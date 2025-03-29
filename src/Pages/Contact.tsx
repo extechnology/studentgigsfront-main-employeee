@@ -2,7 +2,7 @@
 
 export default function Contact() {
 
-    // Scroll to top when page is loaded
+   
     window.scrollTo({ top: 0, behavior: 'smooth', });
 
 
