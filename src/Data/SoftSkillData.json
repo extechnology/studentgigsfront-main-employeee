@@ -1,0 +1,274 @@
+{
+  "skills": [
+    {
+      "category": "Communication",
+      "skills": [
+        {
+          "label": "Verbal Communication",
+          "value": "verbal_communication"
+        },
+        {
+          "label": "Written Communication",
+          "value": "written_communication"
+        },
+        {
+          "label": "Public Speaking",
+          "value": "public_speaking"
+        },
+        {
+          "label": "Active Listening",
+          "value": "active_listening"
+        },
+        {
+          "label": "Negotiation",
+          "value": "negotiation"
+        },
+        {
+          "label": "Presentation Skills",
+          "value": "presentation_skills"
+        },
+        {
+          "label": "Storytelling",
+          "value": "storytelling"
+        },
+        {
+          "label": "Persuasion",
+          "value": "persuasion"
+        },
+        {
+          "label": "Nonverbal Communication",
+          "value": "nonverbal_communication"
+        },
+        {
+          "label": "Interpersonal Communication",
+          "value": "interpersonal_communication"
+        }
+      ]
+    },
+    {
+      "category": "Leadership & Management",
+      "skills": [
+        {
+          "label": "Team Leadership",
+          "value": "team_leadership"
+        },
+        {
+          "label": "Strategic Thinking",
+          "value": "strategic_thinking"
+        },
+        {
+          "label": "Decision Making",
+          "value": "decision_making"
+        },
+        {
+          "label": "Conflict Resolution",
+          "value": "conflict_resolution"
+        },
+        {
+          "label": "Delegation",
+          "value": "delegation"
+        },
+        {
+          "label": "Mentoring",
+          "value": "mentoring"
+        },
+        {
+          "label": "Coaching",
+          "value": "coaching"
+        },
+        {
+          "label": "Change Management",
+          "value": "change_management"
+        },
+        {
+          "label": "Emotional Intelligence",
+          "value": "emotional_intelligence"
+        },
+        {
+          "label": "Visionary Thinking",
+          "value": "visionary_thinking"
+        }
+      ]
+    },
+    {
+      "category": "Problem-Solving & Critical Thinking",
+      "skills": [
+        {
+          "label": "Analytical Thinking",
+          "value": "analytical_thinking"
+        },
+        {
+          "label": "Creative Thinking",
+          "value": "creative_thinking"
+        },
+        {
+          "label": "Logical Reasoning",
+          "value": "logical_reasoning"
+        },
+        {
+          "label": "Troubleshooting",
+          "value": "troubleshooting"
+        },
+        {
+          "label": "Research Skills",
+          "value": "research_skills"
+        },
+        {
+          "label": "Decision Analysis",
+          "value": "decision_analysis"
+        },
+        {
+          "label": "Systems Thinking",
+          "value": "systems_thinking"
+        },
+        {
+          "label": "Root Cause Analysis",
+          "value": "root_cause_analysis"
+        },
+        {
+          "label": "Lateral Thinking",
+          "value": "lateral_thinking"
+        },
+        {
+          "label": "Innovative Thinking",
+          "value": "innovative_thinking"
+        }
+      ]
+    },
+    {
+      "category": "Collaboration & Teamwork",
+      "skills": [
+        {
+          "label": "Teamwork",
+          "value": "teamwork"
+        },
+        {
+          "label": "Collaboration",
+          "value": "collaboration"
+        },
+        {
+          "label": "Conflict Management",
+          "value": "conflict_management"
+        },
+        {
+          "label": "Adaptability",
+          "value": "adaptability"
+        },
+        {
+          "label": "Empathy",
+          "value": "empathy"
+        },
+        {
+          "label": "Cultural Awareness",
+          "value": "cultural_awareness"
+        },
+        {
+          "label": "Networking",
+          "value": "networking"
+        },
+        {
+          "label": "Relationship Building",
+          "value": "relationship_building"
+        },
+        {
+          "label": "Cross-Functional Collaboration",
+          "value": "cross_functional_collaboration"
+        },
+        {
+          "label": "Trustworthiness",
+          "value": "trustworthiness"
+        }
+      ]
+    },
+    {
+      "category": "Time Management & Organization",
+      "skills": [
+        {
+          "label": "Time Management",
+          "value": "time_management"
+        },
+        {
+          "label": "Prioritization",
+          "value": "prioritization"
+        },
+        {
+          "label": "Goal Setting",
+          "value": "goal_setting"
+        },
+        {
+          "label": "Multitasking",
+          "value": "multitasking"
+        },
+        {
+          "label": "Scheduling",
+          "value": "scheduling"
+        },
+        {
+          "label": "Productivity Improvement",
+          "value": "productivity_improvement"
+        },
+        {
+          "label": "Task Delegation",
+          "value": "task_delegation"
+        },
+        {
+          "label": "Deadline Management",
+          "value": "deadline_management"
+        },
+        {
+          "label": "Self-Discipline",
+          "value": "self_discipline"
+        },
+        {
+          "label": "Work-Life Balance",
+          "value": "work_life_balance"
+        }
+      ]
+    },
+    {
+      "category": "Emotional Intelligence",
+      "skills": [
+        {
+          "label": "Self-Awareness",
+          "value": "self_awareness"
+        },
+        {
+          "label": "Self-Regulation",
+          "value": "self_regulation"
+        },
+        {
+          "label": "Motivation",
+          "value": "motivation"
+        },
+        {
+          "label": "Empathy",
+          "value": "empathy"
+        },
+        {
+          "label": "Social Skills",
+          "value": "social_skills"
+        },
+        {
+          "label": "Resilience",
+          "value": "resilience"
+        },
+        {
+          "label": "Stress Management",
+          "value": "stress_management"
+        },
+        {
+          "label": "Mindfulness",
+          "value": "mindfulness"
+        },
+        {
+          "label": "Patience",
+          "value": "patience"
+        },
+        {
+          "label": "Active Engagement",
+          "value": "active_engagement"
+        }
+      ]
+    }
+  ]
+}
