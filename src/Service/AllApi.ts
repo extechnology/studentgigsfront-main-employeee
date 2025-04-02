@@ -14,6 +14,22 @@ export const RegisterUser = async (data: any) => {
 }
 
 
+// Email Verification
+export const PostEmailVerification = async (data: any) => {
+
+    return await CommonApi("POST", `${Base_Url}/verify-otp/`, data, "")
+
+}
+
+
+// Resend Otp
+export const PostResendOtp = async (data: any) => {
+
+    return await CommonApi("POST", `${Base_Url}/resend-otp/`, data, "")
+
+}
+
+
 // User Login
 export const LoginUser = async (data: any) => {
 

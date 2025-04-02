@@ -5,7 +5,9 @@ import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/Context/AuthContext";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
+import EmailOtp from "@/Components/Common/EmailOtp";
+
 
 
 export default function Auth() {
@@ -20,43 +22,64 @@ export default function Auth() {
   }
 
 
+  // Password and Repassword show
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
 
 
+  // Register Data
+  const [RegisterData, setRegisterData] = useState({});
+
+
+
+  // Otp Modal
+  const [otpModal, setOtpModal] = useState(false);
+
+
+
+  // Navigation
   const Navigate = useNavigate()
+
 
 
   // Get the current path
   const location = useLocation();
 
 
+
   // Login and register status
   const [Status, SetStatus] = useState(true)
+
 
 
   // Terms acceptance state
   const [termsAccepted, setTermsAccepted] = useState(false)
 
 
+
   // React Hook Form state
   const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>()
+
 
 
   // Scroll to top when page is loaded
   window.scrollTo({ top: 0, behavior: 'smooth', });
 
 
+
   // Mutate for user Register
-  const { mutate } = UserRegister()
+  const { mutate, isPending: isRegisterPending } = UserRegister()
+
 
 
   // Mutate for user Login
-  const { mutate: mutateLogin } = UserLogin()
+  const { mutate: mutateLogin, isPending: isLoginPending } = UserLogin()
+
 
 
   // Mutate for Google Login
   const { mutate: mutateGoogleLogin } = GoogleAuth()
+
 
 
   // login Provider
@@ -71,6 +94,8 @@ export default function Auth() {
       toast.error("Please accept the Terms and Conditions to continue.");
       return;
     }
+
+    setRegisterData(data)
 
     const formdata = new FormData()
 
@@ -87,19 +112,12 @@ export default function Auth() {
 
         if (response.status >= 200 && response.status <= 300) {
 
-          toast.success("User Register Successfully")
-
-          SetStatus(!Status)
-
-          reset()
-          setTermsAccepted(false)
+          setOtpModal(true)
 
         }
         else {
 
           console.log(response)
-
-          reset()
 
           handleErrors(response?.response?.data);
 
@@ -150,6 +168,8 @@ export default function Auth() {
 
   // Submit Login
   const SubmitLogin = (data: any) => {
+
+
     if (!termsAccepted) {
       toast.error("Please accept the Terms and Conditions to continue.");
       return;
@@ -182,7 +202,6 @@ export default function Auth() {
 
 
           Navigate(from, { replace: true })
-
 
 
         }
@@ -327,8 +346,12 @@ export default function Auth() {
   })
 
 
-  return (
 
+  // Change Status
+  const handleStatusChnage = () => { SetStatus(!Status) }
+
+
+  return (
 
     <>
 
@@ -376,7 +399,6 @@ export default function Auth() {
 
 
 
-
                     {/*Password */}
                     <div className="mb-6 flex flex-col pt-4">
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
@@ -391,7 +413,7 @@ export default function Auth() {
                           className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-gray-500"
                           onClick={() => setShowPassword(!showPassword)}
                         >
-                          {showPassword ? <Eye size={20} /> :  <EyeOff size={20} />}
+                          {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                         </button>
 
                         {errors.password && <p role="alert" className="text-red-500 text-sm">{errors.password.message}</p>}
@@ -436,9 +458,10 @@ export default function Auth() {
 
                     <button
                       type="submit"
-                      className={`w-full rounded-lg ${!termsAccepted ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2`}
+                      disabled={!termsAccepted || isLoginPending}
+                      className={`w-full rounded-lg ${!termsAccepted || isLoginPending ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2 flex items-center justify-center`}
                     >
-                      Log in
+                      Log In {isLoginPending && <Loader className="animate-spin ms-3 duration-3000" />}
                     </button>
 
 
@@ -463,7 +486,7 @@ export default function Auth() {
                   <div className="py-12 text-center">
                     <p className="whitespace-nowrap text-gray-600">
                       Don't have an account?
-                      <a onClick={() => SetStatus(!Status)} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 underline ms-3">Sign up.</a>
+                      <a onClick={() => { SetStatus(!Status), reset() }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 underline ms-3">Sign up.</a>
                     </p>
                   </div>
 
@@ -512,7 +535,6 @@ export default function Auth() {
                             }
                           })}
 
-
                         />
                         {errors.email && <p role="alert" className="text-red-500 text-sm">{errors.email.message}</p>}
                       </div>
@@ -522,6 +544,7 @@ export default function Auth() {
 
                     {/* Password */}
                     <div className="flex flex-col pt-4">
+
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
                         <input
                           type={showPassword ? "text" : "password"}
@@ -535,12 +558,15 @@ export default function Auth() {
                           className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-gray-500"
                           onClick={() => setShowPassword(!showPassword)}
                         >
-                          {showPassword ? <Eye size={20} /> :  <EyeOff size={20} />}
+                          {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                         </button>
+
+                        {errors.password && (
+                          <p role="alert" className="text-red-500 text-sm">{errors.password.message}</p>
+                        )}
+
                       </div>
-                      {errors.password && (
-                        <p role="alert" className="text-red-500 text-sm">{errors.password.message}</p>
-                      )}
+
                     </div>
 
 
@@ -560,12 +586,15 @@ export default function Auth() {
                           className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-gray-500"
                           onClick={() => setShowRePassword(!showRePassword)}
                         >
-                          {showRePassword ? <Eye size={20} /> :  <EyeOff size={20} />}
+                          {showRePassword ? <Eye size={20} /> : <EyeOff size={20} />}
                         </button>
+
+                        {errors.repassword && (
+                          <p role="alert" className="text-red-500 text-sm">{errors.repassword.message}</p>
+                        )}
+
                       </div>
-                      {errors.repassword && (
-                        <p role="alert" className="text-red-500 text-sm">{errors.repassword.message}</p>
-                      )}
+
                     </div>
 
 
@@ -605,10 +634,12 @@ export default function Auth() {
 
 
                     <button
+                      disabled={!termsAccepted || isRegisterPending}
                       type="submit"
-                      className={`w-full rounded-lg ${!termsAccepted ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2`}
+                      className={`w-full rounded-lg ${!termsAccepted || isRegisterPending ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2 flex items-center justify-center`}
                     >
-                      Sign Up
+                      Sign Up {isRegisterPending && <Loader className="animate-spin duration-3000 ms-3" />}
+
                     </button>
 
 
@@ -618,7 +649,7 @@ export default function Auth() {
                   <div className="py-12 text-center">
                     <p className="whitespace-nowrap text-gray-600">
                       Already have an account?
-                      <a onClick={() => SetStatus(!Status)} className="underline-offset-4 font-semibold text-gray-900 underline ms-3 cursor-pointer">Log In.</a>
+                      <a onClick={() => { SetStatus(!Status), reset() }} className="underline-offset-4 font-semibold text-gray-900 underline ms-3 cursor-pointer">Log In.</a>
                     </p>
                   </div>
 
@@ -646,6 +677,8 @@ export default function Auth() {
         </div>
 
 
+        {/* OTP Modal */}
+        <EmailOtp handleStatus={handleStatusChnage} isOpen={otpModal} setIsOpen={setOtpModal} RegisterData={RegisterData} reset={reset} />
 
 
       </main>
