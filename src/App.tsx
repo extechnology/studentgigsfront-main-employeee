@@ -17,7 +17,7 @@ const Settings = lazy(() => import("./Pages/Settings"));
 const UserProfile = lazy(() => import("./Pages/UserProfile"));
 const Plans = lazy(() => import("./Pages/Plans"));
 const GigsAcademy = lazy(() => import("./Pages/GigsAcademy"));
-
+const PlanUsageDashboard = lazy(() => import("./Pages/Usage"));
 
 
 // Job-Related Pages
@@ -90,6 +90,14 @@ function App() {
           <Route path="/savedjobs" element={
             <Suspense fallback={<Loader />}>
               <ProtectedRouteForSavedJobs><JobPages.SavedJobs /></ProtectedRouteForSavedJobs>
+            </Suspense>
+          } />
+
+
+
+          <Route path="/planusage" element={
+            <Suspense fallback={<Loader />}>
+              <ProtectedRoute><PlanUsageDashboard /></ProtectedRoute>
             </Suspense>
           } />
 

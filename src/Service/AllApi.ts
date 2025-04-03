@@ -2,7 +2,7 @@ import { CommonApi } from "./CommonApi";
 
 
 // Base Url
-export const Base_Url = "https://server.studentsgigs.com/api/employee"
+export const Base_Url = "http://localhost:8000/api/employee"
 
 
 
@@ -556,5 +556,13 @@ export const PostEnrollForm = async (data: FormData) => {
 export const GetCourseData = async () => {
 
     return await CommonApi("GET", `${Base_Url}/skills-academy-info/`, "", "")
+
+}
+
+
+// Get Plan Usage
+export const GetPlanUsage = async (header : object) => {
+
+    return await CommonApi("GET", `${Base_Url}/plan-usage/`, "", header)
 
 }

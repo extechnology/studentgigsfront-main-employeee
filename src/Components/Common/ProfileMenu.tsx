@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Popover } from "@headlessui/react";
-import { User, Settings, Crown, Bookmark, KeyRound, LogOut } from "lucide-react";
+import { User, Settings, Crown, Bookmark, KeyRound, LogOut, Gauge } from "lucide-react";
 
 interface ProfileMenuProps {
     LoginStatus: boolean;
@@ -53,6 +53,7 @@ const PopoverContent: React.FC<PopoverContentProps> = ({ LoginStatus, HandleLogO
         <MenuItem link="/settings" icon={<Settings size={20} />} text="Settings" />
         <MenuItem link="/plans" icon={<Crown size={20} />} text="Premium" />
         <MenuItem link="/savedjobs" icon={<Bookmark size={20} />} text="Saved Jobs" />
+        <MenuItem link="/planusage" icon={<Gauge size={20} />} text="Plan Usage" />
 
         {!LoginStatus ? (
             <MenuItem link="/auth" icon={<KeyRound size={20} />} text="Login" />

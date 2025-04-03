@@ -79,6 +79,7 @@ export const VerifyPayment = () => {
 
             queryclient.invalidateQueries({ queryKey: ["userPlans"] });
             queryclient.invalidateQueries({ queryKey: ["allplans"] });
+            queryclient.invalidateQueries({ queryKey: ["planUsage"] });
 
         }
 

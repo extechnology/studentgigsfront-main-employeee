@@ -223,7 +223,7 @@ export const ApplyJob = () => {
             console.error("Failed to Apply Job:", error);
         },
         onSuccess: () => {
-            // queryclient.invalidateQueries({ queryKey: ["userPlans"] });
+            queryclient.invalidateQueries({ queryKey: ["planUsage"] });
             queryclient.invalidateQueries({ queryKey: ["postedJobs"] });
             queryclient.invalidateQueries({ queryKey: ["userPlans"] });
             queryclient.invalidateQueries({ queryKey: ["serachedjobs"] });
