@@ -17,7 +17,7 @@ import { useAuth } from "@/Context/AuthContext";
 import { GetPersonalInfo } from "@/Hooks/UserProfile";
 import { useQueryClient } from "@tanstack/react-query";
 import NotificationPopover from "@/Components/Common/Notifications";
-
+import { GigsAlert } from "./GigsAlert";
 
 export default function Header() {
 
@@ -191,25 +191,7 @@ export default function Header() {
 
 
                 {/* Find Student Talents for mobile view */}
-                <a
-                  href="https://gigs.studentsgigs.com/findtalent"
-                  target="_blank"
-                  onClick={(e) => {
-                    e.preventDefault(); // Prevent default navigation
-                    const confirmRedirect = window.confirm(
-                      "Are you sure you want to continue to the employer page?"
-                    );
-                    if (confirmRedirect) {
-                      window.open("https://gigs.studentsgigs.com/findtalent", "_blank");
-                    }
-                  }}
-                >
-                  <button
-                    className="bg-[#eb8125] text-white font-semibold text-xs px-5 py-2 flex items-center sm:hidden"
-                  >
-                    <GraduationCap size={16} className="me-2" /> Hire Student Talents
-                  </button>
-                </a>
+                <GigsAlert />
 
 
                 {/* Explore Gigs */}
@@ -251,25 +233,7 @@ export default function Header() {
 
 
               {/* Find Student Talents */}
-              <a target="_blank"
-
-                onClick={() => {
-                 
-                  const confirmRedirect = window.confirm(
-                    "Are you sure you want to continue to Students Gigs Employer page?" 
-                  );
-                  if (confirmRedirect) {
-                    window.open("https://gigs.studentsgigs.com/findtalent", "_blank");
-                  }
-                }}
-
-              >
-
-                <button className={`flex items-center gap-x-2 bg-[#eb8125] text-white font-semibold text-md md:px-2 lg:px-6  xl:px-14 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
-                  Hire Students <GraduationCap size={24} />
-                </button>
-
-              </ a>
+              <GigsAlert />
 
 
               {/* Skills Academy  */}

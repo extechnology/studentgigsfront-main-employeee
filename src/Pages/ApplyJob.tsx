@@ -152,7 +152,7 @@ const JobApplicationForm = () => {
 
         e.preventDefault();
 
-        if (!isPlanExpired && usage?.job_limit) {
+        if (!isPlanExpired && usage?.job_limit && usage?.profile_completed) {
 
             const formdata = new FormData()
 
@@ -194,6 +194,9 @@ const JobApplicationForm = () => {
                 handlePlanRedirect("Your plan has expired. Please subscribe to continue.");
             } else if (!usage?.job_limit) {
                 handlePlanRedirect("You have reached your job limit. Please upgrade your plan to continue.");
+            } else if (!usage?.profile_completed) {
+                toast.error("Oops! Please complete your personal information before applying for jobs.");
+                Navigate('/settings')
             }
 
         }

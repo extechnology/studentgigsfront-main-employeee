@@ -3,40 +3,24 @@ import { GetUserPlans, GetAllPlans, GetPlanUsage } from "@/Service/AllApi";
 
 
 
-
-
-
 // Type definitions for plan usage
-type PlanFeature = {
+export interface PlanFeature {
+    
+    limit: string;
     name: string;
-    value?: string | boolean;
-    used?: number;
-    limit?: number;
-};
+    used: number;
+}
 
-type PlanFeatures = {
-    jobApplications: PlanFeature;
-    validity: PlanFeature;
-    profileVisibility: PlanFeature;
-    resumeBuilder: PlanFeature;
-    jobAlerts: PlanFeature;
-    savedJobs: PlanFeature;
-    workplaceCourse: PlanFeature;
-    priorityShortlisting: PlanFeature;
-    premiumBadge: PlanFeature;
-    liveChat: PlanFeature;
-};
-
-type UserPlan = {
+export interface UserPlan {
+    username: string;
     name: string;
     email: string;
     plan: string;
     planCreatedDate: string;
     planExpiryDate: string;
     planExpired: boolean;
-    planFeatures: PlanFeatures;
-};
-
+    planFeatures: PlanFeature[];
+}
 
 
 

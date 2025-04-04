@@ -3,7 +3,7 @@ import { CirclePlus, Clock, Calendar, AlertCircle, Award, Zap, Settings } from '
 import { PlanUsage } from '@/Hooks/Userplans';
 import PlanUsageLoader from '@/Components/Loaders/PlanUsageLoader';
 import { Link } from 'react-router-dom';
-
+import { PlanFeature } from '@/Hooks/Userplans';
 
 
 
@@ -54,11 +54,6 @@ const PlanUsageDashboard = () => {
         return () => clearInterval(timer);
 
     }, []);
-
-
-
-    // Calculate job applications usage percentage
-    const usagePercentage = ( (userData?.planFeatures?.jobApplications?.used ?? 0) / (userData?.planFeatures?.jobApplications?.limit ?? 0)) * 100;
 
 
 
@@ -130,74 +125,83 @@ const PlanUsageDashboard = () => {
 
 
                             {/* Usage Progress Card - Prominent */}
-                            <div className={`mb-8 transform transition-all duration-700 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`} style={{ transitionDelay: '500ms' }}>
+                            {userData?.planFeatures?.map((item: PlanFeature, idx: number) => {
+
+                                const usagePercentage = (Number(item.used) / Number(item.limit)) * 100;
+
+                                return (
+
+                                    <div key={idx} className={`mb-8 transform transition-all border-b border-gray-200/50 pb-8 duration-700 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`} style={{ transitionDelay: '500ms' }}>
 
 
-                                <div className="flex justify-between mb-3">
-                                    <h3 className="font-semibold text-gray-700 text-lg">Job Applications</h3>
-                                    <span className="text-orange-500 font-medium">{userData?.planFeatures?.jobApplications?.used} of {userData?.planFeatures?.jobApplications?.limit} used</span>
-                                </div>
+                                        <div className="flex justify-between mb-3">
+                                            <h3 className="font-semibold text-gray-700 text-lg">{item?.name}</h3>
+                                            <span className="text-orange-500 font-medium">{item?.used} of {item?.limit} used</span>
+                                        </div>
 
 
-                                <div className="h-8 w-full bg-orange-50 rounded-full overflow-hidden p-1.5 shadow-inner">
-                                    <div
-                                        className={`h-full ${usagePercentage > 80 ? 'bg-gradient-to-r from-orange-600 to-orange-400' : 'bg-gradient-to-r from-orange-500 to-orange-300'} rounded-full flex items-center transition-all duration-1500 ease-out relative`}
-                                        style={{
-                                            width: `${Math.min(animationProgress, usagePercentage)}%`,
-                                        }}
-                                    >
-                                        <div className={`absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-md border-2 border-orange-500 transition-opacity duration-300 ${animationProgress >= 30 ? 'opacity-100' : 'opacity-0'}`}></div>
-                                    </div>
-                                </div>
-
-
-                                {/* Data Points */}
-                                <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-
-
-                                    <div className="bg-orange-50 rounded-2xl p-4 border border-orange-100 hover:border-orange-300 transition-all duration-300 group">
-                                        <div className="flex items-center">
-                                            <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center mr-3">
-                                                <Zap size={20} className="text-orange-500" />
-                                            </div>
-                                            <div>
-                                                <p className="text-gray-500 text-sm">Applications Used</p>
-                                                <p className="text-gray-800 text-xl font-bold group-hover:text-orange-500 transition-colors duration-300">{userData?.planFeatures?.jobApplications?.used}</p>
+                                        {/* Progress Bar */}
+                                        <div className="h-8 w-full bg-orange-50 rounded-full overflow-hidden p-1.5 shadow-inner">
+                                            <div
+                                                className={`h-full ${usagePercentage > 80 ? 'bg-gradient-to-r from-orange-600 to-orange-400' : 'bg-gradient-to-r from-orange-500 to-orange-300'} rounded-full flex items-center transition-all duration-1500 ease-out relative`}
+                                                style={{
+                                                    width: `${Math.min(animationProgress, usagePercentage)}%`,
+                                                }}
+                                            >
+                                                <div className={`absolute right-0 top-1/2 transform -translate-y-1/2 w-4 h-4 bg-white rounded-full shadow-md border-2 border-orange-500 transition-opacity duration-300 ${animationProgress >= 30 ? 'opacity-100' : 'opacity-0'}`}></div>
                                             </div>
                                         </div>
-                                    </div>
 
 
-                                    <div className="bg-orange-50 rounded-2xl p-4 border border-orange-100 hover:border-orange-300 transition-all duration-300 group">
-                                        <div className="flex items-center">
-                                            <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center mr-3">
-                                                <CirclePlus size={20} className="text-orange-500" />
+                                        {/* Data Points */}
+                                        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+
+
+                                            <div className="bg-orange-50 rounded-2xl p-4 border border-orange-100 hover:border-orange-300 transition-all duration-300 group">
+                                                <div className="flex items-center">
+                                                    <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center mr-3">
+                                                        <Zap size={20} className="text-orange-500" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-gray-500 text-sm">{item?.name} Used</p>
+                                                        <p className="text-gray-800 text-xl font-bold group-hover:text-orange-500 transition-colors duration-300">{item?.used}</p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p className="text-gray-500 text-sm">Applications Left</p>
-                                                <p className="text-gray-800 text-xl font-bold group-hover:text-orange-500 transition-colors duration-300">{(userData?.planFeatures?.jobApplications?.limit ?? 0) - (userData?.planFeatures?.jobApplications?.used ?? 0)}</p>
+
+
+                                            <div className="bg-orange-50 rounded-2xl p-4 border border-orange-100 hover:border-orange-300 transition-all duration-300 group">
+                                                <div className="flex items-center">
+                                                    <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center mr-3">
+                                                        <CirclePlus size={20} className="text-orange-500" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-gray-500 text-sm">{item?.name} Left</p>
+                                                        <p className="text-gray-800 text-xl font-bold group-hover:text-orange-500 transition-colors duration-300">{ Number(item?.limit ?? 0) - Number(item?.used ?? 0)}</p>
+                                                    </div>
+                                                </div>
                                             </div>
+
+
+                                            <div className="bg-orange-50 rounded-2xl p-4 border border-orange-100 hover:border-orange-300 transition-all duration-300 group">
+                                                <div className="flex items-center">
+                                                    <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center mr-3">
+                                                        <Settings size={20} className="text-orange-500 animate-spin-slow" />
+                                                    </div>
+                                                    <div>
+                                                        <p className="text-gray-500 text-sm">Used</p>
+                                                        <p className="text-gray-800 text-xl font-bold group-hover:text-orange-500 transition-colors duration-300">{Math.round(usagePercentage)}%</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
                                         </div>
+
                                     </div>
-
-
-                                    <div className="bg-orange-50 rounded-2xl p-4 border border-orange-100 hover:border-orange-300 transition-all duration-300 group">
-                                        <div className="flex items-center">
-                                            <div className="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center mr-3">
-                                                <Settings size={20} className="text-orange-500 animate-spin-slow" />
-                                            </div>
-                                            <div>
-                                                <p className="text-gray-500 text-sm">Plan Efficiency</p>
-                                                <p className="text-gray-800 text-xl font-bold group-hover:text-orange-500 transition-colors duration-300">{Math.round(usagePercentage)}%</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
-
-                            </div>
+                                )
+                                
+                            })}
 
 
                             {/* Calendar Cards */}

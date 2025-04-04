@@ -329,7 +329,7 @@ const ProfileEditor: React.FC = () => {
                             </div>
 
                             <div className="md:pt-12 pt-8">
-                                <h1 className="font-semibold text-md md:text-lg">{data[0]?.employee_name?.toUpperCase()}</h1>
+                                <h1 className="font-semibold text-md md:text-lg">{data[0]?.employee_name?.toUpperCase()} <span className="text-gray-400 text-sm ms-1 pb-0">@{data[0]?.username}</span></h1>
                                 <p className="font-[1rem] text-md md:text-lg text-gray-400">
                                     {data[0]?.job_title}
                                 </p>
