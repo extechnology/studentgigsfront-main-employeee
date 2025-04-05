@@ -56,45 +56,36 @@ const Footer = () => {
 
         {/* Right Section */}
         <div>
+
           <h3 className="text-lg font-bold mb-4">Connect With Us</h3>
+
           <div className="flex space-x-4 mb-4">
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://www.facebook.com/studentsgigs.in" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-facebook fa-lg"></i>
             </a>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://www.instagram.com/studentgigs.in" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-instagram fa-lg"></i>
             </a>
-            <a href="https://www.threads.net" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://www.threads.net/@studentgigs.in" target="_blank" rel="noopener noreferrer">
               <i className="fa-brands fa-threads fa-lg"></i>
             </a>
-            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://x.com/studentgigsone" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-x-twitter fa-lg"></i>
             </a>
-            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://www.linkedin.com/company/studentsgigs/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-linkedin fa-lg"></i>
             </a>
-            <a href="https://www.pinterest.com" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://in.pinterest.com/studentgigsone/" target="_blank" rel="noopener noreferrer">
               <i className="fa-brands fa-pinterest fa-lg"></i>
             </a>
-          </div>
 
-          {/* <form className="flex flex-col">
-            <label htmlFor="newsletter" className="mb-2">Subscribe to our Newsletter</label>
-            <div className="flex">
-              <input
-                type="email"
-                id="newsletter"
-                placeholder="Your email"
-                className="p-1 sm:p-2 flex-1 rounded-l-md text-black bg-gray-100"
-              />
-              <button
-                type="submit"
-                className="bg-blue-500 px-2 sm:px-4 py-2 rounded-r-md hover:bg-blue-600"
-              >
-                Subscribe
-              </button>
-            </div>
-          </form> */}
+          </div>
 
 
         </div>
