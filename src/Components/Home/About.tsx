@@ -21,13 +21,13 @@ export default function About() {
                                 <div className="col-span-6">
                                     <div className="grid grid-cols-1 gap-6">
                                         <img
-                                            src="https://jobstack-shreethemes.vercel.app/static/media/ab03.2b6e24b09b3690407ec5.jpg"
+                                            src="/hero-1.jpg"
                                             loading="lazy"
                                             alt="Professional Woman"
                                             className="shadow rounded-md"
                                         />
                                         <img
-                                            src="https://jobstack-shreethemes.vercel.app/static/media/ab02.f851a3dde08585493f97.jpg"
+                                            src="/Hero-2.jpg"
                                             loading="lazy"
                                             alt="Smiling Woman"
                                             className="shadow rounded-md"
@@ -37,7 +37,7 @@ export default function About() {
                                 <div className="col-span-6">
                                     <div className="grid grid-cols-1 gap-6">
                                         <img
-                                            src="https://jobstack-shreethemes.vercel.app/static/media/ab01.016884c7bf778010e79c.jpg"
+                                            src="/Hero-3.jpg"
                                             loading="lazy"
                                             alt="Conference Room"
                                             className="shadow rounded-md"
