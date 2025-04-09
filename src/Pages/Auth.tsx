@@ -61,7 +61,7 @@ export default function Auth() {
 
 
   // React Hook Form state
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>()
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>({ mode: "onChange" })
 
 
 
@@ -523,7 +523,12 @@ export default function Auth() {
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
                         <input type="text" id="login-username" className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Username"
 
-                          {...register("username", { required: "Username is required" })}
+                          {...register("username", {
+                            required: "Username is required", pattern: {
+                              value: /^[a-zA-Z0-9]+$/,
+                              message: "Only letters and numbers are allowed",
+                            },
+                          })}
 
                         />
                         {errors.username && <p role="alert" className="text-red-500 text-sm">{errors.username.message}</p>}
@@ -677,7 +682,7 @@ export default function Auth() {
               <p className="mb-5 text-3xl font-semibold leading-10"> Our mission is to make students independent, responsible, and equipped
                 with practical exposure while learning.</p>
               <p className="mb-4 text-3xl font-semibold">Students Gigs</p>
-              <p className="">Founder, CEO Dr Vimal K R</p>
+              <p className="">Dr Vimal K R , Founder CEO </p>
               <p className="mb-7 text-sm opacity-70">Medresearch India Pvt Ltd</p>
             </div>
             <img className="-z-1 absolute top-0 h-full w-full object-cover opacity-90" loading="lazy" src="https://www.shutterstock.com/image-photo/university-graduation-ceremonies-on-commencement-600nw-298297430.jpg" />
@@ -692,7 +697,7 @@ export default function Auth() {
 
 
         {/* Forget Password Modal */}
-        <ForgetPassword  isOpen={forgotModal} setIsOpen={setForgotModal} />
+        <ForgetPassword isOpen={forgotModal} setIsOpen={setForgotModal} />
 
 
       </main>
