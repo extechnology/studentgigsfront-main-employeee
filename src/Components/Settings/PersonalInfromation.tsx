@@ -13,6 +13,7 @@ import { JObTittles, PostJobTittle } from "@/Hooks/Utils";
 
 
 
+// form inputs
 type Inputs = {
 
     name: string
@@ -27,6 +28,8 @@ type Inputs = {
     about: string
     available_working_periods_start_date: string
     available_working_periods_end_date: string
+    date_of_birth: string
+    age: number
 
 }
 
@@ -46,35 +49,68 @@ export default function PersonalInfromation() {
     const [Search, setSearch] = useState<string>("")
 
 
+
     // ID of user
     const [id, SetId] = useState('');
+
 
 
     // Post Job Tittle
     const { mutate: PostJobTittleMutate } = PostJobTittle();
 
 
+
     // Get Job Title
     const { data: JobTitle, isLoading: JobTitleLoading } = JObTittles()
+
 
 
     // Get User Personal Information
     const { data, isLoading, isError, isPending, isFetching } = GetPersonalInfo();
 
 
+
     // Get All Locations
     const { data: Location, isLoading: LocationLoading } = AllLocations(Search)
+
 
 
     // Edit User Personal Information
     const { mutate } = EditPersonalInfo();
 
 
+
     // Form State
-    const { register, handleSubmit, formState: { errors }, control, reset } = useForm<Inputs>();
+    const { register, handleSubmit, formState: { errors }, control, reset, watch, setValue } = useForm<Inputs>();
 
 
 
+
+    // Watch date of birth 
+    const dateOfBirth = watch("date_of_birth");
+
+
+
+
+    // Calculate age based on date of birth
+    useEffect(() => {
+        if (dateOfBirth) {
+            const dob = new Date(dateOfBirth);
+            const today = new Date();
+            let age = today.getFullYear() - dob.getFullYear();
+            const m = today.getMonth() - dob.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            setValue("age", age);
+        }
+    }, [dateOfBirth, setValue]);
+
+
+
+
+
+    // Reset form on data change
     useEffect(() => {
 
         if (data && data.length > 0) {
@@ -87,6 +123,9 @@ export default function PersonalInfromation() {
 
         }
     }, [data, reset]);
+
+
+
 
 
 
@@ -108,6 +147,7 @@ export default function PersonalInfromation() {
             }
         };
 
+
         appendIfNotEmpty("name", info.name);
         appendIfNotEmpty("email", info.email);
         appendIfNotEmpty("phone", info.phone);
@@ -116,8 +156,11 @@ export default function PersonalInfromation() {
         appendIfNotEmpty("portfolio", info.portfolio);
         appendIfNotEmpty("about", info.about);
         appendIfNotEmpty("job_title", info.job_title);
-        appendIfNotEmpty("available_working_periods_start_date", info.available_working_periods_start_date);
-        appendIfNotEmpty("available_working_periods_end_date", info.available_working_periods_end_date);
+        appendIfNotEmpty("date_of_birth", info.date_of_birth);
+        appendIfNotEmpty("age", info.age);
+        // appendIfNotEmpty("available_working_periods_start_date", info.available_working_periods_start_date);
+        // appendIfNotEmpty("available_working_periods_end_date", info.available_working_periods_end_date);
+
 
 
         mutate(
@@ -136,6 +179,8 @@ export default function PersonalInfromation() {
                 }
             }
         );
+
+
     };
 
 
@@ -158,7 +203,7 @@ export default function PersonalInfromation() {
 
                 }
             },
-            
+
         })
 
     };
@@ -230,16 +275,20 @@ export default function PersonalInfromation() {
                                             className="block text-sm/6 font-medium text-gray-900"
                                         >
                                             Name
+                                            {errors.name && (
+                                                <p className="mt-1 text-sm text-red-600 ms-2">{errors.name.message}</p>
+                                            )}
                                         </label>
                                         <div className="mt-2">
                                             <input
                                                 id="name"
                                                 type="text"
                                                 autoComplete="given-name"
-                                                {...register("name")}
+                                                {...register("name", { required: "Name is required" })}
                                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
+
                                     </div>
 
 
@@ -251,6 +300,9 @@ export default function PersonalInfromation() {
                                             className="block text-sm/6 font-medium text-gray-900"
                                         >
                                             Email address
+                                            {errors.email && (
+                                                <span className="text-sm text-red-500 ms-2">{errors.email.message}</span>
+                                            )}
                                         </label>
                                         <div className="mt-2">
                                             <input
@@ -261,17 +313,13 @@ export default function PersonalInfromation() {
                                                     pattern: {
                                                         value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                                                         message: "Please enter a valid email address"
-                                                    }
+                                                    },
+                                                    required: "Email is required"
                                                 })}
                                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
 
                                         </div>
-
-                                        {errors.email && (
-                                            <span className="text-sm text-red-500">{errors.email.message}</span>
-                                        )}
-
                                     </div>
 
 
@@ -284,6 +332,9 @@ export default function PersonalInfromation() {
                                             className="block text-sm/6 font-medium text-gray-900"
                                         >
                                             Phone Number
+                                            {errors.phone && (
+                                                <span className="text-sm text-red-500 ms-2">{errors.phone.message}</span>
+                                            )}
                                         </label>
                                         <Controller
                                             name="phone"
@@ -293,6 +344,7 @@ export default function PersonalInfromation() {
                                                     value: 13,
                                                     message: "Phone number cannot exceed 10 digits"
                                                 },
+                                                required: "Phone number is required"
                                             }}
                                             render={({ field: { onChange, value } }) => (
                                                 <PhoneInput
@@ -304,9 +356,7 @@ export default function PersonalInfromation() {
                                                 />
                                             )}
                                         />
-                                        {errors.phone && (
-                                            <span className="text-sm text-red-500">{errors.phone.message}</span>
-                                        )}
+
                                     </div>
 
 
@@ -320,13 +370,66 @@ export default function PersonalInfromation() {
                                             className="block text-sm/6 font-medium text-gray-900"
                                         >
                                             Available Work Hours
+                                            {errors.available_work_hours && (
+                                                <span className="text-sm text-red-500 ms-2">{errors.available_work_hours.message}</span>
+                                            )}
                                         </label>
                                         <div className="mt-2">
                                             <input
                                                 id="work-hours"
-                                                type="text"
+                                                type="number"
                                                 autoComplete="work-hours"
-                                                {...register("available_work_hours")}
+                                                {...register("available_work_hours", { required: "Available work hours is required" })}
+                                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                            />
+                                        </div>
+                                    </div>
+
+
+
+
+                                    {/* Date of Birth */}
+                                    <div className="sm:col-span-3">
+                                        <label
+                                            htmlFor="ate_of_birth"
+                                            className="block text-sm/6 font-medium text-gray-900"
+                                        >
+                                            Date of Birth
+                                            {errors.date_of_birth && (
+                                                <span className="text-sm text-red-500 ms-2">{errors.date_of_birth.message}</span>
+                                            )}
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                                id="ate_of_birth"
+                                                type="date"
+                                                autoComplete="off"
+                                                {...register("date_of_birth", { required: "Date of birth is required" })}
+                                                className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                                            />
+                                        </div>
+                                    </div>
+
+
+
+
+                                    {/* Age */}
+                                    <div className="sm:col-span-3">
+                                        <label
+                                            htmlFor="age"
+                                            className="block text-sm/6 font-medium text-gray-900"
+                                        >
+                                            Age
+                                            {errors.age && (
+                                                <span className="text-sm text-red-500 ms-2">{errors.age.message}</span>
+                                            )}
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                                id="age"
+                                                type="number"
+                                                autoComplete="age"
+                                                {...register("age", { required: "Age is required" })}
                                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -341,6 +444,9 @@ export default function PersonalInfromation() {
                                             className="block text-sm/6 font-medium text-gray-900"
                                         >
                                             Portfolio/LinkedIn Profile Link (optional)
+                                            {errors.portfolio && (
+                                                <span className="text-sm text-red-500 ms-2">{errors.portfolio.message}</span>
+                                            )}
                                         </label>
                                         <input
                                             id="portfolio-link"
@@ -356,16 +462,13 @@ export default function PersonalInfromation() {
                                             className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             placeholder="Enter your portfolio or LinkedIn profile URL"
                                         />
-                                        {errors.portfolio && (
-                                            <span className="text-sm text-red-500">{errors.portfolio.message}</span>
-                                        )}
                                     </div>
 
 
 
 
                                     {/* Available Working Period Start Date */}
-                                    <div className="sm:col-span-3">
+                                    {/* <div className="sm:col-span-3">
                                         <label
                                             htmlFor="available_working_periods_start_date"
                                             className="block text-sm/6 font-medium text-gray-900"
@@ -381,12 +484,12 @@ export default function PersonalInfromation() {
                                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
-                                    </div>
+                                    </div> */}
 
 
 
                                     {/* Available Working Period  End Date */}
-                                    <div className="sm:col-span-3">
+                                    {/* <div className="sm:col-span-3">
                                         <label
                                             htmlFor="available_working_periods_start_date"
                                             className="block text-sm/6 font-medium text-gray-900"
@@ -403,7 +506,7 @@ export default function PersonalInfromation() {
                                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
-                                    </div>
+                                    </div> */}
 
 
 
@@ -414,11 +517,15 @@ export default function PersonalInfromation() {
                                             className="block text-sm/6 font-medium text-gray-900"
                                         >
                                             Preferred Work Location
+                                            {errors.preferred_work_location && (
+                                                <span className="text-sm text-red-500 ms-2">{errors.preferred_work_location.message}</span>
+                                            )}
                                         </label>
                                         <div className="mt-2">
                                             <Controller
                                                 name="preferred_work_location"
                                                 control={control}
+                                                rules={{ required: "Work Location is required" }}
                                                 render={({ field: { onChange, value, ref } }) => {
                                                     const selectedOption =
                                                         Location?.find((option: Option) => option?.label === value) ||
@@ -452,10 +559,14 @@ export default function PersonalInfromation() {
                                     <div className="sm:col-span-3">
                                         <label className="block text-sm/6 font-medium text-gray-900">
                                             Job Title
+                                            {errors.job_title && (
+                                                <span className="text-sm text-red-500 ms-2">{errors.job_title.message}</span>
+                                            )}
                                         </label>
                                         <div>
                                             <Controller
                                                 name="job_title"
+                                                rules={{ required: "Job Title is required" }}
                                                 control={control}
                                                 render={({ field: { onChange, value, ref } }) => (
                                                     <CreatableSelect
@@ -481,21 +592,23 @@ export default function PersonalInfromation() {
 
 
 
-
                                     {/* About */}
                                     <div className="sm:col-span-3">
                                         <label htmlFor="references-testimonials" className="block text-sm/6 font-medium text-gray-900">
                                             About You
+                                            {errors.about && (
+                                                <span className="text-sm text-red-500 ms-2">{errors.about.message}</span>
+                                            )}
                                         </label>
                                         <textarea
                                             id="references-testimonials"
                                             rows={3}
-                                            {...register('about')}
+                                            {...register('about', { required: "This field is required" })}
                                             className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             placeholder="Discribe yourself"
                                         ></textarea>
-                                    </div>
 
+                                    </div>
 
 
                                 </div>

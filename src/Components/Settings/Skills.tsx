@@ -170,7 +170,7 @@ export default function Skills() {
 
 
                                 <h2 className="text-2xl pb-3 font-semibold text-gray-900 flex items-center">
-                                    Technical Skills <Laptop size={24} className='ml-2' />
+                                    Technical Skills <Laptop size={24} className='ml-2' /> <span className='text-sm'>(Optional)</span>
                                 </h2>
 
                                 <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -182,7 +182,7 @@ export default function Skills() {
                                             htmlFor="feild-of-study"
                                             className="block text-sm/6 font-medium text-gray-900"
                                         >
-                                            Technical Skills
+                                            Technical Skills 
                                         </label>
                                         <div>
                                             <Controller

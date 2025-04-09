@@ -30,6 +30,7 @@ interface UsageData {
     resume_builder: number;
     job_limit:boolean
     profile_completed : boolean
+    age_restrict : boolean
 }
 
 

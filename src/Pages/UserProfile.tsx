@@ -13,6 +13,12 @@ import ResumeViewer from "@/Components/Common/ResumeViewer";
 import { useAuth } from "@/Context/AuthContext";
 
 
+
+
+
+
+
+// Profile Types
 interface Profile {
     cover_photo: string | null;
     profile_pic: string | null;

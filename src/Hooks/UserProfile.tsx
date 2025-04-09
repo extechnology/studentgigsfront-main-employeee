@@ -98,6 +98,7 @@ export const EditPersonalInfo = () => {
 
             queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
             queryclient.invalidateQueries({ queryKey: ["userprofilepicture"] });
+            queryclient.invalidateQueries({ queryKey: ["userPlans"] });
 
         }
 

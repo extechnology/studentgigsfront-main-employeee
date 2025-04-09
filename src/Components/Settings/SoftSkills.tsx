@@ -156,7 +156,7 @@ export default function SoftSkills() {
 
 
                                 <h2 className="text-2xl pb-3 font-semibold text-gray-900 flex items-center">
-                                    Soft Skills <Lightbulb size={24} className='ml-2' /> (Optional)
+                                    Soft Skills <Lightbulb size={24} className='ml-2' /> <span className='text-sm'>(Optional)</span> 
                                 </h2>
 
                                 <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 sm:grid-rows-1">

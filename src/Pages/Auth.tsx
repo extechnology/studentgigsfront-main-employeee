@@ -7,7 +7,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/Context/AuthContext";
 import { Eye, EyeOff, Loader } from "lucide-react";
 import EmailOtp from "@/Components/Common/EmailOtp";
-
+import ForgetPassword from "@/Components/Common/ForgetPassword";
 
 
 export default function Auth() {
@@ -35,6 +35,9 @@ export default function Auth() {
   // Otp Modal
   const [otpModal, setOtpModal] = useState(false);
 
+
+  // Forgot Password Modal
+  const [forgotModal, setForgotModal] = useState(false);
 
 
   // Navigation
@@ -483,10 +486,17 @@ export default function Auth() {
                   </button>
 
 
-                  <div className="py-12 text-center">
+                  <div className="pt-5 pb-4 text-center">
                     <p className="whitespace-nowrap text-gray-600">
                       Don't have an account?
                       <a onClick={() => { SetStatus(!Status), reset() }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 underline ms-3">Sign up.</a>
+                    </p>
+                  </div>
+
+
+                  <div className=" text-center">
+                    <p className="whitespace-nowrap text-gray-600">
+                      <a onClick={() => { setForgotModal(!forgotModal) }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 underline ms-3">Forget Password ?</a>
                     </p>
                   </div>
 
@@ -679,6 +689,10 @@ export default function Auth() {
 
         {/* OTP Modal */}
         <EmailOtp handleStatus={handleStatusChnage} isOpen={otpModal} setIsOpen={setOtpModal} RegisterData={RegisterData} reset={reset} />
+
+
+        {/* Forget Password Modal */}
+        <ForgetPassword  isOpen={forgotModal} setIsOpen={setForgotModal} />
 
 
       </main>

@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 
 
-
+//  Types for Employer Deatils
 type Country = {
     value: string;
     label: string;

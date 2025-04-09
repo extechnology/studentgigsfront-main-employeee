@@ -16,6 +16,9 @@ import toast from 'react-hot-toast';
 import confetti from 'canvas-confetti';
 import { useAuth } from '@/Context/AuthContext';
 
+
+
+// Types
 type Country = {
     value: string;
     label: string;
@@ -152,7 +155,7 @@ const JobApplicationForm = () => {
 
         e.preventDefault();
 
-        if (!isPlanExpired && usage?.job_limit && usage?.profile_completed) {
+        if (!isPlanExpired && usage?.job_limit && usage?.profile_completed && usage?.age_restrict) {
 
             const formdata = new FormData()
 
@@ -196,6 +199,9 @@ const JobApplicationForm = () => {
                 handlePlanRedirect("You have reached your job limit. Please upgrade your plan to continue.");
             } else if (!usage?.profile_completed) {
                 toast.error("Oops! Please complete your personal information before applying for jobs.");
+                Navigate('/settings')
+            }else if(!usage?.age_restrict){
+                toast.error("Oops! You are not eligible to apply for jobs due to your age.");
                 Navigate('/settings')
             }
 

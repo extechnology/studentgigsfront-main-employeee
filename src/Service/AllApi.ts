@@ -30,6 +30,17 @@ export const PostResendOtp = async (data: any) => {
 }
 
 
+
+// Reset Password
+export const PostResetPassword = async (data: any) => {
+
+    return await CommonApi("POST", `${Base_Url}/reset-password/`, data, "")
+
+}
+
+
+
+
 // User Login
 export const LoginUser = async (data: any) => {
 
@@ -561,7 +572,7 @@ export const GetCourseData = async () => {
 
 
 // Get Plan Usage
-export const GetPlanUsage = async (header : object) => {
+export const GetPlanUsage = async (header: object) => {
 
     return await CommonApi("GET", `${Base_Url}/plan-usage/`, "", header)
 
