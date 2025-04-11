@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Bookmark, Contact, Crown, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, Trophy, User } from 'lucide-react';
 import {
   Dialog,
-  Disclosure,
   PopoverGroup,
   Transition
 } from '@headlessui/react'
@@ -11,7 +10,6 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import ProfileMenu from "./ProfileMenu";
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import toast from "react-hot-toast";
 import { useAuth } from "@/Context/AuthContext";
 import { GetPersonalInfo } from "@/Hooks/UserProfile";
@@ -364,111 +362,7 @@ export default function Header() {
                       <div className="-my-6 divide-y divide-gray-500/10">
 
 
-                        <div className="space-y-2 py-6">
-
-
-                          {/* Menu Dropdown */}
-                          <Disclosure as="div" className="-mx-3">
-
-                            {({ open }) => (
-                              <>
-                                <Disclosure.Button
-                                  className="flex w-full items-center justify-between px-3 py-5 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
-                                >
-                                  <span>Menu</span>
-                                  <ChevronDownIcon
-                                    className={`h-5 w-5 transition-transform duration-200 ${open ? 'rotate-180' : ''
-                                      }`}
-                                  />
-                                </Disclosure.Button>
-
-                                <Disclosure.Panel className="mt-2 space-y-1">
-
-
-                                  {/* Profile */}
-                                  <Link
-                                    to="/userprofile"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                  >
-                                    <div className="flex items-center space-x-2">
-                                      <User className="h-5 w-5" />
-                                      <span>Profile</span>
-                                    </div>
-                                  </Link>
-
-
-
-                                  {/* Settings */}
-                                  <Link
-                                    to="/settings"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                  >
-                                    <div className="flex items-center space-x-2">
-                                      <Settings className="h-5 w-5" />
-                                      <span>Settings</span>
-                                    </div>
-                                  </Link>
-
-
-                                  {/* Premium */}
-                                  <Link
-                                    to="/plans"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                  >
-                                    <div className="flex items-center space-x-2">
-                                      <Crown className="h-5 w-5" />
-                                      <span>Premium</span>
-                                    </div>
-                                  </Link>
-
-
-                                  {/* Saved Job */}
-                                  <Link
-                                    to="/savedjobs"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                  >
-                                    <div className="flex items-center space-x-2">
-                                      <Bookmark className="h-5 w-5" />
-                                      <span>Saved Jobs</span>
-                                    </div>
-                                  </Link>
-
-
-
-                                  {/* Login/Logout */}
-                                  {!isAuthenticated ? (
-                                    <Link
-                                      to="/auth"
-                                      className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                    >
-                                      <div className="flex items-center space-x-2">
-                                        <KeyRound className="h-5 w-5" />
-                                        <span>Login</span>
-                                      </div>
-                                    </Link>
-                                  ) : (
-                                    <button
-                                      onClick={HandleLogOut}
-                                      className="w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                    >
-                                      <div className="flex items-center space-x-2">
-                                        <LogOut className="h-5 w-5" />
-                                        <span>Logout</span>
-                                      </div>
-                                    </button>
-                                  )}
-
-
-                                </Disclosure.Panel>
-                              </>
-                            )}
-                          </Disclosure>
-
-
+                        <div className="space-y-2 py-3">
 
                           {/* Search Gigs */}
                           <Link
@@ -493,6 +387,64 @@ export default function Header() {
                           </a>
 
 
+
+                          {/* Profile */}
+                          <Link
+                            to="/userprofile"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                          >
+                            <div className="flex items-center space-x-2">
+                              <User className="h-5 w-5" />
+                              <span>Profile</span>
+                            </div>
+                          </Link>
+
+
+
+                          {/* Settings */}
+                          <Link
+                            to="/settings"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                          >
+                            <div className="flex items-center space-x-2">
+                              <Settings className="h-5 w-5" />
+                              <span>Settings</span>
+                            </div>
+                          </Link>
+
+
+
+
+                          {/* Premium */}
+                          <Link
+                            to="/plans"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                          >
+                            <div className="flex items-center space-x-2">
+                              <Crown className="h-5 w-5" />
+                              <span>Premium</span>
+                            </div>
+                          </Link>
+
+
+
+                          {/* Saved Job */}
+                          <Link
+                            to="/savedjobs"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                          >
+                            <div className="flex items-center space-x-2">
+                              <Bookmark className="h-5 w-5" />
+                              <span>Saved Jobs</span>
+                            </div>
+                          </Link>
+
+
+
                           {/* Contact */}
                           <Link
                             to="/contact"
@@ -504,16 +456,29 @@ export default function Header() {
                           </Link>
 
 
-                          {/* Companies */}
-                          {/* <Link
-                            to="/employerlist"
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
-                          >
-                            <Building className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
-                            <span>Companies</span>
-                          </Link> */}
 
+                          {/* Login/Logout */}
+                          {!isAuthenticated ? (
+                            <Link
+                              to="/auth"
+                              className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                            >
+                              <div className="flex items-center space-x-2">
+                                <KeyRound className="h-5 w-5" />
+                                <span>Login</span>
+                              </div>
+                            </Link>
+                          ) : (
+                            <button
+                              onClick={HandleLogOut}
+                              className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                            >
+                              <div className="flex items-center space-x-2">
+                                <LogOut className="h-5 w-5" />
+                                <span>Logout</span>
+                              </div>
+                            </button>
+                          )}
 
                         </div>
                       </div>
