@@ -7,15 +7,16 @@ import WorkPreferences from "@/Components/Settings/WorkPreferences";
 import ProfileEditor from "@/Components/Settings/ProfileImage";
 import Experience from "@/Components/Settings/Experience";
 import AdditionalInfo from "@/Components/Settings/AdditionalInfo";
+import ForgetPassword from "@/Components/Common/ForgetPassword";
+import { useState } from "react";
 
 
 
 export default function Settings() {
 
 
-
-  // Scroll to top when page is loaded
-  window.scrollTo({ top: 0, behavior: 'smooth', });
+  // Forgot Password Modal
+  const [forgotModal, setForgotModal] = useState(false);
 
 
   return (
@@ -70,6 +71,17 @@ export default function Settings() {
             {/* Additional Information */}
             <AdditionalInfo />
 
+
+            {/* Forget Password */}
+            <div className="w-full flex justify-end">
+
+              <a className="text-sm  hover:cursor-pointer text-blue-600 underline" onClick={() => setForgotModal(!forgotModal)}>Forget Password ?</a>
+
+            </div>
+
+
+            {/* Forget Password Modal */}
+            <ForgetPassword isOpen={forgotModal} setIsOpen={setForgotModal} />
 
           </div>
 
