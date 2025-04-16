@@ -294,7 +294,7 @@ export default function Education() {
                                                 htmlFor="feild-of-study"
                                                 className="block text-sm/6 font-medium text-gray-900"
                                             >
-                                                Field of Study
+                                               Select / Enter Your Field of Study
                                             </label>
                                             <div>
                                                 <Controller
@@ -399,7 +399,7 @@ export default function Education() {
                                                 htmlFor="university"
                                                 className="block text-sm/6 font-medium text-gray-900"
                                             >
-                                                Academic Achievements
+                                               Select / Enter Your Academic Achievements
                                             </label>
                                             <div className="">
                                                 <Controller

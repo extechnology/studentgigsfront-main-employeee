@@ -148,7 +148,7 @@ const Footer = () => {
           </Link>
         </div>
 
-        <p className="text-xs sm:text-sm">Powered by Exmedia</p>
+        <p className="text-xs sm:text-sm">Powered by exmedia</p>
       </div>
 
 

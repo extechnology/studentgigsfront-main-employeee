@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Bookmark, Contact, Crown, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, Trophy, User } from 'lucide-react';
+import { Bookmark, Crown, House, KeyRound, LogOut, Search, Settings, Telescope, Text, Trophy, User } from 'lucide-react';
 import {
   Dialog,
   PopoverGroup,
