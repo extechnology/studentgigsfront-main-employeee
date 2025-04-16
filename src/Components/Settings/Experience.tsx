@@ -263,7 +263,7 @@ export default function Experience() {
                                 {/* Company Name */}
                                 <div className="sm:col-span-3">
                                     <label className="block text-sm/6 font-medium text-gray-900">
-                                        Company Name
+                                        Select / Enter your company name
                                     </label>
                                     <div>
                                         <Controller
@@ -367,7 +367,7 @@ export default function Experience() {
                                                             selected={value}
                                                             onSelect={onChange}
                                                             initialFocus
-                                                            disabled={currentlyWorking}
+                                                            disabled={(date) => currentlyWorking || date > new Date()}
                                                         />
                                                     </PopoverContent>
                                                 </Popover>

@@ -62,7 +62,7 @@ export default function PreferedCategory() {
                     reset();
                     toast.success("Category Added Successfully");
                 } else {
-                    toast.error("Something went wrong. Please try again Later.");
+                    toast.error("Category Already Exists");
                 }
 
             },

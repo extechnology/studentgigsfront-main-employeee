@@ -69,7 +69,7 @@ export default function SoftSkills() {
                     reset();
                     toast.success("Skill Added Successfully");
                 } else {
-                    toast.error("Something went wrong. Please try again Later.");
+                    toast.error("Skill Already Exists");
                 }
 
             },

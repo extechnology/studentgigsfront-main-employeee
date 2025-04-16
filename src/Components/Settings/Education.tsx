@@ -294,7 +294,7 @@ export default function Education() {
                                                 htmlFor="feild-of-study"
                                                 className="block text-sm/6 font-medium text-gray-900"
                                             >
-                                                Feild OF Study
+                                                Field of Study
                                             </label>
                                             <div>
                                                 <Controller

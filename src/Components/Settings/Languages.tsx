@@ -94,7 +94,7 @@ export default function Languages() {
                     reset();
                     toast.success("Language Added Successfully");
                 } else {
-                    toast.error("Something went wrong. Please try again.");
+                    toast.error("Language Already Exists");
                 }
 
             },

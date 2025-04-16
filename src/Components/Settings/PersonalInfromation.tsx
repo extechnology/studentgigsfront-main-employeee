@@ -261,7 +261,7 @@ export default function PersonalInfromation() {
 
 
                                 <p className="mt-1 text-sm/6 text-gray-600 ">
-                                    Use a permanent address where you can receive mail.
+                                    Use a permanent address where we  can communicate with you
                                 </p>
 
 
@@ -377,9 +377,11 @@ export default function PersonalInfromation() {
                                         <div className="mt-2">
                                             <input
                                                 id="work-hours"
+                                                min={1}
+                                                max={24}
                                                 type="number"
                                                 autoComplete="work-hours"
-                                                {...register("available_work_hours", { required: "Available work hours is required" })}
+                                                {...register("available_work_hours", { required: "Available work hours is required", min: {value: 1 , message : "Available work hours must be between 1 and 24"}, max : {value : 24 , message : "Available work hours must be between 1 and 24"} })}
                                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -427,9 +429,11 @@ export default function PersonalInfromation() {
                                         <div className="mt-2">
                                             <input
                                                 id="age"
+                                                min={14}
+                                                disabled
                                                 type="number"
                                                 autoComplete="age"
-                                                {...register("age", { required: "Age is required" })}
+                                                {...register("age", { required: "Age is required", min: { value: 14, message: "Age must be 14 or older" } })}
                                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
