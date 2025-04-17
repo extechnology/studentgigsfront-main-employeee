@@ -30,6 +30,7 @@ type Inputs = {
     available_working_periods_end_date: string
     date_of_birth: string
     age: number
+    gender: string
 
 }
 
@@ -158,6 +159,7 @@ export default function PersonalInfromation() {
         appendIfNotEmpty("job_title", info.job_title);
         appendIfNotEmpty("date_of_birth", info.date_of_birth);
         appendIfNotEmpty("age", info.age);
+        appendIfNotEmpty("gender", info.gender);
         // appendIfNotEmpty("available_working_periods_start_date", info.available_working_periods_start_date);
         // appendIfNotEmpty("available_working_periods_end_date", info.available_working_periods_end_date);
 
@@ -381,7 +383,7 @@ export default function PersonalInfromation() {
                                                 max={24}
                                                 type="number"
                                                 autoComplete="work-hours"
-                                                {...register("available_work_hours", { required: "Available work hours is required", min: {value: 1 , message : "Available work hours must be between 1 and 24"}, max : {value : 24 , message : "Available work hours must be between 1 and 24"} })}
+                                                {...register("available_work_hours", { required: "Available work hours is required", min: { value: 1, message: "Available work hours must be between 1 and 24" }, max: { value: 24, message: "Available work hours must be between 1 and 24" } })}
                                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -433,7 +435,7 @@ export default function PersonalInfromation() {
                                                 disabled
                                                 type="number"
                                                 autoComplete="age"
-                                                {...register("age", { required: "Age is required", min: { value: 14, message: "Age must be 14 or older" } })}
+                                                {...register("age", { required: "Age is required", min: { value: 14, message: "Must be 14 or older" } })}
                                                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             />
                                         </div>
@@ -441,8 +443,34 @@ export default function PersonalInfromation() {
 
 
 
+
+                                    {/* Gender */}
+                                    <div className="sm:col-span-3">
+                                        <label
+                                            htmlFor="gender"
+                                            className="block text-sm/6 font-medium text-gray-900"
+                                        >
+                                            Gender
+                                            {errors.gender && (
+                                                <span className="text-sm text-red-500 ms-2">{errors.gender.message}</span>
+                                            )}
+                                        </label>
+                                        <div className="mt-2">
+                                            <select  {...register("gender", { required: "Gender is required" })} className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+
+                                                <option value="" disabled>Select Your Gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+
                                     {/* Portfolio/LinkedIn Profile Link */}
-                                    <div className="col-span-full mt-2">
+                                    <div className="sm:col-span-3">
                                         <label
                                             htmlFor="portfolio-link"
                                             className="block text-sm/6 font-medium text-gray-900"
@@ -456,13 +484,7 @@ export default function PersonalInfromation() {
                                             id="portfolio-link"
                                             autoComplete="portfolio-link"
                                             type="url"
-                                            {...register("portfolio", {
-                                                // Validate if the URL is valid
-                                                pattern: {
-                                                    value: /^(https?:\/\/)(www\.)?([a-zA-Z0-9-]+)\.(com|org|net|io|co\.in|co\.uk|edu|gov)\/?([a-zA-Z0-9\-\/]+)?$/, // Regex for valid URLs
-                                                    message: "Please enter a valid URL"
-                                                },
-                                            })}
+                                            {...register("portfolio")}
                                             className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             placeholder="Enter your portfolio or LinkedIn profile URL"
                                         />
