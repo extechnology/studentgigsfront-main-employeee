@@ -414,7 +414,7 @@ export default function Experience() {
                                     Cancel
                                 </button>
                                 <Button type="submit" className="w-full sm:w-auto">
-                                    Add Experience <CirclePlus size={24} />
+                                    Add / Save  <CirclePlus size={24} />
                                 </Button>
 
                             </div>

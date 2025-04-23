@@ -193,7 +193,7 @@ export default function PreferedCategory() {
                                         Cancel
                                     </button>
                                     <Button type="submit" className="w-full sm:w-auto">
-                                        Add  <CirclePlusIcon size={24} />
+                                        Add / Save  <CirclePlusIcon size={24} />
                                     </Button>
 
                                 </div>

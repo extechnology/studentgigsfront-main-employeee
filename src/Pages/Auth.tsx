@@ -380,7 +380,7 @@ export default function Auth() {
                 // Login 
                 <div className="lg:w-[28rem] w-[19rem] mx-auto my-auto flex flex-col justify-center pt-8 md:justify-start md:px-6 md:pt-0">
 
-                  <p className="text-left text-3xl font-bold">Welcome Back</p>
+                  <p className="text-left text-3xl font-bold">Login As Employee</p>
 
 
 
@@ -489,15 +489,21 @@ export default function Auth() {
                   <div className="pt-5 pb-4 text-center">
                     <p className="whitespace-nowrap text-gray-600">
                       Don't have an account?
-                      <a onClick={() => { SetStatus(!Status), reset() }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 underline ms-3">Sign up.</a>
+                      <a onClick={() => { SetStatus(!Status), reset() }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 underline ms-3">Sign up</a>
                     </p>
                   </div>
 
 
-                  <div className=" text-center">
+                  <div className=" text-center flex justify-center">
+                    
                     <p className="whitespace-nowrap text-gray-600">
                       <a onClick={() => { setForgotModal(!forgotModal) }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 underline ms-3">Forget Password ?</a>
                     </p>
+
+                    <p className="whitespace-nowrap text-gray-600">
+                      <a  href="https://gigs.studentsgigs.com/auth" className="cursor-pointer underline-offset-4 font-semibold text-gray-900 underline ms-3">Login as Employer</a>
+                    </p>
+
                   </div>
 
 

@@ -1,9 +1,10 @@
-import { lazy, Suspense, ReactNode } from "react";
+import { lazy, Suspense, ReactNode, useState, useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "./Context/AuthContext";
 import ProtectedRouteForSavedJobs from "./Components/Common/ProtectedRouteForSavedJobs";
 import Loader from "./Components/Loaders/Loader";
+import LoginModal from "./Components/LoginModal/Loginmodal";
 
 
 
@@ -60,103 +61,91 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
 function App() {
 
 
+  // Authentication
+  const { isAuthenticated } = useAuth();
+
+
+  // Login Modal
+  const [isOpen, setIsOpen] = useState(false);
+
+
+
+  // Login Modal Open 
+  useEffect(() => {
+    
+    if (!isAuthenticated && !sessionStorage.getItem("loginModalShown")) {
+
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        sessionStorage.setItem("loginModalShown", "true");
+      }, 10000);
+
+      return () => clearTimeout(timer);
+
+    }
+
+  }, [isAuthenticated]);
+
+
+
+
   return (
 
 
     <>
 
+      <Suspense fallback={<Loader />} >
+
+        <Routes>
+
+          {/* Public Routes */}
+          <Route path="/auth" element={<Auth />} />
+          <Route path="*" element={<NotFound />} />
 
 
-      <Routes>
+          <Route element={<Layout />}>
 
-        {/* Public Routes */}
-        <Route path="/auth" element={<Suspense fallback={<Loader />}><Auth /></Suspense>} />
-        <Route path="*" element={<Suspense fallback={<Loader />}><NotFound /></Suspense>} />
-
-
-        <Route element={<Suspense fallback={<Loader />}><Layout /></Suspense>}>
-
-          <Route path="/" element={<Suspense fallback={<Loader />}><Landing /></Suspense>} />
-          <Route path="/contact" element={<Suspense fallback={<Loader />}><Contact /></Suspense>} />
-          <Route path="/jobfilter" element={<Suspense fallback={<Loader />}><JobPages.JobFilter /></Suspense>} />
-          <Route path="/gigsskillacademy" element={<Suspense fallback={<Loader />}><GigsAcademy /></Suspense>} />
-          <Route path="/termscondition" element={<Suspense fallback={<Loader />}><LegalPages.Terms /></Suspense>} />
-          <Route path="/refundpolicy" element={<Suspense fallback={<Loader />}><LegalPages.Refund /></Suspense>} />
-          <Route path="/privacypolicy" element={<Suspense fallback={<Loader />}><LegalPages.Privacy /></Suspense>} />
-          <Route path="/loginterms" element={<Suspense fallback={<Loader />}><LegalPages.LoginTerms /></Suspense>} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/jobfilter" element={<JobPages.JobFilter />} />
+            <Route path="/gigsskillacademy" element={<GigsAcademy />} />
+            <Route path="/termscondition" element={<LegalPages.Terms />} />
+            <Route path="/refundpolicy" element={<LegalPages.Refund />} />
+            <Route path="/privacypolicy" element={<LegalPages.Privacy />} />
+            <Route path="/loginterms" element={<LegalPages.LoginTerms />} />
 
 
-          {/* Protected Routes */}
-          <Route path="/savedjobs" element={
-            <Suspense fallback={<Loader />}>
-              <ProtectedRouteForSavedJobs><JobPages.SavedJobs /></ProtectedRouteForSavedJobs>
-            </Suspense>
-          } />
+            {/* Protected Routes */}
+            <Route path="/savedjobs" element={<ProtectedRouteForSavedJobs><JobPages.SavedJobs /></ProtectedRouteForSavedJobs>} />
+
+            <Route path="/planusage" element={<ProtectedRoute><PlanUsageDashboard /></ProtectedRoute>} />
+
+            <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
+
+            <Route path="/jobapplysuccess" element={<ProtectedRoute><JobPages.JobApplySuccess /></ProtectedRoute>} />
+
+            <Route path="/userprofile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+
+            <Route path="/employerdeatils/:id" element={<ProtectedRoute><EmployerPages.EmployerDetails /></ProtectedRoute>} />
+
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+
+            <Route path="/applyjob/:id/:jobType" element={<ProtectedRoute><JobPages.ApplyJob /></ProtectedRoute>} />
+
+            <Route path="/jobdeatils/:id/:jobType" element={<ProtectedRoute><JobPages.JobDetails /></ProtectedRoute>} />
 
 
+          </Route>
 
-          <Route path="/planusage" element={
-            <Suspense fallback={<Loader />}>
-              <ProtectedRoute><PlanUsageDashboard /></ProtectedRoute>
-            </Suspense>
-          } />
+        </Routes>
 
-
-          <Route path="/plans" element={
-            <Suspense fallback={<Loader />}>
-              <ProtectedRoute><Plans /></ProtectedRoute>
-            </Suspense>
-          } />
-
-
-          <Route path="/jobapplysuccess" element={
-            <Suspense fallback={<Loader />}>
-              <ProtectedRoute><JobPages.JobApplySuccess /></ProtectedRoute>
-            </Suspense>
-          } />
-
-
-          <Route path="/userprofile" element={
-            <Suspense fallback={<Loader />}>
-              <ProtectedRoute><UserProfile /></ProtectedRoute>
-            </Suspense>
-          } />
-
-
-          <Route path="/employerdeatils/:id" element={
-            <Suspense fallback={<Loader />}>
-              <ProtectedRoute><EmployerPages.EmployerDetails /></ProtectedRoute>
-            </Suspense>
-          } />
-
-
-          <Route path="/settings" element={
-            <Suspense fallback={<Loader />}>
-              <ProtectedRoute><Settings /></ProtectedRoute>
-            </Suspense>
-          } />
-
-
-          <Route path="/applyjob/:id/:jobType" element={
-            <Suspense fallback={<Loader />}>
-              <ProtectedRoute><JobPages.ApplyJob /></ProtectedRoute>
-            </Suspense>
-          } />
-
-
-          <Route path="/jobdeatils/:id/:jobType" element={
-            <Suspense fallback={<Loader />}>
-              <ProtectedRoute><JobPages.JobDetails /></ProtectedRoute>
-            </Suspense>
-          } />
-
-
-        </Route>
-
-      </Routes>
-
+      </Suspense>
 
       <Toaster position="top-center" />
+
+
+      {/* Login Modal */}
+      <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
     </>
 
