@@ -8,7 +8,7 @@ import { GoogleAuth } from "@/Hooks/UserLogin";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import LoginModal from "@/Components/LoginModal/Loginmodal";
+
 
 
 
@@ -173,7 +173,6 @@ export default function Landing() {
         {/* Welcome Modal */}
         {/* <WelcomeModal /> */}
 
-        <LoginModal />
 
       </main>
 
