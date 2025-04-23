@@ -380,7 +380,7 @@ export default function Auth() {
                 // Login 
                 <div className="lg:w-[28rem] w-[19rem] mx-auto my-auto flex flex-col justify-center pt-8 md:justify-start md:px-6 md:pt-0">
 
-                  <p className="text-left text-3xl font-bold">Login As Employee</p>
+                  <p className="text-left text-3xl font-bold">Login As Student</p>
 
 
 

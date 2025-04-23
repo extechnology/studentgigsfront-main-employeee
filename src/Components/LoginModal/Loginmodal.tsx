@@ -88,7 +88,7 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
                                         <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"></path>
                                     </svg>
                                 </motion.div>
-                                <h2 className="text-4xl font-bold mb-3 tracking-tight">Employee Portal</h2>
+                                <h2 className="text-4xl font-bold mb-3 tracking-tight">Student Portal</h2>
                                 <p className="text-lg mb-6 text-gray-200 max-w-xs">Find your dream job and connect with top companies today.</p>
 
                                 <Link to={'/auth'}>

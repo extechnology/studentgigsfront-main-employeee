@@ -47,7 +47,7 @@ export function GigsAlert() {
 
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <a href="https://gigs.studentsgigs.com/findtalent" target="_blank">
+                    <a href="https://gigs.studentsgigs.com/findtalent">
                         <AlertDialogAction className="bg-orange-600 hover:bg-[#eb8125] w-full">Continue</AlertDialogAction>
                     </a>
                 </AlertDialogFooter>
