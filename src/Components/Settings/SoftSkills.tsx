@@ -159,9 +159,11 @@ export default function SoftSkills() {
                                     Soft Skills <Lightbulb size={24} className='ml-2' /> <span className='text-sm'>(Optional)</span> 
                                 </h2>
 
-                                <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 sm:grid-rows-1">
+                                <div className="mt-5 grid grid-cols-1 gap-x-6  sm:grid-cols-2">
+
+
                                     {/* Technical Skills */}
-                                    <div className="sm:col-span-5">
+                                    <div className="sm:col-span-3">
                                         <label
                                             htmlFor="feild-of-study"
                                             className="block text-sm/6 font-medium text-gray-900"
@@ -196,8 +198,7 @@ export default function SoftSkills() {
 
 
                                     {/* Buttons */}
-
-                                    <div className="mt-6 flex items-center justify-end gap-x-6">
+                                    <div className="mt-6 flex items-center justify-end gap-x-6 sm:col-span-3">
                                         <button type="button" className="text-sm/6 font-semibold text-gray-900 border px-2 py-2 rounded-md border-gray-300" onClick={() => { reset() }}>
                                             Cancel
                                         </button>
