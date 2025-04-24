@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Bookmark, Crown, House, KeyRound, LogOut, Search, Settings, Telescope, Text, Trophy, User } from 'lucide-react';
+import { Bookmark, Crown, Gauge, House, KeyRound, LogOut, Search, Settings, Telescope, Text, Trophy, User } from 'lucide-react';
 import {
   Dialog,
   PopoverGroup,
@@ -418,6 +418,24 @@ export default function Header() {
                               <span>Settings</span>
                             </div>
                           </Link>
+
+
+
+
+                          {/* Plan Usage */}
+                          <Link
+                            to="/settings"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                          >
+                            <div className="flex items-center space-x-2">
+                              <Gauge className="h-5 w-5" />
+                              <span>Plan Usage</span>
+                            </div>
+                          </Link>
+
+
+
 
 
                           {/* Login/Logout */}
