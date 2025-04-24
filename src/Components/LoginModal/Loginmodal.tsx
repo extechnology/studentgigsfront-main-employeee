@@ -97,7 +97,7 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
                             <p className="text-base sm:text-lg mb-4 text-gray-200 max-w-xs">Find your dream job and connect with top companies today.</p>
                             <Link to={'/auth'} onClick={() => setIsOpen(false)}>
                                 <motion.button
-                                    className="px-6 py-2 sm:px-8 sm:py-3 bg-white text-orange-600 font-semibold rounded-xl shadow-lg hover:shadow-orange-500/20"
+                                    className="px-6 py-2 hover:cursor-pointer sm:px-8 sm:py-3 bg-white text-orange-600 font-semibold rounded-xl shadow-lg hover:shadow-orange-500/20"
                                     variants={buttonVariants}
                                     initial="initial"
                                     whileHover="hover"
@@ -153,7 +153,7 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
                             <p className="text-base sm:text-lg mb-4 text-gray-200 max-w-xs">Find and hire exceptional talent to grow your business.</p>
                             <a href="https://gigs.studentsgigs.com/auth" onClick={() => setIsOpen(false)}>
                                 <motion.button
-                                    className="px-6 py-2 sm:px-8 sm:py-3 bg-white text-orange-600 font-semibold rounded-xl shadow-lg hover:shadow-orange-500/20"
+                                    className="px-6 py-2 sm:px-8 hover:cursor-pointer sm:py-3 bg-white text-orange-600 font-semibold rounded-xl shadow-lg hover:shadow-orange-500/20"
                                     variants={buttonVariants}
                                     initial="initial"
                                     whileHover="hover"
