@@ -16,6 +16,11 @@ import { GetPersonalInfo } from "@/Hooks/UserProfile";
 import { useQueryClient } from "@tanstack/react-query";
 import NotificationPopover from "@/Components/Common/Notifications";
 import { GigsAlert } from "./GigsAlert";
+import LoginModal from "../LoginModal/Loginmodal";
+
+
+
+
 
 export default function Header() {
 
@@ -26,6 +31,12 @@ export default function Header() {
 
   // Get User Personal Information
   const { data } = GetPersonalInfo()
+
+
+
+  // Login Modal
+  const [isOpen, setIsOpen] = useState(false);
+
 
 
   // To check if the user is scrolled
@@ -47,8 +58,11 @@ export default function Header() {
   const location = useLocation();
 
 
+
   // To use auth context logout
   const { logout, isAuthenticated, isPlanExpired, plan } = useAuth()
+
+
 
 
 
@@ -81,8 +95,11 @@ export default function Header() {
 
 
 
+
   // To use query client
   const queryClient = useQueryClient()
+
+
 
 
   // Logout
@@ -113,6 +130,8 @@ export default function Header() {
           <nav aria-label="Global" className="mx-auto flex flex-col sm:flex-row max-w-7xl justify-between sm:p-0 sm:py-0 px-2 py-1 lg:px-0 md:px-8">
 
 
+
+
             <div className="flex items-center justify-between pb-2">
 
 
@@ -139,7 +158,7 @@ export default function Header() {
 
 
                 {/* Profile image */}
-                <Link to={'/userprofile'} className="ms-2 sm:hidden">
+                <div onClick={() => setIsOpen(true)} className="ms-2 sm:hidden">
 
                   <img
                     src={data[0]?.profile?.profile_pic ?? "/Header-profile.webp"}
@@ -148,7 +167,7 @@ export default function Header() {
                     className="w-[25px] h-[25px] rounded-full object-cover "
                   />
 
-                </Link>
+                </div>
 
 
                 {/* Search  for mobile view */}
@@ -203,6 +222,8 @@ export default function Header() {
 
               </div>
 
+
+
               {/* Skills Academy  */}
               <Link to={'/gigsskillacademy'}>
 
@@ -216,7 +237,12 @@ export default function Header() {
             </div>
 
 
-            {/* Navbar items */}
+
+
+
+
+
+            {/* Desktop Navbar items */}
             <PopoverGroup className="hidden lg:flex lg:gap-x-4 items-center mx-auto">
 
 
@@ -321,7 +347,7 @@ export default function Header() {
                   <div className="flex items-center justify-between">
 
 
-                    <a href="#" className="-m-1.5 p-1.5">
+                    <a href="/" className="-m-1.5 p-1.5">
                       <span className="sr-only">Your Company</span>
                       <img
                         alt="nav-icon"
@@ -437,18 +463,17 @@ export default function Header() {
 
 
 
-
                           {/* Login/Logout */}
                           {!isAuthenticated ? (
-                            <Link
-                              to="/auth"
+                            <div
+                              onClick={() => { setMobileMenuOpen(false), setIsOpen(true) }}
                               className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
                             >
                               <div className="flex items-center space-x-2">
                                 <KeyRound className="h-5 w-5" />
                                 <span>Login</span>
                               </div>
-                            </Link>
+                            </div>
                           ) : (
                             <button
                               onClick={HandleLogOut}
@@ -460,6 +485,8 @@ export default function Header() {
                               </div>
                             </button>
                           )}
+
+
 
                         </div>
                       </div>
@@ -482,6 +509,11 @@ export default function Header() {
 
 
         </header>
+
+
+
+        {/* Login Modal */}
+        <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
 
       </main>
