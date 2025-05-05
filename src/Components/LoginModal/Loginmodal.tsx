@@ -23,7 +23,7 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
 
     const buttonVariants = {
         initial: { scale: 1 },
-        hover: { scale: 1.05, transition: { duration: 0.2 } }
+        hover: { scale: 1.05, transition: { duration: 0.2 } }   
     };
 
 
