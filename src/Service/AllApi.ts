@@ -79,10 +79,10 @@ export const GetFeildOfStudy = async (header: object) => {
 
 
 
-//GET Job List 
+//GET Category List
 export const GetJobList = async () => {
 
-    return await CommonApi("GET", `${Base_Url}/employee-job-category/`, "", "")
+    return await CommonApi("GET", `${Base_Url}/talent-categories-view/`, "", "")
 
 }
 
@@ -440,17 +440,7 @@ export const GetTrendingJobs = async () => {
 //GET Job Title
 export const GetJobTitle = async () => {
 
-    return await CommonApi("GET", `${Base_Url}/job-title/`, "", "")
-
-}
-
-
-//Post new Job Title
-export const PostNewJobTitle = async (job_title: string) => {
-
-    const params = new URLSearchParams({ job_title: job_title })
-
-    return await CommonApi("POST", `${Base_Url}/job-title/?${params.toString()}`, "", "")
+    return await CommonApi("GET", `${Base_Url}/job-titles-view/`, "", "")
 
 }
 
@@ -493,7 +483,7 @@ export const PostVerifyPayment = async (data: any, header: object) => {
 //GET All Search Category
 export const GetAllSearchCategory = async () => {
 
-    return await CommonApi("GET", `${Base_Url}/all-category-job-search/`, "", "")
+    return await CommonApi("GET", `${Base_Url}/category-and-title-view/`, "", "")
 
 }
 

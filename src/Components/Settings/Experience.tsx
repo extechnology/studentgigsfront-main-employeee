@@ -1,6 +1,7 @@
 import { Building2, Calendar1, CirclePlus, Hourglass, Trash2 } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import CreatableSelect from 'react-select/creatable';
+import Select from "react-select";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -10,7 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Checkbox } from "../ui/checkbox";
 import { GetExperience, AddExperience, DeleteExperience } from "@/Hooks/UserProfile";
 import toast from "react-hot-toast";
-import { JObTittles, PostJobTittle } from "@/Hooks/Utils";
+import { JObTittles } from "@/Hooks/Utils";
 
 
 
@@ -31,12 +32,9 @@ export default function Experience() {
     const { data, isLoading, isError, isFetching } = GetExperience()
 
 
-    // Post Job Tittle
-    const { mutate: PostJobTittleMutate } = PostJobTittle();
-
 
     // Get Job Title
-    const { data: JobTitle, isLoading: JobTitleLoading } = JObTittles()
+    const { data: JobTitle, isLoading: JobTitleLoading , isPending : JobTitlePending } = JObTittles()
 
 
     // Add Experience
@@ -148,27 +146,7 @@ export default function Experience() {
 
 
 
-    // Function to handle new job title creation
-    const handleCreate = async (inputValue: string) => {
-
-        PostJobTittleMutate(inputValue, {
-
-            onSuccess: (response) => {
-
-                if (response.status >= 200 && response.status < 300) {
-
-                    toast.success("New Job Tittle Added Successfully");
-
-                } else {
-
-                    toast.error("Something went wrong. Please try again.");
-
-                }
-            },
-
-        })
-
-    };
+ 
 
     return (
 
@@ -234,7 +212,7 @@ export default function Experience() {
                                             control={control}
                                             rules={{ required: "Job Title is required" }}
                                             render={({ field: { onChange, value, ref } }) => (
-                                                <CreatableSelect
+                                                <Select
                                                     ref={ref}
                                                     options={JobTitle}
                                                     value={value ? JobTitle?.find((option: any) => option.label === value) : null}
@@ -243,11 +221,7 @@ export default function Experience() {
                                                     isSearchable={true}
                                                     className="basic-single"
                                                     isClearable={true}
-                                                    onCreateOption={(inputValue) => {
-                                                        handleCreate(inputValue);
-                                                        onChange(inputValue); // Set the value immediately
-                                                    }}
-                                                    isLoading={JobTitleLoading}
+                                                    isLoading={JobTitleLoading || JobTitlePending}
                                                     classNamePrefix="select"
                                                 />
                                             )}

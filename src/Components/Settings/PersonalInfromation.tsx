@@ -7,9 +7,8 @@ import PhoneInput from 'react-phone-number-input';
 import toast from "react-hot-toast";
 import { SaveIcon, UserRound } from "lucide-react";
 import { Button } from "../ui/button";
-import CreatableSelect from 'react-select/creatable';
 import { AllLocations } from "@/Hooks/Utils";
-import { JObTittles, PostJobTittle } from "@/Hooks/Utils";
+import { JObTittles } from "@/Hooks/Utils";
 
 
 
@@ -56,13 +55,8 @@ export default function PersonalInfromation() {
 
 
 
-    // Post Job Tittle
-    const { mutate: PostJobTittleMutate } = PostJobTittle();
-
-
-
     // Get Job Title
-    const { data: JobTitle, isLoading: JobTitleLoading } = JObTittles()
+    const { data: JobTitle, isLoading: JobTitleLoading , isPending : JobTitlePending } = JObTittles()
 
 
 
@@ -185,30 +179,6 @@ export default function PersonalInfromation() {
 
     };
 
-
-
-
-    // Function to handle new job title creation
-    const handleCreate = async (inputValue: string) => {
-
-        PostJobTittleMutate(inputValue, {
-
-            onSuccess: (response) => {
-
-                if (response.status >= 200 && response.status < 300) {
-
-                    toast.success("New Job Tittle Added Successfully");
-
-                } else {
-
-                    toast.error("Something went wrong. Please try again.");
-
-                }
-            },
-
-        })
-
-    };
 
 
 
@@ -595,20 +565,16 @@ export default function PersonalInfromation() {
                                                 rules={{ required: "Job Title is required" }}
                                                 control={control}
                                                 render={({ field: { onChange, value, ref } }) => (
-                                                    <CreatableSelect
+                                                    <Select
                                                         ref={ref}
                                                         options={JobTitle}
                                                         value={value ? JobTitle?.find((option: Option) => option.label === value) : null}
                                                         onChange={(selectedOption) => onChange(selectedOption?.label)}
                                                         placeholder="Search Your Job Title"
                                                         isSearchable={true}
-                                                        onCreateOption={(inputValue) => {
-                                                            handleCreate(inputValue);
-                                                            onChange(inputValue); // Set the value immediately
-                                                        }}
                                                         className="basic-single"
                                                         isClearable={true}
-                                                        isLoading={JobTitleLoading}
+                                                        isLoading={JobTitleLoading || JobTitlePending}
                                                         classNamePrefix="select"
                                                     />
                                                 )}
