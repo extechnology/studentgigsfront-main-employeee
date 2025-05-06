@@ -64,7 +64,7 @@ export default function ForgetPassword({ isOpen, setIsOpen }: EmailOtpProps) {
 
                 if (response.status >= 200 && response.status <= 300) {
 
-                    toast.success("Password reset link has been sent to your email.")
+                    toast.success("Password reset link and username has been sent to your email.")
                     setIsOpen(false)
 
                 } else {
@@ -126,7 +126,7 @@ export default function ForgetPassword({ isOpen, setIsOpen }: EmailOtpProps) {
 
 
                                             <FormDescription className="text-center text-gray-500">
-                                                A link will be sent to your email for resetting your password
+                                                A link will be sent to your email for resetting your password and username
                                             </FormDescription>
 
 
