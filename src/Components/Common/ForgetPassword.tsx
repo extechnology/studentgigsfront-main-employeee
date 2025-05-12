@@ -126,7 +126,7 @@ export default function ForgetPassword({ isOpen, setIsOpen }: EmailOtpProps) {
 
 
                                             <FormDescription className="text-center text-gray-500">
-                                                A link will be sent to your email for resetting your password and username
+                                                A link will be sent to your email for resetting your password & username
                                             </FormDescription>
 
 

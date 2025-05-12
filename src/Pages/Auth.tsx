@@ -163,7 +163,6 @@ export default function Auth() {
       }
     };
 
-
   }
 
 
@@ -497,7 +496,7 @@ export default function Auth() {
                   <div className=" text-center flex justify-center">
                     
                     <p className="whitespace-nowrap text-gray-600">
-                      <a onClick={() => { setForgotModal(!forgotModal) }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 hover:underline ms-3">Forget Password and Username ?</a>
+                      <a onClick={() => { setForgotModal(!forgotModal) }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 hover:underline ms-3">Forget Password & Username ?</a>
                     </p>
 
                     <p className="whitespace-nowrap text-gray-600">
