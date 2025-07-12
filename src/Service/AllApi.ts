@@ -2,7 +2,7 @@ import { CommonApi } from "./CommonApi";
 
 
 // Base Url
-export const Base_Url = "https://server.studentsgigs.com/api/employee"
+export const Base_Url = "http://127.0.0.1:8002/api/employee"
 
 
 
