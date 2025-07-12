@@ -73,6 +73,7 @@ const JobApplicationForm = () => {
     const { id, jobType } = useParams<{ id: string; jobType: string }>();
 
 
+    const [resumeFile, setResumeFile] = useState<File | null>(null);
     const [resumeUrl, setResumeUrl] = useState('');
     const [isEditing, setIsEditing] = useState(false);
 
@@ -143,6 +144,7 @@ const JobApplicationForm = () => {
             }
 
             const tempUrl = URL.createObjectURL(file);
+            setResumeFile(file);
             setResumeUrl(tempUrl);
             setIsEditing(false);
         }
@@ -159,7 +161,7 @@ const JobApplicationForm = () => {
 
             const formdata = new FormData()
 
-            formdata.append("resume", resumeUrl ? resumeUrl : '')
+            formdata.append("resume", resumeFile ? resumeFile : '')
             formdata.append("job_id", id ? id : '')
             formdata.append("job_type", jobDetails?.job_type ? jobDetails?.job_type : '')
 
