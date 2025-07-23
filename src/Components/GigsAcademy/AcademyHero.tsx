@@ -39,7 +39,7 @@ const AcademyHero = () => {
 
     return (
 
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-5">
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-36 sm:pt-24 pb-5">
 
 
             {/* Animated SVG Backgrounds */}

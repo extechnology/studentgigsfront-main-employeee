@@ -1,9 +1,8 @@
 import { useState, useEffect, Fragment } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Bookmark, Contact, Crown, GraduationCap, House, KeyRound, LogOut, Search, Settings, Telescope, Text, Trophy, User } from 'lucide-react';
+import { Bookmark, Crown, Gauge, House, KeyRound, LogOut, Search, Settings, Telescope, Text, Trophy, User } from 'lucide-react';
 import {
   Dialog,
-  Disclosure,
   PopoverGroup,
   Transition
 } from '@headlessui/react'
@@ -11,12 +10,16 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import ProfileMenu from "./ProfileMenu";
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import toast from "react-hot-toast";
 import { useAuth } from "@/Context/AuthContext";
 import { GetPersonalInfo } from "@/Hooks/UserProfile";
 import { useQueryClient } from "@tanstack/react-query";
 import NotificationPopover from "@/Components/Common/Notifications";
+import { GigsAlert } from "./GigsAlert";
+import LoginModal from "../LoginModal/Loginmodal";
+
+
+
 
 
 export default function Header() {
@@ -28,6 +31,12 @@ export default function Header() {
 
   // Get User Personal Information
   const { data } = GetPersonalInfo()
+
+
+
+  // Login Modal
+  const [isOpen, setIsOpen] = useState(false);
+
 
 
   // To check if the user is scrolled
@@ -49,8 +58,11 @@ export default function Header() {
   const location = useLocation();
 
 
+
   // To use auth context logout
   const { logout, isAuthenticated, isPlanExpired, plan } = useAuth()
+
+
 
 
 
@@ -83,8 +95,11 @@ export default function Header() {
 
 
 
+
   // To use query client
   const queryClient = useQueryClient()
+
+
 
 
   // Logout
@@ -115,6 +130,8 @@ export default function Header() {
           <nav aria-label="Global" className="mx-auto flex flex-col sm:flex-row max-w-7xl justify-between sm:p-0 sm:py-0 px-2 py-1 lg:px-0 md:px-8">
 
 
+
+
             <div className="flex items-center justify-between pb-2">
 
 
@@ -141,7 +158,7 @@ export default function Header() {
 
 
                 {/* Profile image */}
-                <Link to={'/userprofile'} className="ms-2 sm:hidden">
+                <div onClick={() => setIsOpen(true)} className="ms-2 sm:hidden">
 
                   <img
                     src={data[0]?.profile?.profile_pic ?? "/Header-profile.webp"}
@@ -150,7 +167,7 @@ export default function Header() {
                     className="w-[25px] h-[25px] rounded-full object-cover "
                   />
 
-                </Link>
+                </div>
 
 
                 {/* Search  for mobile view */}
@@ -189,14 +206,10 @@ export default function Header() {
 
               <div className="flex justify-center items-center gap-x-1 mb-2 sm:hidden">
 
+
                 {/* Find Student Talents for mobile view */}
-                <a href={'https://gigs.studentsgigs.com/findtalent'} target="_blank">
+                <GigsAlert />
 
-                  <button className={`bg-[#eb8125] text-white font-semibold text-xs px-5 py-2 flex items-center sm:hidden`}>
-                    <GraduationCap size={16} className="me-2" /> Hire Student Talents
-                  </button>
-
-                </a>
 
                 {/* Explore Gigs */}
                 <Link to={'/jobfilter'}>
@@ -208,6 +221,8 @@ export default function Header() {
                 </Link>
 
               </div>
+
+
 
               {/* Skills Academy  */}
               <Link to={'/gigsskillacademy'}>
@@ -222,7 +237,12 @@ export default function Header() {
             </div>
 
 
-            {/* Navbar items */}
+
+
+
+
+
+            {/* Desktop Navbar items */}
             <PopoverGroup className="hidden lg:flex lg:gap-x-4 items-center mx-auto">
 
 
@@ -237,13 +257,7 @@ export default function Header() {
 
 
               {/* Find Student Talents */}
-              <a href={'https://gigs.studentsgigs.com/findtalent'} target="_blank">
-
-                <button className={`flex items-center gap-x-2 bg-[#eb8125] text-white font-semibold text-md md:px-2 lg:px-6  xl:px-14 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
-                  Hire Students <GraduationCap size={24} />
-                </button>
-
-              </ a>
+              <GigsAlert />
 
 
               {/* Skills Academy  */}
@@ -333,7 +347,7 @@ export default function Header() {
                   <div className="flex items-center justify-between">
 
 
-                    <a href="#" className="-m-1.5 p-1.5">
+                    <a href="/" className="-m-1.5 p-1.5">
                       <span className="sr-only">Your Company</span>
                       <img
                         alt="nav-icon"
@@ -374,155 +388,104 @@ export default function Header() {
                       <div className="-my-6 divide-y divide-gray-500/10">
 
 
-                        <div className="space-y-2 py-6">
+                        <div className="space-y-2 py-3">
 
 
-                          {/* Menu Dropdown */}
-                          <Disclosure as="div" className="-mx-3">
-
-                            {({ open }) => (
-                              <>
-                                <Disclosure.Button
-                                  className="flex w-full items-center justify-between px-3 py-5 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
-                                >
-                                  <span>Menu</span>
-                                  <ChevronDownIcon
-                                    className={`h-5 w-5 transition-transform duration-200 ${open ? 'rotate-180' : ''
-                                      }`}
-                                  />
-                                </Disclosure.Button>
-
-                                <Disclosure.Panel className="mt-2 space-y-1">
-
-
-                                  {/* Profile */}
-                                  <Link
-                                    to="/userprofile"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                  >
-                                    <div className="flex items-center space-x-2">
-                                      <User className="h-5 w-5" />
-                                      <span>Profile</span>
-                                    </div>
-                                  </Link>
-
-
-
-                                  {/* Settings */}
-                                  <Link
-                                    to="/settings"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                  >
-                                    <div className="flex items-center space-x-2">
-                                      <Settings className="h-5 w-5" />
-                                      <span>Settings</span>
-                                    </div>
-                                  </Link>
-
-
-                                  {/* Premium */}
-                                  <Link
-                                    to="/plans"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                  >
-                                    <div className="flex items-center space-x-2">
-                                      <Crown className="h-5 w-5" />
-                                      <span>Premium</span>
-                                    </div>
-                                  </Link>
-
-
-                                  {/* Saved Job */}
-                                  <Link
-                                    to="/savedjobs"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                  >
-                                    <div className="flex items-center space-x-2">
-                                      <Bookmark className="h-5 w-5" />
-                                      <span>Saved Jobs</span>
-                                    </div>
-                                  </Link>
-
-
-
-                                  {/* Login/Logout */}
-                                  {!isAuthenticated ? (
-                                    <Link
-                                      to="/auth"
-                                      className="block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                    >
-                                      <div className="flex items-center space-x-2">
-                                        <KeyRound className="h-5 w-5" />
-                                        <span>Login</span>
-                                      </div>
-                                    </Link>
-                                  ) : (
-                                    <button
-                                      onClick={HandleLogOut}
-                                      className="w-full text-left rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200"
-                                    >
-                                      <div className="flex items-center space-x-2">
-                                        <LogOut className="h-5 w-5" />
-                                        <span>Logout</span>
-                                      </div>
-                                    </button>
-                                  )}
-
-
-                                </Disclosure.Panel>
-                              </>
-                            )}
-                          </Disclosure>
-
-
-
-                          {/* Search Gigs */}
+                          {/* Profile */}
                           <Link
-                            to="/jobfilter"
+                            to="/userprofile"
                             onClick={() => setMobileMenuOpen(false)}
                             className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
                           >
-                            <Telescope className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
-                            <span>Explore Student Jobs</span>
+                            <div className="flex items-center space-x-2">
+                              <User className="h-5 w-5" />
+                              <span>Profile</span>
+                            </div>
                           </Link>
 
 
 
-                          {/* Find Student Talents */}
-                          <a
-                            href={'https://gigs.studentsgigs.com/findtalent'}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
-                          >
-                            <GraduationCap className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
-                            <span>Hire Students</span>
-                          </a>
-
-
-                          {/* Contact */}
+                          {/* Saved Job */}
                           <Link
-                            to="/contact"
+                            to="/savedjobs"
                             onClick={() => setMobileMenuOpen(false)}
                             className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
                           >
-                            <Contact className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
-                            <span>Contact</span>
+                            <div className="flex items-center space-x-2">
+                              <Bookmark className="h-5 w-5" />
+                              <span>Saved Jobs</span>
+                            </div>
                           </Link>
 
 
-                          {/* Companies */}
-                          {/* <Link
-                            to="/employerlist"
+
+                          {/* Premium */}
+                          <Link
+                            to="/plans"
                             onClick={() => setMobileMenuOpen(false)}
                             className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
                           >
-                            <Building className="h-6 w-6 group-hover:scale-110 transition-transform duration-200" />
-                            <span>Companies</span>
-                          </Link> */}
+                            <div className="flex items-center space-x-2">
+                              <Crown className="h-5 w-5" />
+                              <span>Premium</span>
+                            </div>
+                          </Link>
+
+
+
+                          {/* Settings */}
+                          <Link
+                            to="/settings"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                          >
+                            <div className="flex items-center space-x-2">
+                              <Settings className="h-5 w-5" />
+                              <span>Settings</span>
+                            </div>
+                          </Link>
+
+
+
+
+                          {/* Plan Usage */}
+                          <Link
+                            to="/planusage"
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                          >
+                            <div className="flex items-center space-x-2">
+                              <Gauge className="h-5 w-5" />
+                              <span>Plan Usage</span>
+                            </div>
+                          </Link>
+
+
+
+
+                          {/* Login/Logout */}
+                          {!isAuthenticated ? (
+                            <div
+                              onClick={() => { setMobileMenuOpen(false), setIsOpen(true) }}
+                              className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                            >
+                              <div className="flex items-center space-x-2">
+                                <KeyRound className="h-5 w-5" />
+                                <span>Login</span>
+                              </div>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={HandleLogOut}
+                              className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
+                            >
+                              <div className="flex items-center space-x-2">
+                                <LogOut className="h-5 w-5" />
+                                <span>Logout</span>
+                              </div>
+                            </button>
+                          )}
+
 
 
                         </div>
@@ -546,6 +509,11 @@ export default function Header() {
 
 
         </header>
+
+
+
+        {/* Login Modal */}
+        <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
 
       </main>

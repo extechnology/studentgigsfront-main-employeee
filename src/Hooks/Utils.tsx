@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { GetUniversityList, GetFeildOfStudy, GetJobList, GetHomeSlider, GetLocations, GetJobTitle, PostNewJobTitle, GetAllSearchCategory, GetNotifications, PutMarkAllAsRead, DeleteAllNotifications , GetCourseData } from "@/Service/AllApi";
+import { GetUniversityList, GetFeildOfStudy, GetJobList, GetHomeSlider, GetLocations, GetJobTitle, GetAllSearchCategory, GetNotifications, PutMarkAllAsRead, DeleteAllNotifications, GetCourseData } from "@/Service/AllApi";
 
 
 
@@ -38,23 +38,15 @@ export const FeildOfStudyList = () => {
 
         queryFn: async () => {
 
-            try {
+            if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
 
-                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+            const token = localStorage.getItem("token")
 
-                const token = localStorage.getItem("token")
+            const headers = { Authorization: `Bearer ${token}` }
 
-                const headers = { Authorization: `Bearer ${token}` }
+            const Response = await GetFeildOfStudy(headers)
 
-                const Response = await GetFeildOfStudy(headers)
-
-                return Response.data
-
-            } catch (err) {
-
-                console.log(err);
-
-            }
+            return Response.data
 
         },
         staleTime: 1000 * 60 * 10,
@@ -77,17 +69,9 @@ export const JObList = () => {
 
         queryFn: async () => {
 
-            try {
+            const Response = await GetJobList()
 
-                const Response = await GetJobList()
-
-                return Response.data
-
-            } catch (err) {
-
-                console.log(err);
-
-            }
+            return Response.data
 
         },
         staleTime: 1000 * 60 * 10,
@@ -108,17 +92,9 @@ export const AllSearchCategory = () => {
 
         queryFn: async () => {
 
-            try {
+            const Response = await GetAllSearchCategory()
 
-                const Response = await GetAllSearchCategory()
-
-                return Response.data
-
-            } catch (err) {
-
-                console.log(err);
-
-            }
+            return Response.data
 
         },
         staleTime: 1000 * 60 * 10,
@@ -140,62 +116,13 @@ export const JObTittles = () => {
 
         queryFn: async () => {
 
-            try {
 
-                const Response = await GetJobTitle()
+            const Response = await GetJobTitle()
 
-                return Response.data
-
-            } catch (err) {
-
-                console.log(err);
-
-            }
+            return Response.data
 
         },
         staleTime: 1000 * 60 * 10,
-
-    })
-
-}
-
-
-
-
-// Post new JobTittle
-export const PostJobTittle = () => {
-
-    const queryclient = useQueryClient();
-
-    return useMutation({
-
-        mutationFn: async (job_title: string) => {
-
-            try {
-
-                const Response = await PostNewJobTitle(job_title)
-
-                return Response
-
-            }
-            catch (err) {
-
-                console.log(err);
-
-            }
-
-        },
-
-        onSuccess: () => {
-
-            queryclient.invalidateQueries({ queryKey: ["jobtittles"] });
-
-        },
-        onError: (error) => {
-            console.error("Failed to Resister User:", error);
-            queryclient.invalidateQueries({ queryKey: ["jobtittles"] });
-        },
-
 
     })
 
@@ -213,17 +140,11 @@ export const HomeSlider = () => {
 
         queryFn: async () => {
 
-            try {
 
-                const Response = await GetHomeSlider()
+            const Response = await GetHomeSlider()
 
-                return Response.data
+            return Response.data
 
-            } catch (err) {
-
-                console.log(err);
-
-            }
 
         },
 
@@ -243,32 +164,25 @@ export const AllLocations = (search: string) => {
 
         queryFn: async () => {
 
-            try {
+            const response = await GetLocations(search);
 
-                const response = await GetLocations(search);
+            return response.data.features.map((location: any) => {
 
-                return response.data.features.map((location: any) => {
+                const properties = location.properties;
+                const coordinates = location.geometry.coordinates;
 
-                    const properties = location.properties;
-                    const coordinates = location.geometry.coordinates;
+                const city = properties.city || properties.name || "";
+                const state = properties.state || "";
+                const country = properties.country || "";
+                const postalCode = properties.postcode || ""; // Fetching postal code
 
-                    const city = properties.city || properties.name || "";
-                    const state = properties.state || "";
-                    const country = properties.country || "";
-                    const postalCode = properties.postcode || ""; // Fetching postal code
+                return {
+                    value: `${coordinates[1]},${coordinates[0]}`, // lat,lng format
+                    label: [city, state, country, postalCode].filter(Boolean).join(", "), // Removing empty values
+                };
 
-                    return {
-                        value: `${coordinates[1]},${coordinates[0]}`, // lat,lng format
-                        label: [city, state, country, postalCode].filter(Boolean).join(", "), // Removing empty values
-                    };
+            });
 
-                });
-
-
-            } catch (err) {
-                console.error("Error fetching locations:", err);
-                return [];
-            }
         },
     });
 };
@@ -321,24 +235,16 @@ export const MarkAsRead = () => {
 
         mutationFn: async (data: string) => {
 
-            try {
+            if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
 
-                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+            const token = localStorage.getItem("token")
 
-                const token = localStorage.getItem("token")
+            const headers = { Authorization: `Bearer ${token}` }
 
-                const headers = { Authorization: `Bearer ${token}` }
+            const Response = await PutMarkAllAsRead(data, headers)
 
-                const Response = await PutMarkAllAsRead(data, headers)
+            return Response
 
-                return Response
-
-            }
-            catch (err) {
-
-                console.log(err);
-
-            }
 
         },
         onSuccess: () => {
@@ -369,24 +275,15 @@ export const ClearAllNotifications = () => {
 
         mutationFn: async (data: string) => {
 
-            try {
+            if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
 
-                if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+            const token = localStorage.getItem("token")
 
-                const token = localStorage.getItem("token")
+            const headers = { Authorization: `Bearer ${token}` }
 
-                const headers = { Authorization: `Bearer ${token}` }
+            const Response = await DeleteAllNotifications(data, headers)
 
-                const Response = await DeleteAllNotifications(data, headers)
-
-                return Response
-
-            }
-            catch (err) {
-
-                console.log(err);
-
-            }
+            return Response
 
         },
         onSuccess: () => {
@@ -413,18 +310,10 @@ export const CourseData = () => {
         queryKey: ["CourseData"],
         queryFn: async () => {
 
-            try {
+            const response = await GetCourseData();
 
-                const response = await GetCourseData();
+            return response.data;
 
-                return response.data;
-
-            } catch (err) {
-
-                console.error("Error fetching Course Data:", err);
-                throw new Error("Failed to fetch Course Data");
-
-            }
         },
 
         staleTime: 1000 * 60 * 10,

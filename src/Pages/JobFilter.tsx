@@ -91,7 +91,8 @@ export default function JobFilter() {
 
                             {/* Main heading */}
                             <p className="text-center text-2xl font-bold tracking-tight text-white sm:text-3xl mb-8 mt-5">
-                                “Your profile is your gateway to independence and practical learning. Build it to showcase your skills, explore opportunities, and prepare for the challenges of tomorrow.”
+                                <span className='font-extrabold'>Find the Right Job for You</span> <br />
+                                ”Search part-time jobs and internships by city and salary type”
                             </p>
 
                         </div>

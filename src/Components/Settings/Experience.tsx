@@ -1,6 +1,7 @@
 import { Building2, Calendar1, CirclePlus, Hourglass, Trash2 } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
 import CreatableSelect from 'react-select/creatable';
+import Select from "react-select";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -10,7 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Checkbox } from "../ui/checkbox";
 import { GetExperience, AddExperience, DeleteExperience } from "@/Hooks/UserProfile";
 import toast from "react-hot-toast";
-import { JObTittles, PostJobTittle } from "@/Hooks/Utils";
+import { JObTittles } from "@/Hooks/Utils";
 
 
 
@@ -31,12 +32,9 @@ export default function Experience() {
     const { data, isLoading, isError, isFetching } = GetExperience()
 
 
-    // Post Job Tittle
-    const { mutate: PostJobTittleMutate } = PostJobTittle();
-
 
     // Get Job Title
-    const { data: JobTitle, isLoading: JobTitleLoading } = JObTittles()
+    const { data: JobTitle, isLoading: JobTitleLoading , isPending : JobTitlePending } = JObTittles()
 
 
     // Add Experience
@@ -148,27 +146,7 @@ export default function Experience() {
 
 
 
-    // Function to handle new job title creation
-    const handleCreate = async (inputValue: string) => {
-
-        PostJobTittleMutate(inputValue, {
-
-            onSuccess: (response) => {
-
-                if (response.status >= 200 && response.status < 300) {
-
-                    toast.success("New Job Tittle Added Successfully");
-
-                } else {
-
-                    toast.error("Something went wrong. Please try again.");
-
-                }
-            },
-
-        })
-
-    };
+ 
 
     return (
 
@@ -216,7 +194,7 @@ export default function Experience() {
 
 
                             <h2 className="text-2xl pb-3 font-semibold text-gray-900 flex items-center">
-                                Experience <Hourglass className="ml-2" size={24} /> (Optional)
+                                Experience <Hourglass className="ml-2" size={24} /> <span className='text-sm'>(Optional)</span>
                             </h2>
 
                             <div className="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -234,7 +212,7 @@ export default function Experience() {
                                             control={control}
                                             rules={{ required: "Job Title is required" }}
                                             render={({ field: { onChange, value, ref } }) => (
-                                                <CreatableSelect
+                                                <Select
                                                     ref={ref}
                                                     options={JobTitle}
                                                     value={value ? JobTitle?.find((option: any) => option.label === value) : null}
@@ -243,11 +221,7 @@ export default function Experience() {
                                                     isSearchable={true}
                                                     className="basic-single"
                                                     isClearable={true}
-                                                    onCreateOption={(inputValue) => {
-                                                        handleCreate(inputValue);
-                                                        onChange(inputValue); // Set the value immediately
-                                                    }}
-                                                    isLoading={JobTitleLoading}
+                                                    isLoading={JobTitleLoading || JobTitlePending}
                                                     classNamePrefix="select"
                                                 />
                                             )}
@@ -263,7 +237,7 @@ export default function Experience() {
                                 {/* Company Name */}
                                 <div className="sm:col-span-3">
                                     <label className="block text-sm/6 font-medium text-gray-900">
-                                        Company Name
+                                        Select / Enter your company name
                                     </label>
                                     <div>
                                         <Controller
@@ -367,7 +341,7 @@ export default function Experience() {
                                                             selected={value}
                                                             onSelect={onChange}
                                                             initialFocus
-                                                            disabled={currentlyWorking}
+                                                            disabled={(date) => currentlyWorking || date > new Date()}
                                                         />
                                                     </PopoverContent>
                                                 </Popover>
@@ -414,7 +388,7 @@ export default function Experience() {
                                     Cancel
                                 </button>
                                 <Button type="submit" className="w-full sm:w-auto">
-                                    Add Experience <CirclePlus size={24} />
+                                    Add / Save  <CirclePlus size={24} />
                                 </Button>
 
                             </div>

@@ -13,6 +13,12 @@ import ResumeViewer from "@/Components/Common/ResumeViewer";
 import { useAuth } from "@/Context/AuthContext";
 
 
+
+
+
+
+
+// Profile Types
 interface Profile {
     cover_photo: string | null;
     profile_pic: string | null;
@@ -112,6 +118,7 @@ interface PersonalInfo {
     available_working_periods_end_date: string;
     portfolio: string;
     user: number;
+    username : string
     about: string;
     job_title: string;
 }
@@ -272,10 +279,8 @@ export default function UserProfile() {
 
                                                 </div>
 
-
-
-                                                <div className="md:pt-12 pt-9">
-                                                    <h1 className="font-semibold text-md md:text-lg">{UserData?.name?.toUpperCase()}</h1>
+                                                <div className="md:pt-12 pt-9 ps-2">
+                                                    <h1 className="font-semibold text-md md:text-lg">{UserData?.name?.toUpperCase()} <span className="text-gray-400 text-sm ms-1 pb-0">@{UserData?.username}</span></h1>
                                                     <p className="font-[1rem] text-md md:text-lg text-gray-400">
                                                         {UserData?.job_title}
                                                     </p>

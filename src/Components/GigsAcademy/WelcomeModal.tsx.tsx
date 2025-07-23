@@ -147,18 +147,18 @@ export default function WelcomeModal() {
                                     </div>
 
                                     <h2 className="text-3xl font-bold text-white leading-tight mb-6 ms-2 max-w-xs">
-                                        Gigs Skill Academy
+                                        GIG Skill Academy
                                     </h2>
 
                                 </div>
 
 
                                 <h2 className="text-4xl font-bold text-white leading-tight mb-4 max-w-xs">
-                                    Start Your Learning Journey Today
+                                    Kickstart Your Career Today
                                 </h2>
 
                                 <p className="text-white/90 mt-4 leading-relaxed max-w-md">
-                                    Join thousands of successful students who have transformed their careers through our expert-led programs.
+                                    Join thousands of students who are upgrading their futures with real-world skills, expert-led classes, and industry-recognized certifications — all designed just for students like you!
                                 </p>
                             </div>
 
@@ -170,7 +170,7 @@ export default function WelcomeModal() {
                                     <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center">
                                         <CheckCircle className="w-5 h-5 text-white" />
                                     </div>
-                                    <span className="text-white/90">Industry-recognized certifications</span>
+                                    <span className="text-white/90">Industry-Recognized Certifications</span>
                                 </div>
 
 
@@ -178,7 +178,7 @@ export default function WelcomeModal() {
                                     <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center">
                                         <CheckCircle className="w-5 h-5 text-white" />
                                     </div>
-                                    <span className="text-white/90">Flexible learning schedules</span>
+                                    <span className="text-white/90">Flexible Learning Schedules</span>
                                 </div>
 
 
@@ -186,7 +186,15 @@ export default function WelcomeModal() {
                                     <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center">
                                         <CheckCircle className="w-5 h-5 text-white" />
                                     </div>
-                                    <span className="text-white/90">1-on-1 career coaching</span>
+                                    <span className="text-white/90">Role Plays & Real-World Simulations</span>
+                                </div>
+
+
+                                <div className="flex items-center gap-3 animate-fade-in animation-delay-1000">
+                                    <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center">
+                                        <CheckCircle className="w-5 h-5 text-white" />
+                                    </div>
+                                    <span className="text-white/90">Perfect for Students Aged 14+</span>
                                 </div>
 
                             </div>
@@ -204,8 +212,8 @@ export default function WelcomeModal() {
 
 
                             <div className="mb-8 animate-fade-in">
-                                <h3 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent mb-2">Get Your Free Consultation</h3>
-                                <p className="text-gray-600">Fill out this short form to start your learning journey.</p>
+                                <h3 className="text-2xl font-bold bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent mb-2">Join a Course & Get Started</h3>
+                                <p className="text-gray-600">Fill out this quick form to begin your learning journey with GIG Skill Academy.</p>
                             </div>
 
                             <Form {...form}>
@@ -222,7 +230,7 @@ export default function WelcomeModal() {
                                                             <User className="h-5 w-5" />
                                                         </span>
                                                         <Input
-                                                            placeholder="John Doe"
+                                                            placeholder="eg., Arjun Nair"
                                                             {...field}
                                                             className="pl-10 border-gray-200 bg-gray-50 focus-visible:ring-orange-500 h-12 rounded-xl text-gray-800 shadow-sm hover:border-orange-200 transition-all"
                                                         />
@@ -245,7 +253,7 @@ export default function WelcomeModal() {
                                                             <Mail className="h-5 w-5" />
                                                         </span>
                                                         <Input
-                                                            placeholder="johndoe@example.com"
+                                                            placeholder="eg., arjun@example.com"
                                                             {...field}
                                                             className="pl-10 border-gray-200 bg-gray-50 focus-visible:ring-orange-500 h-12 rounded-xl text-gray-800 shadow-sm hover:border-orange-200 transition-all"
                                                         />
@@ -268,7 +276,7 @@ export default function WelcomeModal() {
                                                             <Phone className="h-5 w-5" />
                                                         </span>
                                                         <Input
-                                                            placeholder="(123) 456-7890"
+                                                            placeholder="eg.,+91 9876543210"
                                                             {...field}
                                                             className="pl-10 border-gray-200 bg-gray-50 focus-visible:ring-orange-500 h-12 rounded-xl text-gray-800 shadow-sm hover:border-orange-200 transition-all"
                                                         />
@@ -314,12 +322,12 @@ export default function WelcomeModal() {
                                         className="w-full mt-8 h-12 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-1 animate-fade-in animation-delay-1100 btn-shine overflow-hidden font-semibold text-base"
                                     >
                                         <span className="relative flex items-center gap-2">
-                                            Request Free Consultation
+                                            Start Learning Now
                                         </span>
                                     </Button>
 
                                     <p className="text-center text-xs text-gray-500 mt-6 animate-fade-in animation-delay-1300">
-                                        Your data is secure and will only be used to contact you about your inquiry.
+                                        Your information is secure and used only to guide your course enrollment
                                     </p>
                                 </form>
                             </Form>

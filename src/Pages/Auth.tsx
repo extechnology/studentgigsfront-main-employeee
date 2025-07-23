@@ -5,7 +5,9 @@ import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/Context/AuthContext";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
+import EmailOtp from "@/Components/Common/EmailOtp";
+import ForgetPassword from "@/Components/Common/ForgetPassword";
 
 
 export default function Auth() {
@@ -20,43 +22,67 @@ export default function Auth() {
   }
 
 
+  // Password and Repassword show
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
 
 
+  // Register Data
+  const [RegisterData, setRegisterData] = useState({});
+
+
+
+  // Otp Modal
+  const [otpModal, setOtpModal] = useState(false);
+
+
+  // Forgot Password Modal
+  const [forgotModal, setForgotModal] = useState(false);
+
+
+  // Navigation
   const Navigate = useNavigate()
+
 
 
   // Get the current path
   const location = useLocation();
 
 
+
   // Login and register status
   const [Status, SetStatus] = useState(true)
+
 
 
   // Terms acceptance state
   const [termsAccepted, setTermsAccepted] = useState(false)
 
 
+
   // React Hook Form state
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>()
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>({ mode: "onChange" })
+
 
 
   // Scroll to top when page is loaded
   window.scrollTo({ top: 0, behavior: 'smooth', });
 
 
+
   // Mutate for user Register
-  const { mutate } = UserRegister()
+  const { mutate, isPending: isRegisterPending } = UserRegister()
+
 
 
   // Mutate for user Login
-  const { mutate: mutateLogin } = UserLogin()
+  const { mutate: mutateLogin, isPending: isLoginPending } = UserLogin()
+
 
 
   // Mutate for Google Login
   const { mutate: mutateGoogleLogin } = GoogleAuth()
+
 
 
   // login Provider
@@ -71,6 +97,8 @@ export default function Auth() {
       toast.error("Please accept the Terms and Conditions to continue.");
       return;
     }
+
+    setRegisterData(data)
 
     const formdata = new FormData()
 
@@ -87,19 +115,12 @@ export default function Auth() {
 
         if (response.status >= 200 && response.status <= 300) {
 
-          toast.success("User Register Successfully")
-
-          SetStatus(!Status)
-
-          reset()
-          setTermsAccepted(false)
+          setOtpModal(true)
 
         }
         else {
 
           console.log(response)
-
-          reset()
 
           handleErrors(response?.response?.data);
 
@@ -142,7 +163,6 @@ export default function Auth() {
       }
     };
 
-
   }
 
 
@@ -150,6 +170,8 @@ export default function Auth() {
 
   // Submit Login
   const SubmitLogin = (data: any) => {
+
+
     if (!termsAccepted) {
       toast.error("Please accept the Terms and Conditions to continue.");
       return;
@@ -182,7 +204,6 @@ export default function Auth() {
 
 
           Navigate(from, { replace: true })
-
 
 
         }
@@ -327,8 +348,12 @@ export default function Auth() {
   })
 
 
-  return (
 
+  // Change Status
+  const handleStatusChnage = () => { SetStatus(!Status) }
+
+
+  return (
 
     <>
 
@@ -354,7 +379,7 @@ export default function Auth() {
                 // Login 
                 <div className="lg:w-[28rem] w-[19rem] mx-auto my-auto flex flex-col justify-center pt-8 md:justify-start md:px-6 md:pt-0">
 
-                  <p className="text-left text-3xl font-bold">Welcome Back</p>
+                  <p className="text-left text-3xl font-bold">Login As Student</p>
 
 
 
@@ -376,7 +401,6 @@ export default function Auth() {
 
 
 
-
                     {/*Password */}
                     <div className="mb-6 flex flex-col pt-4">
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
@@ -391,7 +415,7 @@ export default function Auth() {
                           className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-gray-500"
                           onClick={() => setShowPassword(!showPassword)}
                         >
-                          {showPassword ? <Eye size={20} /> :  <EyeOff size={20} />}
+                          {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                         </button>
 
                         {errors.password && <p role="alert" className="text-red-500 text-sm">{errors.password.message}</p>}
@@ -436,9 +460,10 @@ export default function Auth() {
 
                     <button
                       type="submit"
-                      className={`w-full rounded-lg ${!termsAccepted ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2`}
+                      disabled={!termsAccepted || isLoginPending}
+                      className={`w-full rounded-lg ${!termsAccepted || isLoginPending ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2 flex items-center justify-center`}
                     >
-                      Log in
+                      Log In {isLoginPending && <Loader className="animate-spin ms-3 duration-3000" />}
                     </button>
 
 
@@ -460,11 +485,24 @@ export default function Auth() {
                   </button>
 
 
-                  <div className="py-12 text-center">
+                  <div className="pt-5 pb-4 text-center">
                     <p className="whitespace-nowrap text-gray-600">
                       Don't have an account?
-                      <a onClick={() => SetStatus(!Status)} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 underline ms-3">Sign up.</a>
+                      <a onClick={() => { SetStatus(!Status), reset() }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 hover:underline ms-3">Sign up</a>
                     </p>
+                  </div>
+
+
+                  <div className=" text-center flex justify-center">
+                    
+                    <p className="whitespace-nowrap text-gray-600">
+                      <a onClick={() => { setForgotModal(!forgotModal) }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 hover:underline ms-3">Forget Password & Username ?</a>
+                    </p>
+
+                    <p className="whitespace-nowrap text-gray-600">
+                      <a  href="https://gigs.studentsgigs.com/auth" className="cursor-pointer underline-offset-4 font-semibold text-gray-900 hover:underline ms-3">Login as Employer</a>
+                    </p>
+
                   </div>
 
 
@@ -490,7 +528,12 @@ export default function Auth() {
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
                         <input type="text" id="login-username" className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Username"
 
-                          {...register("username", { required: "Username is required" })}
+                          {...register("username", {
+                            required: "Username is required", pattern: {
+                              value: /^[a-zA-Z0-9]+$/,
+                              message: "Only letters and numbers are allowed",
+                            },
+                          })}
 
                         />
                         {errors.username && <p role="alert" className="text-red-500 text-sm">{errors.username.message}</p>}
@@ -512,7 +555,6 @@ export default function Auth() {
                             }
                           })}
 
-
                         />
                         {errors.email && <p role="alert" className="text-red-500 text-sm">{errors.email.message}</p>}
                       </div>
@@ -522,6 +564,7 @@ export default function Auth() {
 
                     {/* Password */}
                     <div className="flex flex-col pt-4">
+
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
                         <input
                           type={showPassword ? "text" : "password"}
@@ -535,12 +578,15 @@ export default function Auth() {
                           className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-gray-500"
                           onClick={() => setShowPassword(!showPassword)}
                         >
-                          {showPassword ? <Eye size={20} /> :  <EyeOff size={20} />}
+                          {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
                         </button>
+
+                        {errors.password && (
+                          <p role="alert" className="text-red-500 text-sm">{errors.password.message}</p>
+                        )}
+
                       </div>
-                      {errors.password && (
-                        <p role="alert" className="text-red-500 text-sm">{errors.password.message}</p>
-                      )}
+
                     </div>
 
 
@@ -560,12 +606,15 @@ export default function Auth() {
                           className="absolute cursor-pointer right-4 top-1/2 -translate-y-1/2 text-gray-500"
                           onClick={() => setShowRePassword(!showRePassword)}
                         >
-                          {showRePassword ? <Eye size={20} /> :  <EyeOff size={20} />}
+                          {showRePassword ? <Eye size={20} /> : <EyeOff size={20} />}
                         </button>
+
+                        {errors.repassword && (
+                          <p role="alert" className="text-red-500 text-sm">{errors.repassword.message}</p>
+                        )}
+
                       </div>
-                      {errors.repassword && (
-                        <p role="alert" className="text-red-500 text-sm">{errors.repassword.message}</p>
-                      )}
+
                     </div>
 
 
@@ -605,10 +654,12 @@ export default function Auth() {
 
 
                     <button
+                      disabled={!termsAccepted || isRegisterPending}
                       type="submit"
-                      className={`w-full rounded-lg ${!termsAccepted ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2`}
+                      className={`w-full rounded-lg ${!termsAccepted || isRegisterPending ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2 flex items-center justify-center`}
                     >
-                      Sign Up
+                      Sign Up {isRegisterPending && <Loader className="animate-spin duration-3000 ms-3" />}
+
                     </button>
 
 
@@ -618,7 +669,7 @@ export default function Auth() {
                   <div className="py-12 text-center">
                     <p className="whitespace-nowrap text-gray-600">
                       Already have an account?
-                      <a onClick={() => SetStatus(!Status)} className="underline-offset-4 font-semibold text-gray-900 underline ms-3 cursor-pointer">Log In.</a>
+                      <a onClick={() => { SetStatus(!Status), reset() }} className="underline-offset-4 font-semibold text-gray-900 hover:underline ms-3 cursor-pointer">Log In.</a>
                     </p>
                   </div>
 
@@ -636,7 +687,7 @@ export default function Auth() {
               <p className="mb-5 text-3xl font-semibold leading-10"> Our mission is to make students independent, responsible, and equipped
                 with practical exposure while learning.</p>
               <p className="mb-4 text-3xl font-semibold">Students Gigs</p>
-              <p className="">Founder, CEO Dr Vimal K R</p>
+              <p className="">Dr Vimal K R , Founder CEO </p>
               <p className="mb-7 text-sm opacity-70">Medresearch India Pvt Ltd</p>
             </div>
             <img className="-z-1 absolute top-0 h-full w-full object-cover opacity-90" loading="lazy" src="https://www.shutterstock.com/image-photo/university-graduation-ceremonies-on-commencement-600nw-298297430.jpg" />
@@ -646,6 +697,12 @@ export default function Auth() {
         </div>
 
 
+        {/* OTP Modal */}
+        <EmailOtp handleStatus={handleStatusChnage} isOpen={otpModal} setIsOpen={setOtpModal} RegisterData={RegisterData} reset={reset} />
+
+
+        {/* Forget Password Modal */}
+        <ForgetPassword isOpen={forgotModal} setIsOpen={setForgotModal} />
 
 
       </main>

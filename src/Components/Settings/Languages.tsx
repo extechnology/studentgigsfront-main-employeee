@@ -94,7 +94,7 @@ export default function Languages() {
                     reset();
                     toast.success("Language Added Successfully");
                 } else {
-                    toast.error("Something went wrong. Please try again.");
+                    toast.error("Language Already Exists");
                 }
 
             },
@@ -278,7 +278,7 @@ export default function Languages() {
                                             Cancel
                                         </button>
                                         <Button type="submit" className="w-full sm:w-auto">
-                                            Add  <CirclePlus size={24} />
+                                            Add / Save   <CirclePlus size={24} />
                                         </Button>
 
                                     </div>

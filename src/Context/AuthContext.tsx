@@ -29,6 +29,8 @@ interface UsageData {
     expire_date?: string; // Plan expiration date
     resume_builder: number;
     job_limit:boolean
+    profile_completed : boolean
+    age_restrict : boolean
 }
 
 

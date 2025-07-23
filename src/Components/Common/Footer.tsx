@@ -56,45 +56,53 @@ const Footer = () => {
 
         {/* Right Section */}
         <div>
+
           <h3 className="text-lg font-bold mb-4">Connect With Us</h3>
+
           <div className="flex space-x-4 mb-4">
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://www.facebook.com/studentsgigs.in" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-facebook fa-lg"></i>
             </a>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://www.instagram.com/studentgigs.in" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-instagram fa-lg"></i>
             </a>
-            <a href="https://www.threads.net" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://www.threads.net/@studentgigs.in" target="_blank" rel="noopener noreferrer">
               <i className="fa-brands fa-threads fa-lg"></i>
             </a>
-            <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://x.com/studentgigsone" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-x-twitter fa-lg"></i>
             </a>
-            <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://www.linkedin.com/company/studentsgigs/about/?viewAsMember=true" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-linkedin fa-lg"></i>
             </a>
-            <a href="https://www.pinterest.com" target="_blank" rel="noopener noreferrer">
+
+            <a href="https://in.pinterest.com/studentgigsone/" target="_blank" rel="noopener noreferrer">
               <i className="fa-brands fa-pinterest fa-lg"></i>
             </a>
+
           </div>
 
-          {/* <form className="flex flex-col">
-            <label htmlFor="newsletter" className="mb-2">Subscribe to our Newsletter</label>
-            <div className="flex">
-              <input
-                type="email"
-                id="newsletter"
-                placeholder="Your email"
-                className="p-1 sm:p-2 flex-1 rounded-l-md text-black bg-gray-100"
-              />
-              <button
-                type="submit"
-                className="bg-blue-500 px-2 sm:px-4 py-2 rounded-r-md hover:bg-blue-600"
-              >
-                Subscribe
-              </button>
-            </div>
-          </form> */}
+          <a
+            href="https://wa.me/yourPhoneNumber?text=Hi%20there!%20I%20want%20to%20chat."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-52 items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition-all"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              className="w-5 h-5"
+            >
+              <path d="M12.04 2C6.58 2 2.16 6.42 2.16 11.89c0 2.1.55 4.15 1.59 5.95L2 22l4.28-1.12a10.03 10.03 0 005.76 1.68c5.46 0 9.88-4.42 9.88-9.89S17.5 2 12.04 2zm.01 17.73c-1.83 0-3.62-.5-5.17-1.44l-.37-.22-2.55.66.68-2.49-.24-.39a8.03 8.03 0 01-1.27-4.34c0-4.44 3.62-8.06 8.06-8.06 4.44 0 8.06 3.62 8.06 8.06s-3.62 8.06-8.06 8.06zm4.4-6.1c-.24-.12-1.43-.7-1.65-.78-.22-.08-.38-.12-.54.12s-.62.78-.76.94c-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.92-1.2-.71-.63-1.18-1.41-1.32-1.65-.14-.24-.02-.37.1-.49.1-.1.24-.26.36-.4.12-.14.16-.24.24-.4.08-.16.04-.3 0-.42-.06-.12-.54-1.29-.74-1.76-.2-.48-.4-.4-.54-.41l-.46-.01c-.16 0-.42.06-.64.3-.22.24-.86.84-.86 2.06s.88 2.4 1.02 2.57c.14.16 1.73 2.64 4.2 3.7.59.26 1.05.42 1.4.54.59.18 1.12.16 1.54.1.47-.07 1.43-.58 1.63-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28z" />
+            </svg>
+            <span>Let’s Chat</span>
+          </a>
 
 
         </div>
@@ -140,7 +148,7 @@ const Footer = () => {
           </Link>
         </div>
 
-        <p className="text-xs sm:text-sm">Powered by Exmedia</p>
+        <p className="text-xs sm:text-sm">Powered by exmedia</p>
       </div>
 
 
