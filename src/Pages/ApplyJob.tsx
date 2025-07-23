@@ -119,7 +119,7 @@ const JobApplicationForm = () => {
             const SelectedInfo = user[0]
 
             setResumeUrl(SelectedInfo?.additional_information?.employee_resume ? SelectedInfo?.additional_information?.employee_resume : '')
-
+            setResumeFile(SelectedInfo?.additional_information?.employee_resume ? SelectedInfo?.additional_information?.employee_resume : '');
         }
 
     }, [data, user])
