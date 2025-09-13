@@ -140,10 +140,10 @@ export default function JobCard({ id, applied, saved, employer_id, salaryType, c
 
         <>
 
-            <section>
+            <section className='h-full'>
 
 
-                <div className="bg-white rounded-lg p-6 sm:shadow-sm shadow-md border border-gray-200 hover:shadow-md transition-shadow">
+                <div className="bg-white rounded-lg p-6 sm:shadow-sm shadow-md border border-gray-200 hover:shadow-md transition-shadow h-full flex flex-col">
 
 
 

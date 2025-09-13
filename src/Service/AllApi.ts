@@ -31,6 +31,25 @@ export const PostResendOtp = async (data: any) => {
 
 
 
+
+// Mobile Otp send
+export const PostMobileOtp = async (data: any) => {
+
+    return await CommonApi("POST", `${Base_Url}/send-sms-otp/`, data, "")
+
+}
+
+
+
+// Mobile Otp Verify
+export const PostMobileOtpVerify = async (data: any) => {
+
+    return await CommonApi("POST", `${Base_Url}/verify-sms-otp/`, data, "")
+
+}
+
+
+
 // Reset Password
 export const PostResetPassword = async (data: any) => {
 
