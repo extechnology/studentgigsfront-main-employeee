@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { RegisterUser, LoginUser, GoogleLogin, PostEmailVerification, PostResendOtp, PostResetPassword } from "@/Service/AllApi"
+import { RegisterUser, LoginUser, GoogleLogin, PostEmailVerification, PostResendOtp, PostResetPassword, PostMobileOtpVerify, PostMobileOtp } from "@/Service/AllApi"
 
 
 
@@ -112,7 +112,7 @@ export const ResetPassword = () => {
         onError: (error) => {
 
             console.error("Failed to Reset Password", error);
-           
+
         },
     })
 
@@ -223,6 +223,71 @@ export const GoogleAuth = () => {
             }
 
         }
+
+    })
+
+}
+
+
+
+
+
+// Mobile Otp Request
+export const useMobileOtp = () => {
+
+    return useMutation({
+
+        mutationFn: async (data: any) => {
+
+            try {
+
+                const Response = await PostMobileOtp(data)
+
+                return Response
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+        onError: (error) => {
+            console.error("Failed to Verify Email", error);
+        },
+
+    })
+
+}
+
+
+
+
+// Verify Mobile Otp
+export const useVerifyMobileOtp = () => {
+
+    return useMutation({
+
+        mutationFn: async (data: any) => {
+
+            try {
+
+                const Response = await PostMobileOtpVerify(data)
+
+                return Response
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+        onError: (error) => {
+            console.error("Failed to Verify Email", error);
+        },
 
     })
 

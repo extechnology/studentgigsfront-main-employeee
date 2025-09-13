@@ -5,14 +5,16 @@ import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "@/Context/AuthContext";
-import { Eye, EyeOff, Loader } from "lucide-react";
-import EmailOtp from "@/Components/Common/EmailOtp";
-import ForgetPassword from "@/Components/Common/ForgetPassword";
+import { Eye, EyeOff, Loader, Phone } from "lucide-react";
+import EmailOtp from "@/Components/otp/EmailOtp";
+import ForgetPassword from "@/Components/otp/ForgetPassword";
+import MobileOtpModal from "@/Components/otp/MobileOtpModal";
 
 
 export default function Auth() {
 
 
+  // Form inputs
   type Inputs = {
     email: string
     password: string
@@ -32,8 +34,13 @@ export default function Auth() {
 
 
 
-  // Otp Modal
+  //Email Otp Modal
   const [otpModal, setOtpModal] = useState(false);
+
+
+  // Mobile Otp Modal
+  const [isMobileOtpModalOpen, setIsMobileOtpModalOpen] = useState(false);
+
 
 
   // Forgot Password Modal
@@ -52,11 +59,6 @@ export default function Auth() {
 
   // Login and register status
   const [Status, SetStatus] = useState(true)
-
-
-
-  // Terms acceptance state
-  const [termsAccepted, setTermsAccepted] = useState(false)
 
 
 
@@ -81,7 +83,7 @@ export default function Auth() {
 
 
   // Mutate for Google Login
-  const { mutate: mutateGoogleLogin } = GoogleAuth()
+  const { mutate: mutateGoogleLogin, isPending: isGoogleLoginPending } = GoogleAuth()
 
 
 
@@ -93,10 +95,6 @@ export default function Auth() {
   // Submit Register
   const SubmitRegister = (data: any) => {
 
-    if (!termsAccepted) {
-      toast.error("Please accept the Terms and Conditions to continue.");
-      return;
-    }
 
     setRegisterData(data)
 
@@ -171,12 +169,6 @@ export default function Auth() {
   // Submit Login
   const SubmitLogin = (data: any) => {
 
-
-    if (!termsAccepted) {
-      toast.error("Please accept the Terms and Conditions to continue.");
-      return;
-    }
-
     const formdata = new FormData()
 
     formdata.append("username", data.username)
@@ -197,7 +189,6 @@ export default function Auth() {
 
 
           reset()
-          setTermsAccepted(false)
 
 
           login(response.data.access)
@@ -261,10 +252,6 @@ export default function Auth() {
   const GoogleLogin = useGoogleLogin({
 
     onSuccess: async (tokenResponse) => {
-      if (!termsAccepted) {
-        toast.error("Please accept the Terms and Conditions to continue.");
-        return;
-      }
 
       try {
 
@@ -310,8 +297,6 @@ export default function Auth() {
                 login(response.data.access)
 
                 toast.success("Login Successful..!")
-
-                setTermsAccepted(false)
 
                 Navigate(from, { replace: true })
 
@@ -366,7 +351,7 @@ export default function Auth() {
 
           <div className="flex w-full flex-col md:w-1/2">
 
-            <div className="flex justify-center pt-12 md:-mb-24 md:justify-start md:pl-12">
+            <div className="flex justify-center pt-5 md:-mb-24 md:justify-start md:pl-12">
               <Link to="/" className="border-b-gray-700 border-b-4 pb-2 text-2xl font-bold text-gray-900 sm:mb-28 mb-3"> StudentsGigs </Link>
             </div>
 
@@ -402,7 +387,8 @@ export default function Auth() {
 
 
                     {/*Password */}
-                    <div className="mb-6 flex flex-col pt-4">
+                    <div className="mb-0 flex flex-col pt-4">
+
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
                         <input type={showPassword ? "text" : "password"} id="login-password" className="w-full flex-1 appearance-none border-gray-300 bg-white px-4 py-2 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Password"
 
@@ -420,48 +406,27 @@ export default function Auth() {
 
                         {errors.password && <p role="alert" className="text-red-500 text-sm">{errors.password.message}</p>}
                       </div>
+
+                      {/* Terms and Conditions Notice */}
+                      <div className="mb-6 text-start mt-3 text-sm text-gray-600">
+                        By logging in, you agree to our{" "}
+                        <Link
+                          to="/loginterms"
+                          className="text-gray-900 font-medium underline hover:text-black transition-colors"
+                        >
+                          Terms and Conditions
+                        </Link>
+                        .
+                      </div>
+
                     </div>
 
 
-
-                    {/* Terms and Conditions Checkbox */}
-                    <div className="flex items-center mb-6">
-                      <input
-                        type="checkbox"
-                        id="terms"
-                        className={`peer hidden`}
-                        checked={termsAccepted}
-                        onChange={(e) => setTermsAccepted(e.target.checked)}
-                      />
-                      <label
-                        htmlFor="terms"
-                        className={`h-4 w-4 border-2 border-gray-300 rounded flex items-center justify-center hover:cursor-pointer transition-all
-      ${termsAccepted ? "bg-black border-black" : "bg-white border-gray-300"}`}
-                      >
-                        {termsAccepted && (
-                          <svg
-                            className="w-3 h-3 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path>
-                          </svg>
-                        )}
-                      </label>
-                      <label htmlFor="terms" className="ml-2 block text-sm text-gray-600">
-                        I accept the <Link to={'/loginterms'} className="text-gray-900 underline">Terms and Conditions</Link>
-                      </label>
-                    </div>
-
-
-
+                    {/* Login */}
                     <button
                       type="submit"
-                      disabled={!termsAccepted || isLoginPending}
-                      className={`w-full rounded-lg ${!termsAccepted || isLoginPending ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2 flex items-center justify-center`}
+                      disabled={isLoginPending}
+                      className={`w-full rounded-lg ${isLoginPending ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2 flex items-center justify-center`}
                     >
                       Log In {isLoginPending && <Loader className="animate-spin ms-3 duration-3000" />}
                     </button>
@@ -476,13 +441,26 @@ export default function Auth() {
 
 
 
+                  {/* Google Login */}
                   <button
                     onClick={() => GoogleLogin()}
-                    className={`shadow-md mt-8 flex items-center justify-center rounded-md border px-4 py-2 outline-none ring-gray-400 ring-offset-2 transition focus:ring-2 hover:border-transparent hover:bg-black hover:text-white ${!termsAccepted ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    disabled={!termsAccepted}
+                    className={`shadow-md mt-8 flex items-center justify-center rounded-md border px-4 py-2 outline-none ring-gray-400 ring-offset-2 transition focus:ring-2 hover:border-transparent hover:bg-black hover:text-white ${isGoogleLoginPending ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    disabled={isGoogleLoginPending}
                   >
-                    <img className="mr-2 h-5" src="https://static.cdnlogo.com/logos/g/35/google-icon.svg" alt="google-icon" /> Log in with Google
+                    <img className="mr-2 h-5" src="https://static.cdnlogo.com/logos/g/35/google-icon.svg" alt="google-icon" /> Log in with Google {isGoogleLoginPending && <Loader className="animate-spin ms-3 duration-3000" />}
                   </button>
+
+
+
+                  {/* Mobile Number Login */}
+                  <button
+                    onClick={() => { setIsMobileOtpModalOpen(true) }}
+                    className={`cursor-pointer shadow-lg mt-4 flex items-center justify-center rounded-md px-4 py-2 outline-none ring-gray-400 ring-offset-2 transition focus:ring-2 hover:border-transparent hover:bg-black hover:text-white `}
+                  >
+                    <Phone className="mr-2 h-5 w-5 hover:text-white" />
+                    Log in with Phone
+                  </button>
+
 
 
                   <div className="pt-5 pb-4 text-center">
@@ -494,13 +472,13 @@ export default function Auth() {
 
 
                   <div className=" text-center flex justify-center">
-                    
+
                     <p className="whitespace-nowrap text-gray-600">
                       <a onClick={() => { setForgotModal(!forgotModal) }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 hover:underline ms-3">Forget Password & Username ?</a>
                     </p>
 
                     <p className="whitespace-nowrap text-gray-600">
-                      <a  href="https://gigs.studentsgigs.com/auth" className="cursor-pointer underline-offset-4 font-semibold text-gray-900 hover:underline ms-3">Login as Employer</a>
+                      <a href="https://gigs.studentsgigs.com/auth" className="cursor-pointer underline-offset-4 font-semibold text-gray-900 hover:underline ms-3">Login as Employer</a>
                     </p>
 
                   </div>
@@ -593,6 +571,7 @@ export default function Auth() {
 
                     {/* Re-enter Password */}
                     <div className="mb-6 flex flex-col pt-4">
+
                       <div className="focus-within:border-b-gray-500 relative flex overflow-hidden border-b-2 transition">
                         <input
                           type={showRePassword ? "text" : "password"}
@@ -615,48 +594,26 @@ export default function Auth() {
 
                       </div>
 
+                      {/* Terms and Conditions Notice */}
+                      <div className="mb-6 text-start mt-3 text-sm text-gray-600">
+                        By registering, you agree to our{" "}
+                        <Link
+                          to="/loginterms"
+                          className="text-gray-900 font-medium underline hover:text-black transition-colors"
+                        >
+                          Terms and Conditions
+                        </Link>
+                        .
+                      </div>
+
                     </div>
 
 
-
-                    {/* Terms and Conditions Checkbox */}
-                    <div className="flex items-center mb-6">
-                      <input
-                        type="checkbox"
-                        id="terms"
-                        className={`peer hidden`}
-                        checked={termsAccepted}
-                        onChange={(e) => setTermsAccepted(e.target.checked)}
-                      />
-                      <label
-                        htmlFor="terms"
-                        className={`h-4 w-4 border-2 border-gray-300 rounded flex items-center justify-center hover:cursor-pointer transition-all
-      ${termsAccepted ? "bg-black border-black" : "bg-white border-gray-300"}`}
-                      >
-                        {termsAccepted && (
-                          <svg
-                            className="w-3 h-3 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"></path>
-                          </svg>
-                        )}
-                      </label>
-                      <label htmlFor="terms" className="ml-2 block text-sm text-gray-600">
-                        I accept the <Link to={'/loginterms'} className="text-gray-900 underline">Terms and Conditions</Link>
-                      </label>
-                    </div>
-
-
-
+                    {/* Sign Up */}
                     <button
-                      disabled={!termsAccepted || isRegisterPending}
+                      disabled={isRegisterPending}
                       type="submit"
-                      className={`w-full rounded-lg ${!termsAccepted || isRegisterPending ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2 flex items-center justify-center`}
+                      className={`w-full rounded-lg ${isRegisterPending ? 'bg-gray-400 cursor-not-allowed' : 'bg-gray-900'} px-4 py-2 text-center text-base font-semibold text-white shadow-md ring-gray-500 ring-offset-2 transition focus:ring-2 flex items-center justify-center`}
                     >
                       Sign Up {isRegisterPending && <Loader className="animate-spin duration-3000 ms-3" />}
 
@@ -703,6 +660,10 @@ export default function Auth() {
 
         {/* Forget Password Modal */}
         <ForgetPassword isOpen={forgotModal} setIsOpen={setForgotModal} />
+
+
+        {/* Mobile OTP Modal */}
+        <MobileOtpModal isOpen={isMobileOtpModalOpen} setIsOpen={setIsMobileOtpModalOpen} />
 
 
       </main>

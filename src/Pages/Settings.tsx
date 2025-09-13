@@ -7,7 +7,7 @@ import WorkPreferences from "@/Components/Settings/WorkPreferences";
 import ProfileEditor from "@/Components/Settings/ProfileImage";
 import Experience from "@/Components/Settings/Experience";
 import AdditionalInfo from "@/Components/Settings/AdditionalInfo";
-import ForgetPassword from "@/Components/Common/ForgetPassword";
+import ForgetPassword from "@/Components/otp/ForgetPassword";
 import { useState } from "react";
 
 

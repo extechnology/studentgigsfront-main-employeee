@@ -161,7 +161,7 @@ export default function JobFilter() {
 
                         <>
 
-                            <div className='grid sm:grid-cols-3 gap-4 grid-cols-1'>
+                            <div className='grid sm:grid-cols-3 gap-4 grid-cols-1 items-stretch'>
                                 {searchResults.data.map((item: Job, index: number) => (
                                     <JobCard
                                         company={item?.company?.company_name}
