@@ -146,6 +146,13 @@ const Footer = () => {
           <Link to={'/refundpolicy'} className="hover:text-gray-400">
             Refund Policy
           </Link>
+
+          <span className="hidden sm:inline">|</span>
+          
+          <Link to={'/disclaimer'} className="hover:text-gray-400">
+            Disclaimer
+          </Link>
+
         </div>
 
         <p className="text-xs sm:text-sm">Powered by exmedia</p>

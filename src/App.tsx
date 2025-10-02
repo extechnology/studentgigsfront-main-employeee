@@ -19,6 +19,8 @@ const UserProfile = lazy(() => import("./Pages/UserProfile"));
 const Plans = lazy(() => import("./Pages/Plans"));
 const GigsAcademy = lazy(() => import("./Pages/GigsAcademy"));
 const PlanUsageDashboard = lazy(() => import("./Pages/Usage"));
+const DeleteAccount = lazy(() => import("./Pages/DeleteAccount"));
+
 
 
 // Job-Related Pages
@@ -45,6 +47,7 @@ const LegalPages = {
   LoginTerms: lazy(() => import("./Pages/LoginTerms")),
   Refund: lazy(() => import("./Pages/Refund")),
   Privacy: lazy(() => import("./Pages/Privacy")),
+  Disclaimer: lazy(() => import("./Pages/Disclaimer")),
 };
 
 
@@ -113,6 +116,8 @@ function App() {
             <Route path="/refundpolicy" element={<LegalPages.Refund />} />
             <Route path="/privacypolicy" element={<LegalPages.Privacy />} />
             <Route path="/loginterms" element={<LegalPages.LoginTerms />} />
+            <Route path="/disclaimer" element={<LegalPages.Disclaimer />} />
+            <Route path="/deleteaccount" element={<DeleteAccount />} />
 
 
             {/* Protected Routes */}

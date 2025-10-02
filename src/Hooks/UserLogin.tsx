@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { RegisterUser, LoginUser, GoogleLogin, PostEmailVerification, PostResendOtp, PostResetPassword, PostMobileOtpVerify, PostMobileOtp } from "@/Service/AllApi"
+import { RegisterUser, LoginUser, GoogleLogin, PostEmailVerification, PostResendOtp, PostResetPassword, PostMobileOtpVerify, PostMobileOtp, PostAccountDeleteOtp, PostAccountDeleteOtpVerify } from "@/Service/AllApi"
 
 
 
@@ -287,6 +287,69 @@ export const useVerifyMobileOtp = () => {
         },
         onError: (error) => {
             console.error("Failed to Verify Email", error);
+        },
+
+    })
+
+}
+
+
+
+// Delete Account Otp
+export const useDeleteAccountOtp = () => {
+
+    return useMutation({
+
+        mutationFn: async (data: any) => {
+
+            try {
+
+                const Response = await PostAccountDeleteOtp(data)
+
+                return Response
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+        onError: (error) => {
+            console.error("Failed to Verify Email", error);
+        },
+
+    })
+
+}
+
+
+
+
+// Verify Delete Account Otp
+export const useVerifyDeleteAccountOtp = () => {
+
+    return useMutation({
+
+        mutationFn: async (data: any) => {
+
+            try {
+
+                const Response = await PostAccountDeleteOtpVerify(data)
+
+                return Response
+
+            }
+            catch (err) {
+
+                console.log(err);
+
+            }
+
+        },
+        onError: (error) => {
+            console.error("Failed to Verify OTP", error);
         },
 
     })
