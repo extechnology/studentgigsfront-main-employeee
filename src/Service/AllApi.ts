@@ -2,7 +2,7 @@ import { CommonApi } from "./CommonApi";
 
 
 // Base Url
-export const Base_Url = "https://0735a0800fac.ngrok-free.app/api/employee"
+export const Base_Url = "https://server.studentsgigs.com/api/employee"
 
 
 
