@@ -9,19 +9,15 @@ import { motion } from "framer-motion";
 import { BadgeCheck, Loader, RefreshCw, ShieldCheck } from "lucide-react";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import 'react-phone-number-input/style.css';
-import PhoneInput from 'react-phone-number-input';
-import { isValidPhoneNumber } from "libphonenumber-js";
-import { useMobileOtp, useVerifyMobileOtp } from "@/Hooks/UserLogin";
-import { useQueryClient } from "@tanstack/react-query";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "@/Context/AuthContext";
+import { useDeleteAccountOtp, useVerifyDeleteAccountOtp } from "@/Hooks/UserLogin";
+import { Input } from "../ui/input";
+
 
 
 
 
 // Props
-interface MobileOtpProps {
+interface DeleteAccountProps {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
 }
@@ -30,12 +26,8 @@ interface MobileOtpProps {
 
 
 // Step schema
-const MobileSchema = z.object({
-    phone: z
-        .string()
-        .refine((value) => isValidPhoneNumber(value), {
-            message: "Enter a valid mobile number",
-        }),
+const EmailSchema = z.object({
+    email: z.string().email("Please enter a valid email address"),
 });
 
 
@@ -48,10 +40,10 @@ const OtpSchema = z.object({
 
 
 
-export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
+export default function DeleteOtpModal({ isOpen, setIsOpen }: DeleteAccountProps) {
 
 
-    const [step, setStep] = useState<"mobile" | "otp">("mobile");
+    const [step, setStep] = useState<"email" | "otp">("email");
     const [timeLeft, setTimeLeft] = useState(300);
     const [isResendDisabled, setIsResendDisabled] = useState(true);
     const [otpExpired, setOtpExpired] = useState(false);
@@ -61,32 +53,14 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
     const [timerKey, setTimerKey] = useState(0);
 
 
-    // Mobile Number send otp
-    const { mutate: MobileOtpSend, isPending } = useMobileOtp();
+    // Email send otp
+    const { mutate: EmailOtpSend, isPending } = useDeleteAccountOtp();
 
 
 
-    // Mobile Number send otp
-    const { mutate: MobileVerifyOtpSend, isPending: isVerifyPending } = useVerifyMobileOtp();
+    // Verify otp
+    const { mutate: VerifyOtp, isPending: isVerifyPending } = useVerifyDeleteAccountOtp();
 
-
-
-    // Login context
-    const { login } = useAuth()
-
-
-
-    // Navigate
-    const Navigate = useNavigate()
-
-
-
-    // Get the current path
-    const location = useLocation();
-
-
-
-    const queryclient = useQueryClient();
 
 
 
@@ -126,10 +100,10 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
 
 
     // Forms
-    const mobileForm = useForm<z.infer<typeof MobileSchema>>({
-        resolver: zodResolver(MobileSchema),
+    const emailForm = useForm<z.infer<typeof EmailSchema>>({
+        resolver: zodResolver(EmailSchema),
         mode: "onChange",
-        defaultValues: { phone: "" },
+        defaultValues: { email: "" },
     });
 
 
@@ -143,21 +117,21 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
 
 
 
-    // Submit mobile
-    const handleSendOtp = (data: z.infer<typeof MobileSchema>) => {
+    // Submit email
+    const handleSendOtp = (data: z.infer<typeof EmailSchema>) => {
 
         const formdata = new FormData();
 
-        formdata.append("mobile", data.phone);
+        formdata.append("identifier", data.email);
 
 
-        MobileOtpSend(formdata, {
+        EmailOtpSend(formdata, {
 
             onSuccess: (response) => {
 
                 if (response.status >= 200 && response.status <= 300) {
 
-                    toast.success("An Otp has been sent to your mobile number.", { duration: 4000 });
+                    toast.success("An Otp has been sent to your Email.", { duration: 4000 });
                     setStep("otp");
 
                 } else {
@@ -180,33 +154,25 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
 
         const formdata = new FormData();
 
-        formdata.append("mobile", mobileForm.getValues().phone);
+        formdata.append("identifier", emailForm.getValues().email);
         formdata.append("otp", data.pin);
 
 
-        MobileVerifyOtpSend(formdata, {
+        VerifyOtp(formdata, {
 
             onSuccess: (response) => {
 
                 if (response.status >= 200 && response.status <= 300) {
 
-                    toast.success("Logged in successfully.", { duration: 4000 });
+                    toast.success("Request has been sent & your account will be deleted in 60days", { duration: 4000 });
                     setIsOpen(false);
-                    mobileForm.reset();
+                    emailForm.reset();
                     otpForm.reset();
-                    setStep("mobile");
-
-                    login(response.data.access)
-
-                    const from = location.state?.from?.pathname || "/";
-
-                    queryclient.invalidateQueries({ queryKey: ["UserProfile"] });
-
-                    Navigate(from, { replace: true })
+                    setStep("email");
 
                 } else {
 
-                    toast.error(`${response?.response?.data?.error ? response.response.data.error : "Something went wrong. Please try again."}`);
+                    toast.error(`${response?.response?.data?.otp ? response.response.data.otp[0] : "Something went wrong. Please try again."}`);
 
                 }
 
@@ -224,15 +190,15 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
 
         const formdata = new FormData();
 
-        formdata.append("mobile", mobileForm.getValues().phone);
+        formdata.append("identifier", emailForm.getValues().email);
 
-        MobileOtpSend(formdata, {
+        EmailOtpSend(formdata, {
 
             onSuccess: (response) => {
 
                 if (response.status >= 200 && response.status <= 300) {
 
-                    toast.success("An Otp has been resent to your mobile number.", { duration: 4000 });
+                    toast.success("An Otp has been resent to your Email.", { duration: 4000 });
                     setTimerKey(prev => prev + 1);
                     setIsResendDisabled(true);
                     setOtpExpired(false);
@@ -247,7 +213,6 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
         })
 
     };
-
 
 
 
@@ -270,45 +235,44 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
                         className="text-center mb-6"
                     >
                         <h2 className="text-2xl font-bold flex items-center justify-center">
-                            {step === "mobile" ? "Enter Your Mobile Number" : "OTP Verification"}{" "}
+                            {step === "email" ? "Enter Your Email Address" : "OTP Verification"}{" "}
                             <ShieldCheck size={26} />
                         </h2>
                         <p className="text-gray-500 mt-2">
-                            {step === "mobile"
-                                ? "We’ll send a OTP to your Mobile Number"
-                                : "Enter the code sent to your Mobile Number"}
+                            {step === "email"
+                                ? "We’ll send a OTP to your Email Address"
+                                : "Enter the code sent to your Email Address"}
                         </p>
                     </motion.div>
 
 
 
-                    {step === "mobile" ? (
+                    {step === "email" ? (
 
 
-                        <Form {...mobileForm} key="mobile-form">
+                        <Form {...emailForm} key="mobile-form">
 
 
                             <form
-                                onSubmit={mobileForm.handleSubmit(handleSendOtp)}
+                                onSubmit={emailForm.handleSubmit(handleSendOtp)}
                                 className="space-y-6"
                             >
 
                                 <FormField
-                                    control={mobileForm.control}
-                                    name="phone"
+                                    control={emailForm.control}
+                                    name="email"
                                     render={({ field }) => (
-                                        <FormItem>
+
+                                        <FormItem className="space-y-4">
+
                                             <FormControl>
-                                                <PhoneInput
-                                                    international
-                                                    defaultCountry="IN"
-                                                    placeholder="Enter mobile number"
-                                                    value={field.value}
-                                                    onChange={field.onChange}
-                                                    className="w-full rounded-xl py-4 px-4 border border-gray-300 "
-                                                />
+
+                                                <Input {...field} className="py-6" type="email" placeholder="Enter Your Email" />
+
                                             </FormControl>
-                                            <FormMessage />
+
+                                            <FormMessage className="text-center" />
+
                                         </FormItem>
                                     )}
                                 />

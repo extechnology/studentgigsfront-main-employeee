@@ -2,7 +2,7 @@ import { CommonApi } from "./CommonApi";
 
 
 // Base Url
-export const Base_Url = "https://server.studentsgigs.com/api/employee"
+export const Base_Url = "https://0735a0800fac.ngrok-free.app/api/employee"
 
 
 
@@ -48,6 +48,22 @@ export const PostMobileOtpVerify = async (data: any) => {
 
 }
 
+
+// Account Delete Otp
+export const PostAccountDeleteOtp = async (data: any) => {
+
+    return await CommonApi("POST", `${Base_Url}/user-delete-request-otp/`, data, "")
+
+}
+
+
+
+// Account Delete Otp Verify
+export const PostAccountDeleteOtpVerify = async (data: any) => {
+
+    return await CommonApi("POST", `${Base_Url}/verify-user-delete-otp/`, data, "")
+
+}
 
 
 // Reset Password
