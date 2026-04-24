@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import { Popover } from "@headlessui/react";
 import { User, Settings, Crown, Bookmark, KeyRound, LogOut, Gauge } from "lucide-react";
-import LoginModal from "../LoginModal/Loginmodal";
-import { useState } from "react";
 
 
 interface ProfileMenuProps {
@@ -14,14 +12,6 @@ interface ProfileMenuProps {
 
 
 const ProfileMenu: React.FC<ProfileMenuProps> = ({ LoginStatus, HandleLogOut, data, color }) => {
-
-
-    // Login modal
-    const [isOpen, setIsOpen] = useState(false);
-
-    const handleLoginClick = () => {
-        setIsOpen(true);
-    };
 
 
     return (
@@ -45,15 +35,13 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ LoginStatus, HandleLogOut, da
                         <Popover.Panel
                             className="absolute -left-32 top-9 z-10 mt-3 w-52 dropdown rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5"
                         >
-                            <PopoverContent LoginStatus={LoginStatus} HandleLogOut={HandleLogOut} handleLoginClick={handleLoginClick} />
+                            <PopoverContent LoginStatus={LoginStatus} HandleLogOut={HandleLogOut} />
 
                         </Popover.Panel>
                     </>
                 )}
             </Popover>
 
-            {/* Login Modal */}
-            <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
         </>
     );
@@ -64,11 +52,10 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ LoginStatus, HandleLogOut, da
 interface PopoverContentProps {
     LoginStatus: boolean;
     HandleLogOut: () => void;
-    handleLoginClick: () => void;
 }
 
 
-const PopoverContent: React.FC<PopoverContentProps> = ({ LoginStatus, HandleLogOut, handleLoginClick }) => (
+const PopoverContent: React.FC<PopoverContentProps> = ({ LoginStatus, HandleLogOut }) => (
 
     <div className="p-4">
         <MenuItem link="/userprofile" icon={<User size={20} />} text="Profile" />
@@ -78,7 +65,9 @@ const PopoverContent: React.FC<PopoverContentProps> = ({ LoginStatus, HandleLogO
         <MenuItem link="/planusage" icon={<Gauge size={20} />} text="Plan Usage" />
 
         {!LoginStatus ? (
-            <button className="w-full hover:cursor-pointer text-left flex font-semibold items-center gap-2 text-sm text-gray-900 hover:bg-gray-50 p-4 rounded-lg" onClick={handleLoginClick}><KeyRound size={20} /> Login </button>
+            <Link to="/auth">
+                <button className="w-full hover:cursor-pointer text-left flex font-semibold items-center gap-2 text-sm text-gray-900 hover:bg-gray-50 p-4 rounded-lg" ><KeyRound size={20} /> Login </button>
+            </Link> 
         ) : (
             <MenuItemLogout icon={<LogOut size={20} />} text="Logout" HandleLogOut={HandleLogOut} />
         )}

@@ -20,11 +20,11 @@ createRoot(document.getElementById('root')!).render(
 
         <AuthProvider>
 
-            <JobSearchProvider>
+          <JobSearchProvider>
 
-              <App />
+            <App />
 
-            </JobSearchProvider>
+          </JobSearchProvider>
 
         </AuthProvider>
 
