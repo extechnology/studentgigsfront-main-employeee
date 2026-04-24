@@ -170,10 +170,6 @@ export default function Landing() {
         {/* About */}
         <div><About /></div>
 
-        {/* Welcome Modal */}
-        {/* <WelcomeModal /> */}
-
-
       </main>
 
 

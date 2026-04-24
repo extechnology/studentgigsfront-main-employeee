@@ -87,6 +87,12 @@ const EmployerPlansPage = () => {
                     <path d="M8 12H16M12 8V16" stroke="white" strokeWidth="2" strokeLinecap="round" />
                 </svg>
             ),
+            starter: (
+                <svg viewBox="0 0 24 24" className="w-12 h-12">
+                    <circle cx="12" cy="12" r="10" fill="#f59e0b" />
+                    <path d="M8 12H16M12 8V16" stroke="white" strokeWidth="3" strokeLinecap="round" />
+                </svg>
+            ),
             standard: (
                 <svg viewBox="0 0 24 24" fill="none" className="w-12 h-12">
                     <circle cx="12" cy="12" r="10" fill="#8B5CF6" />
@@ -316,6 +322,9 @@ const EmployerPlansPage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth', });
 
 
+    console.log(currentPlan);
+
+
 
     return (
 
@@ -372,11 +381,11 @@ const EmployerPlansPage = () => {
 
                                     {data?.map((plan: Plan) => (
 
-                                        currentPlan?.toLowerCase() === plan.id && (
+                                        currentPlan?.toLowerCase() === plan?.id && (
 
                                             <div
                                                 className={`h-3 w-3 rounded-full animate-pulse 
-                                                ${currentPlan?.toLowerCase() === plan.id
+                                                ${currentPlan?.toLowerCase() === plan?.id
                                                         ? (isPlanExpired ? "bg-rose-500" : "bg-green-400")
                                                         : "bg-gray-300"}`
                                                 }
@@ -390,12 +399,20 @@ const EmployerPlansPage = () => {
                                         Current Plan:
                                     </span>
 
+
+                                    {currentPlan?.toLowerCase() === 'free' && (
+                                        <span className="font-bold flex items-center gap-2 text-blue-500">
+                                            {currentPlan?.toUpperCase()}
+                                        </span>
+                                    )}
+
+
                                     {data?.map((plan: Plan) => (
 
-                                        currentPlan?.toLowerCase() === plan.id && (
+                                        currentPlan?.toLowerCase() === plan?.id && (
 
-                                            <span key={plan.id} className={`font-bold flex items-center gap-2 ${getColorClass(plan.color, 'text')}`}>
-                                                {plan.name.toUpperCase()} <span className="text-rose-500">{currentPlan.toLowerCase() === plan.id && isPlanExpired ? '(Expired)' : ' '}</span>
+                                            <span key={plan?.id} className={`font-bold flex items-center gap-2 ${getColorClass(plan?.color, 'text')}`}>
+                                                {plan?.name.toUpperCase()} <span className="text-rose-500">{currentPlan.toLowerCase() === plan?.id && isPlanExpired ? '(Expired)' : ' '}</span>
                                             </span>
 
                                         )
@@ -418,11 +435,11 @@ const EmployerPlansPage = () => {
 
                                     {data?.map((plan: Plan) => (
                                         <motion.div
-                                            key={plan.id}
+                                            key={plan?.id}
                                             variants={itemVariants}
                                             initial="hidden"
                                             animate="visible"
-                                            className={`rounded-2xl overflow-hidden transition-all duration-300 ${currentPlan?.toLowerCase() === plan.id && !isPlanExpired
+                                            className={`rounded-2xl overflow-hidden transition-all duration-300 ${currentPlan?.toLowerCase() === plan?.id && !isPlanExpired
                                                 ? 'bg-white shadow-xl border border-gray-100'
                                                 : 'bg-white/80 shadow-md border border-gray-100'
                                                 }`}
@@ -430,18 +447,18 @@ const EmployerPlansPage = () => {
 
 
                                             {/* Recommended badge */}
-                                            {plan.recommended && currentPlan?.toLowerCase() !== plan.id && (
-                                                <div className={`${getColorClass(plan.color, 'bg')} text-white text-sm font-medium text-center py-2 px-4 shadow-md`}>
+                                            {plan.recommended && currentPlan?.toLowerCase() !== plan?.id && (
+                                                <div className={`${getColorClass(plan?.color, 'bg')} text-white text-sm font-medium text-center py-2 px-4 shadow-md`}>
                                                     Recommended for employers
                                                 </div>
                                             )}
 
 
                                             {/* Current Plan Indicator */}
-                                            {currentPlan?.toLowerCase() === plan.id && !isPlanExpired && (
+                                            {currentPlan?.toLowerCase() === plan?.id && !isPlanExpired && (
 
                                                 <div className=" w-full">
-                                                    <div className={`${getColorClass(plan.color, 'bg')} text-white text-sm font-medium text-center py-2 px-4 shadow-md`}>
+                                                    <div className={`${getColorClass(plan?.color, 'bg')} text-white text-sm font-medium text-center py-2 px-4 shadow-md`}>
                                                         Current Plan
                                                     </div>
                                                 </div>
@@ -450,7 +467,7 @@ const EmployerPlansPage = () => {
 
 
                                             {/* Plan Expired Indicator */}
-                                            {currentPlan?.toLowerCase() === plan.id && isPlanExpired && (
+                                            {currentPlan?.toLowerCase() === plan?.id && isPlanExpired && (
 
                                                 <div className=" w-full">
                                                     <div className="bg-gradient-to-r from-rose-500 to-rose-600 text-white text-sm font-medium text-center py-2 px-4 shadow-md">
@@ -471,24 +488,24 @@ const EmployerPlansPage = () => {
                                                 <div className="flex items-center space-x-4">
 
                                                     <motion.div
-                                                        className={`p-2 rounded-full ${getColorClass(plan.color, 'bgLight')} flex items-center justify-center`}
+                                                        className={`p-2 rounded-full ${getColorClass(plan?.color, 'bgLight')} flex items-center justify-center`}
                                                         whileHover={{ rotate: 5, scale: 1.1 }}
                                                         transition={{ type: "spring", stiffness: 400, damping: 10 }}
                                                     >
-                                                        <div className="flex items-center justify-center w-8 h-8"> {PlanIcons({ plan: plan.id })}</div>
+                                                        <div className="flex items-center justify-center w-8 h-8"> {PlanIcons({ plan: plan?.id })}</div>
                                                     </motion.div>
 
 
                                                     {/* Plan Price */}
                                                     <div>
-                                                        <h3 className="text-xl font-semibold">{plan.name.toUpperCase()}</h3>
+                                                        <h3 className="text-xl font-semibold">{plan?.name?.toUpperCase()}</h3>
                                                         <div className="flex items-baseline">
 
-                                                            <span className={`${plan.id === 'premium' && currentPlan?.toLowerCase() === 'standard' && isoffer ? 'line-through text-gray-400' : ''} text-2xl font-extrabold`}>
-                                                                {plan.price === '0' ? 'Free' : `Rs. ${parseInt(plan.price).toLocaleString()}`}
+                                                            <span className={`${plan?.id === 'premium' && currentPlan?.toLowerCase() === 'standard' && isoffer ? 'line-through text-gray-400' : ''} text-2xl font-extrabold`}>
+                                                                {plan?.price === '0' ? 'Free' : `Rs. ${parseInt(plan?.price).toLocaleString()}`}
                                                             </span>
 
-                                                            <span className='text-2xl font-extrabold ms-5'>{plan.id === 'premium' && currentPlan?.toLowerCase() === 'standard' && isoffer ? ` Rs. ${Number(plan?.price) - 0.5 * Number(currentPlanData?.price || 0)}` : ''}</span>
+                                                            <span className='text-2xl font-extrabold ms-5'>{plan?.id === 'premium' && currentPlan?.toLowerCase() === 'standard' && isoffer ? ` Rs. ${Number(plan?.price) - 0.5 * Number(currentPlanData?.price || 0)}` : ''}</span>
 
                                                         </div>
                                                     </div>
@@ -497,7 +514,7 @@ const EmployerPlansPage = () => {
 
 
                                                 <motion.div
-                                                    animate={{ rotate: currentPlan?.toLowerCase() === plan.id ? 180 : 0 }}
+                                                    animate={{ rotate: currentPlan?.toLowerCase() === plan?.id ? 180 : 0 }}
                                                     transition={{ duration: 0.3 }}
                                                 >
                                                     <svg
@@ -525,7 +542,7 @@ const EmployerPlansPage = () => {
                                                     className="px-6 pb-6 pt-2 overflow-hidden"
                                                 >
                                                     <ul className="space-y-3">
-                                                        {plan.features.map((feature, idx) => (
+                                                        {plan?.features?.map((feature, idx) => (
                                                             <motion.li
                                                                 key={idx}
                                                                 className="flex justify-between items-center py-2 border-b border-gray-100"
@@ -533,12 +550,12 @@ const EmployerPlansPage = () => {
                                                                 animate={{ opacity: 1, x: 0 }}
                                                                 transition={{ delay: idx * 0.05 }}
                                                             >
-                                                                <span className="text-gray-600">{feature.name}</span>
-                                                                <span className={`font-medium ${feature.value === 'Yes' ? 'text-green-500' :
-                                                                    feature.value === 'No' ? 'text-gray-400' :
-                                                                        getColorClass(plan.color, 'text')
+                                                                <span className="text-gray-600">{feature?.name}</span>
+                                                                <span className={`font-medium ${feature?.value === 'Yes' ? 'text-green-500' :
+                                                                    feature?.value === 'No' ? 'text-gray-400' :
+                                                                        getColorClass(plan?.color, 'text')
                                                                     }`}>
-                                                                    {feature.value}
+                                                                    {feature?.value}
                                                                 </span>
                                                             </motion.li>
                                                         ))}
@@ -549,28 +566,26 @@ const EmployerPlansPage = () => {
 
                                                     {/* Plan Upgrade Button */}
                                                     <motion.button
-                                                        whileHover={{ scale: isPlanExpired || currentPlan?.toLowerCase() !== plan.id ? 1.05 : 1 }}
-                                                        whileTap={{ scale: isPlanExpired || currentPlan?.toLowerCase() !== plan.id ? 0.95 : 1 }}
+                                                        whileHover={{ scale: isPlanExpired || currentPlan?.toLowerCase() !== plan?.id ? 1.05 : 1 }}
+                                                        whileTap={{ scale: isPlanExpired || currentPlan?.toLowerCase() !== plan?.id ? 0.95 : 1 }}
                                                         className={`w-full py-3 px-6 rounded-xl font-medium text-white bg-gradient-to-r 
-                                                        ${getColorClass(plan.color, 'gradient')} shadow-lg  
-                                                        ${(currentPlan?.toLowerCase() === plan.id && !isPlanExpired) || // Disable current active plan
-                                                                (plan.id === "free" && (currentPlan?.toLocaleLowerCase() !== "free" || isPlanExpired)) || // Disable Free plan if another plan is active or expired
-                                                                (plan.id === "standard" && currentPlan?.toLocaleLowerCase() === "premium" && !isPlanExpired) || Progress // Disable Standard plan if another plan is active 
+                                                        ${getColorClass(plan?.color, 'gradient')} shadow-lg  
+                                                        ${(currentPlan?.toLowerCase() === plan?.id && !isPlanExpired) || // Disable current active plan
+                                                                (plan?.id === "standard" && currentPlan?.toLocaleLowerCase() === "premium" && !isPlanExpired) || Progress // Disable Standard plan if another plan is active 
                                                                 ? "opacity-50 cursor-not-allowed"
                                                                 : ""
                                                             }`}
                                                         disabled={
-                                                            (currentPlan?.toLowerCase() === plan.id && !isPlanExpired) || // Disable current active plan
-                                                            (plan.id === "free" && (currentPlan?.toLowerCase() !== "free" || isPlanExpired)) || // Disable Free plan if another plan is active or expired
-                                                            (plan.id === "standard" && currentPlan?.toLowerCase() === "premium" && !isPlanExpired)
+                                                            (currentPlan?.toLowerCase() === plan?.id && !isPlanExpired) || // Disable current active plan
+                                                            (plan?.id === "standard" && currentPlan?.toLowerCase() === "premium" && !isPlanExpired)
                                                         }
-                                                        onClick={() => handlePlanUpgrade(plan.id, plan.price)}
+                                                        onClick={() => handlePlanUpgrade(plan?.id, plan?.price)}
                                                     >
                                                         {Progress ?
                                                             <span className="animate-spin">🔄 Loading...</span> :
-                                                            currentPlan?.toLowerCase() === plan.id && isPlanExpired
+                                                            currentPlan?.toLowerCase() === plan?.id && isPlanExpired
                                                                 ? "Renew Plan"
-                                                                : currentPlan?.toLowerCase() === plan.id
+                                                                : currentPlan?.toLowerCase() === plan?.id
                                                                     ? "Current Plan"
                                                                     : "Upgrade Now"}
 
@@ -605,11 +620,11 @@ const EmployerPlansPage = () => {
                                 {data?.map((plan: Plan) => (
 
                                     <motion.div
-                                        key={plan.id}
+                                        key={plan?.id}
                                         variants={itemVariants}
                                         whileHover={{ y: -8 }}
-                                        className={`relative rounded-2xl transition-all duration-300 overflow-hidden ${currentPlan?.toLowerCase() === plan.id && !isPlanExpired
-                                            ? `bg-white shadow-xl border-2 ${getColorClass(plan.color, 'border')} ${getColorClass(plan.color, 'shadow')}`
+                                        className={`relative rounded-2xl transition-all duration-300 overflow-hidden ${currentPlan?.toLowerCase() === plan?.id && !isPlanExpired
+                                            ? `bg-white shadow-xl border-2 ${getColorClass(plan?.color, 'border')} ${getColorClass(plan?.color, 'shadow')}`
                                             : 'bg-white/90 shadow-md border border-gray-100'
                                             }`}
 
@@ -617,10 +632,10 @@ const EmployerPlansPage = () => {
 
 
                                         {/* Current Plan Indicator */}
-                                        {currentPlan?.toLowerCase() === plan.id && !isPlanExpired && (
+                                        {currentPlan?.toLowerCase() === plan?.id && !isPlanExpired && (
 
                                             <div className="absolute top-0 left-0 right-0 w-full">
-                                                <div className={`${getColorClass(plan.color, 'bg')} text-white text-sm font-medium text-center py-2 px-4 shadow-md`}>
+                                                <div className={`${getColorClass(plan?.color, 'bg')} text-white text-sm font-medium text-center py-2 px-4 shadow-md`}>
                                                     Current Plan
                                                 </div>
                                             </div>
@@ -629,9 +644,9 @@ const EmployerPlansPage = () => {
 
 
                                         {/* Recommended tag with correct positioning */}
-                                        {plan.recommended && currentPlan?.toLowerCase() !== plan.id && (
+                                        {plan?.recommended && currentPlan?.toLowerCase() !== plan?.id && (
                                             <div className="absolute top-0 left-0 right-0 w-full">
-                                                <div className={`${getColorClass(plan.color, 'bg')} text-white text-sm font-medium text-center py-2 px-4 shadow-md`}>
+                                                <div className={`${getColorClass(plan?.color, 'bg')} text-white text-sm font-medium text-center py-2 px-4 shadow-md`}>
                                                     Recommended for Employee
                                                 </div>
                                             </div>
@@ -639,7 +654,7 @@ const EmployerPlansPage = () => {
 
 
                                         {/* Plan Expired Indicator */}
-                                        {currentPlan?.toLowerCase() === plan.id && isPlanExpired && (
+                                        {currentPlan?.toLowerCase() === plan?.id && isPlanExpired && (
 
                                             <div className="absolute top-0 left-0 right-0 w-full">
                                                 <div className="bg-gradient-to-r from-rose-500 to-rose-600 text-white text-sm font-medium text-center py-2 px-4 shadow-md">
@@ -651,9 +666,9 @@ const EmployerPlansPage = () => {
 
 
                                         {/* Active Indicator */}
-                                        {currentPlan?.toLowerCase() === plan.id && !isPlanExpired && (
+                                        {currentPlan?.toLowerCase() === plan?.id && !isPlanExpired && (
                                             <motion.div
-                                                className={`absolute top-0 left-0 w-full h-1 ${getColorClass(plan.color, 'bg')} ${plan.recommended ? 'mt-8' : ''}`}
+                                                className={`absolute top-0 left-0 w-full h-1 ${getColorClass(plan?.color, 'bg')} ${plan?.recommended ? 'mt-8' : ''}`}
                                                 layoutId="activeIndicator"
                                                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                                             />
@@ -661,7 +676,7 @@ const EmployerPlansPage = () => {
 
 
                                         {/* Plan Content */}
-                                        <div className={`p-8 ${plan.recommended || currentPlan?.toLowerCase() === plan.id && isPlanExpired || currentPlan?.toLowerCase() === plan.id ? 'pt-12' : ''}`}>
+                                        <div className={`p-8 ${plan?.recommended || currentPlan?.toLowerCase() === plan?.id && isPlanExpired || currentPlan?.toLowerCase() === plan?.id ? 'pt-12' : ''}`}>
 
 
                                             <div className="flex justify-between items-start mb-6">
@@ -669,12 +684,12 @@ const EmployerPlansPage = () => {
 
                                                 <div>
                                                     <div className="flex items-center gap-2">
-                                                        <h3 className="text-2xl font-bold mb-1">{plan.name.toUpperCase()}</h3>
-                                                        {currentPlan?.toLowerCase() === plan.id && (
+                                                        <h3 className="text-2xl font-bold mb-1">{plan?.name?.toUpperCase()}</h3>
+                                                        {currentPlan?.toLowerCase() === plan?.id && (
                                                             <motion.span
                                                                 initial={{ scale: 0 }}
                                                                 animate={{ scale: 1 }}
-                                                                className={`px-2 py-1 text-xs rounded-full ${getColorClass(plan.color, 'bgLight')} ${getColorClass(plan.color, 'text')}`}
+                                                                className={`px-2 py-1 text-xs rounded-full ${getColorClass(plan?.color, 'bgLight')} ${getColorClass(plan?.color, 'text')}`}
                                                             >
                                                                 Current
                                                             </motion.span>
@@ -685,11 +700,11 @@ const EmployerPlansPage = () => {
                                                     {/* PLan Price */}
                                                     <div className="flex items-baseline">
 
-                                                        <span className={`${plan.id === 'premium' && currentPlan?.toLowerCase() === 'standard' && isoffer ? 'line-through text-gray-400' : ''} text-2xl font-extrabold`}>
-                                                            {plan.price === '0' ? 'Free' : `Rs. ${parseInt(plan.price).toLocaleString()}`}
+                                                        <span className={`${plan?.id === 'premium' && currentPlan?.toLowerCase() === 'standard' && isoffer ? 'line-through text-gray-400' : ''} text-2xl font-extrabold`}>
+                                                            {plan?.price === '0' ? 'Free' : `Rs. ${parseInt(plan?.price).toLocaleString()}`}
                                                         </span>
 
-                                                        <span className='text-2xl font-extrabold ms-5'>{plan.id === 'premium' && currentPlan?.toLowerCase() === 'standard' && isoffer ? ` Rs. ${Number(plan?.price) - 0.5 * Number(currentPlanData?.price || 0)}` : ''}</span>
+                                                        <span className='text-2xl font-extrabold ms-5'>{plan?.id === 'premium' && currentPlan?.toLowerCase() === 'standard' && isoffer ? ` Rs. ${Number(plan?.price) - 0.5 * Number(currentPlanData?.price || 0)}` : ''}</span>
 
                                                     </div>
 
@@ -698,12 +713,12 @@ const EmployerPlansPage = () => {
 
 
                                                 <motion.div
-                                                    className={`p-3 rounded-full ${getColorClass(plan.color, 'bg')} flex items-center justify-center`}
+                                                    className={`p-3 rounded-full ${getColorClass(plan?.color, 'bg')} flex items-center justify-center`}
                                                     whileHover={{ rotate: 10, scale: 1.1 }}
                                                     transition={{ type: "spring", stiffness: 400, damping: 10 }}
                                                 >
                                                     <div className={`flex items-center justify-center w-8 h-8`}>
-                                                        {PlanIcons({ plan: plan.id })}
+                                                        {PlanIcons({ plan: plan?.id })}
                                                     </div>
 
                                                 </motion.div>
@@ -714,7 +729,7 @@ const EmployerPlansPage = () => {
 
                                             {/* Plan Features */}
                                             <ul className="space-y-4 mb-8">
-                                                {plan.features.map((feature, idx) => (
+                                                {plan?.features?.map((feature, idx) => (
                                                     <motion.li
                                                         key={idx}
                                                         className="flex items-center justify-between"
@@ -722,29 +737,29 @@ const EmployerPlansPage = () => {
                                                         animate={{ opacity: 1, y: 0 }}
                                                         transition={{ delay: 0.1 + idx * 0.05 }}
                                                     >
-                                                        <span className="text-gray-700">{feature.name}</span>
-                                                        <span className={`font-medium ${feature.value === 'Yes' ? 'text-green-600' :
-                                                            feature.value === 'No' ? 'text-gray-400' :
-                                                                typeof checkValue(feature.value) === 'boolean' ?
-                                                                    checkValue(feature.value) ? 'text-green-600' : 'text-gray-400' :
-                                                                    getColorClass(plan.color, 'text')
+                                                        <span className="text-gray-700">{feature?.name}</span>
+                                                        <span className={`font-medium ${feature?.value === 'Yes' ? 'text-green-600' :
+                                                            feature?.value === 'No' ? 'text-gray-400' :
+                                                                typeof checkValue(feature?.value) === 'boolean' ?
+                                                                    checkValue(feature?.value) ? 'text-green-600' : 'text-gray-400' :
+                                                                    getColorClass(plan?.color, 'text')
                                                             }`}>
-                                                            {feature.value === 'Yes' ? (
+                                                            {feature?.value === 'Yes' ? (
                                                                 <span className="flex items-center">
                                                                     <svg className="w-5 h-5 mr-1 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                                     </svg>
-                                                                    {feature.value}
+                                                                    {feature?.value}
                                                                 </span>
-                                                            ) : feature.value === 'No' ? (
+                                                            ) : feature?.value === 'No' ? (
                                                                 <span className="flex items-center">
                                                                     <svg className="w-5 h-5 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                                                     </svg>
-                                                                    {feature.value}
+                                                                    {feature?.value}
                                                                 </span>
                                                             ) : (
-                                                                feature.value
+                                                                feature?.value
                                                             )}
                                                         </span>
                                                     </motion.li>
@@ -755,28 +770,26 @@ const EmployerPlansPage = () => {
 
                                             {/* Plan Upgrade Button */}
                                             <motion.button
-                                                whileHover={{ scale: isPlanExpired || currentPlan?.toLowerCase() !== plan.id ? 1.05 : 1 }}
-                                                whileTap={{ scale: isPlanExpired || currentPlan?.toLowerCase() !== plan.id ? 0.95 : 1 }}
+                                                whileHover={{ scale: isPlanExpired || currentPlan?.toLowerCase() !== plan?.id ? 1.05 : 1 }}
+                                                whileTap={{ scale: isPlanExpired || currentPlan?.toLowerCase() !== plan?.id ? 0.95 : 1 }}
                                                 className={`w-full py-3 px-6 rounded-xl font-medium text-white bg-gradient-to-r 
-                                                        ${getColorClass(plan.color, 'gradient')} shadow-lg  
-                                                        ${(currentPlan?.toLowerCase() === plan.id && !isPlanExpired) || // Disable current active plan
-                                                        (plan.id === "free" && (currentPlan?.toLocaleLowerCase() !== "free" || isPlanExpired)) || // Disable Free plan if another plan is active or expired
-                                                        (plan.id === "standard" && currentPlan?.toLocaleLowerCase() === "premium" && !isPlanExpired) || Progress // Disable Standard plan if another plan is active 
+                                                        ${getColorClass(plan?.color, 'gradient')} shadow-lg  
+                                                        ${(currentPlan?.toLowerCase() === plan?.id && !isPlanExpired) || // Disable current active plan
+                                                        (plan?.id === "standard" && currentPlan?.toLocaleLowerCase() === "premium" && !isPlanExpired) || Progress // Disable Standard plan if another plan is active 
                                                         ? "opacity-50 cursor-not-allowed"
                                                         : ""
                                                     }`}
                                                 disabled={
-                                                    (currentPlan?.toLowerCase() === plan.id && !isPlanExpired) || // Disable current active plan
-                                                    (plan.id === "free" && (currentPlan?.toLowerCase() !== "free" || isPlanExpired)) || // Disable Free plan if another plan is active or expired
-                                                    (plan.id === "standard" && currentPlan?.toLowerCase() === "premium" && !isPlanExpired)
+                                                    (currentPlan?.toLowerCase() === plan?.id && !isPlanExpired) || // Disable current active plan
+                                                    (plan?.id === "standard" && currentPlan?.toLowerCase() === "premium" && !isPlanExpired)
                                                 }
-                                                onClick={() => handlePlanUpgrade(plan.id, plan.price)}
+                                                onClick={() => handlePlanUpgrade(plan?.id, plan?.price)}
                                             >
                                                 {Progress ?
                                                     <span className="animate-spin">🔄 Loading...</span> :
-                                                    currentPlan?.toLowerCase() === plan.id && isPlanExpired
+                                                    currentPlan?.toLowerCase() === plan?.id && isPlanExpired
                                                         ? "Renew Plan"
-                                                        : currentPlan?.toLowerCase() === plan.id
+                                                        : currentPlan?.toLowerCase() === plan?.id
                                                             ? "Current Plan"
                                                             : "Upgrade Now"}
 

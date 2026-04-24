@@ -1,10 +1,9 @@
-import { lazy, Suspense, ReactNode, useState, useEffect } from "react";
+import { lazy, Suspense, ReactNode } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "./Context/AuthContext";
 import ProtectedRouteForSavedJobs from "./Components/Common/ProtectedRouteForSavedJobs";
 import Loader from "./Components/Loaders/Loader";
-import LoginModal from "./Components/LoginModal/Loginmodal";
 
 
 
@@ -29,7 +28,7 @@ const JobPages = {
   JobDetails: lazy(() => import("./Pages/JobDeatils")),
   ApplyJob: lazy(() => import("./Pages/ApplyJob")),
   JobApplySuccess: lazy(() => import("./Pages/JobApplySuccess")),
-  SavedJobs: lazy(() => import("./Pages/SavedJobs")),
+  SavedJobs: lazy(() => import("./Pages/SavedJobs")),        
 };
 
 
@@ -62,34 +61,6 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
 
 
 function App() {
-
-
-  // Authentication
-  const { isAuthenticated } = useAuth();
-
-
-  // Login Modal
-  const [isOpen, setIsOpen] = useState(false);
-
-
-
-  // Login Modal Open 
-  useEffect(() => {
-    
-    if (!isAuthenticated && !sessionStorage.getItem("loginModalShown")) {
-
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-        sessionStorage.setItem("loginModalShown", "true");
-      }, 10000);
-
-      return () => clearTimeout(timer);
-
-    }
-
-  }, [isAuthenticated]);
-
-
 
 
   return (
@@ -147,10 +118,6 @@ function App() {
       </Suspense>
 
       <Toaster position="top-center" />
-
-
-      {/* Login Modal */}
-      <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
     </>
 

@@ -153,7 +153,11 @@ const SelectedStyles = {
 }
 
 
-export default function FilterJob() {
+interface FilterJobProps {
+    className?: string;
+}
+
+export default function FilterJob({ className }: FilterJobProps = {}) {
 
     
     // Get the current path
@@ -204,6 +208,10 @@ export default function FilterJob() {
             location: data.location,
             salary_type: data.salary_type
         });
+        
+        if (location.pathname !== '/jobfilter') {
+            navigate('/jobfilter');
+        }
 
     }
 
@@ -213,7 +221,7 @@ export default function FilterJob() {
         <>
 
             {/* Filter section */}
-            <div className="w-full max-w-7xl mx-auto p-2 sm:-mt-20 -mt-24">
+            <div className={className || "w-full max-w-7xl mx-auto p-2 sm:-mt-20 -mt-24"}>
 
 
                 <form onSubmit={handleSubmit(Onsubmit)}>
@@ -229,6 +237,7 @@ export default function FilterJob() {
                             {/* <Briefcase className="text-emerald-500 flex-shrink-0" size={24} /> */}
 
                             <div className="w-full">
+                                
                                 <Controller
                                     name="category"
                                     control={control}

@@ -16,7 +16,7 @@ import { GetPersonalInfo } from "@/Hooks/UserProfile";
 import { useQueryClient } from "@tanstack/react-query";
 import NotificationPopover from "@/Components/Common/Notifications";
 import { GigsAlert } from "./GigsAlert";
-import LoginModal from "../LoginModal/Loginmodal";
+
 
 
 
@@ -31,11 +31,6 @@ export default function Header() {
 
   // Get User Personal Information
   const { data } = GetPersonalInfo()
-
-
-
-  // Login Modal
-  const [isOpen, setIsOpen] = useState(false);
 
 
 
@@ -158,7 +153,7 @@ export default function Header() {
 
 
                 {/* Profile image */}
-                <div onClick={() => setIsOpen(true)} className="ms-2 sm:hidden">
+                <div className="ms-2 sm:hidden">
 
                   <img
                     src={data[0]?.profile?.profile_pic ?? "/Header-profile.webp"}
@@ -212,13 +207,15 @@ export default function Header() {
 
 
                 {/* Explore Gigs */}
-                <Link to={'/jobfilter'}>
+                {location.pathname !== "/jobfilter" && (
+                  <Link to={'/jobfilter'}>
 
-                  <button className={` flex items-center gap-x-2 bg-[#004673] ms-2 text-white font-semibold text-xs px-5 py-2  sm:hidden`}>
-                    Explore Jobs <Telescope size={16} />
-                  </button>
+                    <button className={` flex items-center gap-x-2 bg-[#004673] ms-2 text-white font-semibold text-xs px-5 py-2  sm:hidden`}>
+                      Explore Jobs <Telescope size={16} />
+                    </button>
 
-                </Link>
+                  </Link>
+                )}
 
               </div>
 
@@ -247,13 +244,15 @@ export default function Header() {
 
 
               {/* Explore Gigs */}
-              <Link to={'/jobfilter'}>
+              {location.pathname !== "/jobfilter" && (
+                <Link to={'/jobfilter'}>
 
-                <button className={` flex items-center gap-x-2 bg-[#004673] ms-2 text-white font-semibold text-md md:px-2 lg:px-8  xl:px-14 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
-                  Explore Jobs <Telescope size={24} />
-                </button>
+                  <button className={` flex items-center gap-x-2 bg-[#004673] ms-2 text-white font-semibold text-md md:px-2 lg:px-8  xl:px-14 py-2  hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out `}>
+                    Explore Jobs <Telescope size={24} />
+                  </button>
 
-              </Link>
+                </Link>
+              )}
 
 
               {/* Find Student Talents */}
@@ -466,13 +465,14 @@ export default function Header() {
                           {/* Login/Logout */}
                           {!isAuthenticated ? (
                             <div
-                              onClick={() => { setMobileMenuOpen(false), setIsOpen(true) }}
                               className="group -mx-3 flex items-center gap-x-3 px-3 py-4 text-base font-semibold text-gray-900 hover:bg-gray-50 transition-colors duration-200 border-b border-gray-400/45"
                             >
-                              <div className="flex items-center space-x-2">
-                                <KeyRound className="h-5 w-5" />
-                                <span>Login</span>
-                              </div>
+                              <Link to="/auth">
+                                <div className="flex items-center space-x-2">
+                                  <KeyRound className="h-5 w-5" />
+                                  <span>Login</span>
+                                </div>
+                              </Link>
                             </div>
                           ) : (
                             <button
@@ -510,10 +510,6 @@ export default function Header() {
 
         </header>
 
-
-
-        {/* Login Modal */}
-        <LoginModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
 
       </main>

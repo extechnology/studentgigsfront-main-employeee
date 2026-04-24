@@ -128,7 +128,7 @@ const Footer = () => {
 
       {/* Copyright Section */}
       <div className="mt-4 text-center text-sm px-4">
-        <p>&copy; {new Date().getFullYear()} Job Portal. All Rights Reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Students Gigs. All Rights Reserved.</p>
 
         <div className="flex flex-wrap justify-center gap-2 py-1 text-xs sm:text-sm">
           <Link to={'/privacypolicy'} className="hover:text-gray-400">
@@ -155,7 +155,7 @@ const Footer = () => {
 
         </div>
 
-        <p className="text-xs sm:text-sm">Powered by exmedia</p>
+        <a href="https://extechnology.in/" target="_blank" rel="noopener noreferrer" className="text-xs sm:text-sm">Powered by <span className="hover:text-blue-400 text-md">ex-technology</span></a>
       </div>
 
 

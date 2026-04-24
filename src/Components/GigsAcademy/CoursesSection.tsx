@@ -40,7 +40,7 @@ const CoursesSection = () => {
 
 
                 {/* Course Crads */}
-                <div className="max-w-7xl mx-auto">
+                <div className="w-full max-w-[1800px] mx-auto px-4 md:px-8">
 
 
                     <div className="text-center mb-16 max-w-2xl mx-auto">
@@ -64,11 +64,11 @@ const CoursesSection = () => {
 
 
                     {/* Course Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+                    <div className="grid grid-cols-1 gap-8 md:gap-12 w-full mx-auto">
 
                         {isLoading || isFetching || isError ? (
 
-                            Array.from({ length: 2 }).map((_, index) => <CourseCardLoader key={index} />)
+                            Array.from({ length: 1 }).map((_, index) => <CourseCardLoader key={index} />)
 
                         ) : (
 

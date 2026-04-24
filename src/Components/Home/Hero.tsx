@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Telescope } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { HomeSlider } from '@/Hooks/Utils';
+import FilterJob from '@/Components/JobFilter/FilterJob';
 
 
 
@@ -162,6 +163,36 @@ const Hero = () => {
 
 
                   </Swiper>
+
+                  {/* Job Filter Section */}
+                  <div className="absolute z-40 sm:bottom-16 bottom-12 inset-x-0 px-5 sm:px-16 text-white pointer-events-none flex flex-col items-center justify-end text-center">
+                    <div className="pointer-events-auto w-full max-w-7xl">
+                      <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.6 }}
+                        className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-1 drop-shadow-lg text-white"
+                      >
+                        Find the Right Job for You
+                      </motion.h2>
+                      <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.8 }}
+                        className="text-sm sm:text-lg lg:text-xl mb-5 text-gray-200 drop-shadow-md font-medium"
+                      >
+                        “Search part-time jobs and internships by city and salary type”
+                      </motion.p>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 1 }}
+                        className="w-full"
+                      >
+                        <FilterJob className="w-full text-left" />
+                      </motion.div>
+                    </div>
+                  </div>
 
                   {/* Slider dots */}
                   <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
