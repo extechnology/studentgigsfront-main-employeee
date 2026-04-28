@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/Context/AuthContext';
 import { AllPlans } from '@/Hooks/Userplans';
-import { CreateOrder, VerifyPayment } from '@/Hooks/Payment';
-import { RazorpayOrderOptions, useRazorpay } from "react-razorpay";
-import { GetPersonalInfo } from '@/Hooks/UserProfile';
+import { CreateOrder } from '@/Hooks/Payment';
 import PlanLoader from '@/Components/Loaders/PlanLoader';
 import toast from 'react-hot-toast';
 import AnimatedSvg from '@/Components/Loaders/AnimatedSvg';
+import { load } from "@cashfreepayments/cashfree-js";
+
 
 
 
@@ -40,11 +40,11 @@ const EmployerPlansPage = () => {
 
 
     // Razorpay
-    const { Razorpay } = useRazorpay();
+    // const { Razorpay } = useRazorpay();
 
 
     // Get User Personal Info
-    const { data: userInfo } = GetPersonalInfo()
+    // const { data: userInfo } = GetPersonalInfo()
 
 
     // Plan Progress
@@ -56,7 +56,7 @@ const EmployerPlansPage = () => {
 
 
     // Verify Payment Mutate
-    const { mutate: VerifyPaymentMutate } = VerifyPayment()
+    // const { mutate: VerifyPaymentMutate } = VerifyPayment()
 
 
     // Get All Plans Data
@@ -227,79 +227,112 @@ const EmployerPlansPage = () => {
             const formData = new FormData()
 
             formData.append("amount", finalPrice.toString())
-            formData.append("currency", "INR")
             formData.append("plan", plan)
+            // formData.append("currency", "INR")
 
 
 
             // Make the API call For Create Order
             mutate({ formData }, {
 
-                onSuccess: (response) => {
 
-                    if (response.status >= 200 && response.status < 300) {
+                onSuccess: async (response: any) => {
 
-                        // Get the order id
-                        const { id } = response.data
-
-                        // Initialize Razorpay
-                        const options: RazorpayOrderOptions = {
-
-                            key: import.meta.env.VITE_RAZORPAY_KEY || "",
-                            amount: finalPrice * 100,
-                            currency: "INR",
-                            name: "Medresearch India Pvt Ltd",
-                            description: `Upgrade to ${plan} Plan`,
-                            order_id: id,
-                            handler: (response) => {
-
-                                VerifyPaymentMutate({ response }, {
-
-                                    onSuccess: (response) => {
-
-                                        if (response.status >= 200 && response.status < 300) {
-
-                                            toast.success(`Upgraded to ${plan} Plan Successful `, { duration: 5000 });
-                                            window.scrollTo({ top: 0, behavior: 'smooth', });
-
-                                        } else {
-
-                                            toast.error("Something went wrong");
-
-                                        }
-                                    }
-
-                                })
-                            },
-                            prefill: {
-                                name: userInfo?.[0]?.name || "Guest",
-                                email: userInfo?.[0]?.email || "guest@example.com",
-                                contact: userInfo?.[0]?.phone || "1234567890",
-                            },
-                            theme: {
-                                color: "#F37254",
-                            },
-                        };
+                    
+                    const sessionId = response?.data?.payment_session_id || response?.payment_session_id;
 
 
-                        // Open Razorpay
-                        const razorpayInstance = new Razorpay(options);
-                        razorpayInstance.open();
+                    if (sessionId) {
+
+                        try {
+
+                            const cashfree = await load({
+                                mode: "production",
+                            });
 
 
-                        // Add event listeners
-                        razorpayInstance.on("payment.failed", (error) => {
-                            console.error("Payment Failed:", error);
-                            toast.error("Payment Failed! Please Try Again.");
-                        });
+                            let checkoutOptions = {
+                                paymentSessionId: sessionId,
+                                redirectTarget: "_self",
+                            };
 
+                            cashfree.checkout(checkoutOptions)
+
+                        } catch (err) {
+
+                            toast.error("Failed to load payment gateway");
+
+                        }
 
                     } else {
 
-                        console.log(response);
-                        toast.error("Something went wrong");
+                        toast.error("Invalid payment session data received.");
 
                     }
+
+                    // if (response?.status >= 200 && response?.status < 300) {
+
+                    //     // Get the order id
+                    //     const { id } = response.data
+
+                    //     // Initialize Razorpay
+                    //     const options: RazorpayOrderOptions = {
+
+                    //         key: import.meta.env.VITE_RAZORPAY_KEY || "",
+                    //         amount: finalPrice * 100,
+                    //         currency: "INR",
+                    //         name: "Medresearch India Pvt Ltd",
+                    //         description: `Upgrade to ${plan} Plan`,
+                    //         order_id: id,
+                    //         handler: (response:any) => {
+
+                    //             VerifyPaymentMutate({ response }, {
+
+                    //                 onSuccess: (response:any) => {
+
+                    //                     if (response?.status >= 200 && response?.status < 300) {
+
+                    //                         toast.success(`Upgraded to ${plan} Plan Successful `, { duration: 5000 });
+                    //                         window.scrollTo({ top: 0, behavior: 'smooth', });
+
+                    //                     } else {
+
+                    //                         toast.error("Something went wrong");
+
+                    //                     }
+                    //                 }
+
+                    //             })
+                    //         },
+                    //         prefill: {
+                    //             name: userInfo?.[0]?.name || "Guest",
+                    //             email: userInfo?.[0]?.email || "guest@example.com",
+                    //             contact: userInfo?.[0]?.phone || "1234567890",
+                    //         },
+                    //         theme: {
+                    //             color: "#F37254",
+                    //         },
+                    //     };
+
+
+                    //     // Open Razorpay
+                    //     const razorpayInstance = new Razorpay(options);
+                    //     razorpayInstance.open();
+
+
+                    //     // Add event listeners
+                    //     razorpayInstance.on("payment.failed", (error) => {
+                    //         console.error("Payment Failed:", error);
+                    //         toast.error("Payment Failed! Please Try Again.");
+                    //     });
+
+
+                    // } else {
+
+                    //     console.log(response);
+                    //     toast.error("Something went wrong");
+
+                    // }
 
                 }
             })
@@ -321,8 +354,6 @@ const EmployerPlansPage = () => {
 
     window.scrollTo({ top: 0, behavior: 'smooth', });
 
-
-    console.log(currentPlan);
 
 
 
@@ -449,7 +480,7 @@ const EmployerPlansPage = () => {
                                             {/* Recommended badge */}
                                             {plan.recommended && currentPlan?.toLowerCase() !== plan?.id && (
                                                 <div className={`${getColorClass(plan?.color, 'bg')} text-white text-sm font-medium text-center py-2 px-4 shadow-md`}>
-                                                    Recommended for employers
+                                                    Recommended for Employee
                                                 </div>
                                             )}
 

@@ -14,6 +14,15 @@ export const CommonApi = async (reqmethod: string, apiurl: string, reqbody: any,
 
     }
 
-    return await axios(Config).then((res) => res).catch((err) => err)
+    try {
+
+        const res = await axios(Config);
+        return res;
+
+    } catch (err) {
+
+        throw err
+
+    }
 
 }

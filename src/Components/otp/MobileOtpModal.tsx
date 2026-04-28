@@ -153,9 +153,9 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
 
         MobileOtpSend(formdata, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status <= 300) {
+                if (response?.status >= 200 && response?.status <= 300) {
 
                     toast.success("An Otp has been sent to your mobile number.", { duration: 4000 });
                     setStep("otp");
@@ -186,9 +186,9 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
 
         MobileVerifyOtpSend(formdata, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status <= 300) {
+                if (response?.status >= 200 && response?.status <= 300) {
 
                     toast.success("Logged in successfully.", { duration: 4000 });
                     setIsOpen(false);
@@ -228,9 +228,9 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
 
         MobileOtpSend(formdata, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status <= 300) {
+                if (response?.status >= 200 && response?.status <= 300) {
 
                     toast.success("An Otp has been resent to your mobile number.", { duration: 4000 });
                     setTimerKey(prev => prev + 1);

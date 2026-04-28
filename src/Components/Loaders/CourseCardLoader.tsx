@@ -9,7 +9,7 @@ export default function CourseCardLoader() {
         <>
 
             <motion.div
-                className="bg-white rounded-4xl shadow-lg overflow-hidden transition-all animate-pulse sm:w-[70vh]"
+                className="bg-white rounded-7xl shadow-lg overflow-hidden transition-all animate-pulse sm:w-[90vh]"
             >
                 <div className="relative">
                     <div className="absolute inset-x-0 top-0 h-20 bg-gray-200"></div>

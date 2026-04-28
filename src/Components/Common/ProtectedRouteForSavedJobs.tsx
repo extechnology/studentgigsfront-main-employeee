@@ -26,7 +26,7 @@ const ProtectedRouteForSavedJobs = ({ children }: { children: React.ReactNode })
 
     // Redirect to /auth if not authenticated
     if (!isAuthenticated) {
-        return <Navigate to="/auth"  />;
+        return <Navigate to="/auth" state={{ from: location }} />;
     }
 
 

@@ -60,9 +60,9 @@ export default function ForgetPassword({ isOpen, setIsOpen }: EmailOtpProps) {
 
         mutate(formdata, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status <= 300) {
+                if (response?.status >= 200 && response?.status <= 300) {
 
                     toast.success("Password reset link and username has been sent to your email.")
                     setIsOpen(false)

@@ -75,9 +75,9 @@ export default function Skills() {
 
         AddSkill({ formData: formdata }, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status < 300) {
+                if (response?.status >= 200 && response?.status < 300) {
                     reset();
                     toast.success("Skill Added Successfully");
                 } else {
@@ -102,9 +102,9 @@ export default function Skills() {
 
         DeleteSkill(id, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status < 300) {
+                if (response?.status >= 200 && response?.status < 300) {
                     reset();
                     toast.success("Skill Deleted Successfully");
                 } else {

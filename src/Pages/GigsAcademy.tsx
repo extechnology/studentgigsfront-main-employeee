@@ -2,7 +2,6 @@ import AcademyHero from "@/Components/GigsAcademy/AcademyHero"
 import WhyChooseUs from "@/Components/GigsAcademy/WhyChooseUs"
 import CoursesSection from "@/Components/GigsAcademy/CoursesSection"
 import TestimonialsSection from "@/Components/GigsAcademy/TestimonialsSection"
-import CallToAction from "@/Components/GigsAcademy/CallToAction"
 
 
 export default function GigsAcademy() {
@@ -28,10 +27,6 @@ export default function GigsAcademy() {
 
         {/* testimonials */}
         <TestimonialsSection />
-
-
-        {/* Contact */}
-        <CallToAction />
 
 
       </main>

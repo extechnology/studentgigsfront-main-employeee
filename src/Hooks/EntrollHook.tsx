@@ -1,5 +1,6 @@
-import { PostEnrollForm } from "@/Service/AllApi";
-import { useMutation  } from "@tanstack/react-query";
+import { PostEnrollForm, PostVerifyCoursePayment } from "@/Service/AllApi";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 
 
@@ -9,24 +10,53 @@ export const SubmitEnroll = () => {
 
     return useMutation({
 
-        mutationFn: async (formData : FormData) => {
+        mutationFn: async (formData: FormData) => {
 
-            try {
+            if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
 
-                const Response = await PostEnrollForm(formData)
+            const token = localStorage.getItem("token")
 
-                return Response
+            const headers = { Authorization: `Bearer ${token}` }
 
-            }
-            catch (err) {
-
-                console.log(err);
-
-            }
+            return await PostEnrollForm(formData, headers)
 
         },
-        onError: (error) => {
-            console.error("Failed to Submit FormData:", error);
+
+        onError: (error: any) => {
+
+            console.log(error);
+
+            if (error?.response?.data?.error) {
+                toast.error(error.response.data.error)
+            } else {
+                toast.error("Failed to initiate enrollment")
+            }
+
+
+        }
+
+    })
+
+}
+
+
+
+
+// Verify course payment
+export const VerifyCoursePayment = () => {
+
+    return useMutation({
+
+        mutationFn: async (formData: FormData) => {
+
+            if (!localStorage.getItem("token")) { throw new Error("Authentication token not found"); }
+
+            const token = localStorage.getItem("token")
+
+            const headers = { Authorization: `Bearer ${token}` }
+
+            return await PostVerifyCoursePayment(formData, headers)
+
         },
 
     })

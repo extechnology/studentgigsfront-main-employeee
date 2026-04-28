@@ -3,8 +3,8 @@ import { Check, Target, AlertTriangle, Briefcase, Award, ChevronRight, Zap, User
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import EnrollmentModal from './EnrollmentModal';
-
-
+import { useAuth } from '@/Context/AuthContext';
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -47,6 +47,7 @@ export interface CourseCardProps {
 
 
 const CourseCard = ({
+    id,
     title,
     subtitle,
     short_description,
@@ -63,9 +64,14 @@ const CourseCard = ({
     delay = 0,
 }: CourseCardProps) => {
 
+    const navigate = useNavigate();
 
 
     const [activeTab, setActiveTab] = useState<'overview' | 'curriculum'>('overview');
+
+
+    // Auth Context
+    const { isAuthenticated } = useAuth()
 
 
     return (
@@ -140,12 +146,34 @@ const CourseCard = ({
 
 
                     <div className="space-y-3">
-                        <EnrollmentModal>
-                            <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-2xl h-16 text-lg font-bold shadow-[0_0_30px_rgba(249,115,22,0.25)] hover:shadow-[0_0_40px_rgba(249,115,22,0.4)] transition-all duration-300 group">
-                                Start Your Transformation
-                                <ChevronRight size={22} className="ml-2 group-hover:translate-x-1.5 transition-transform" />
-                            </Button>
-                        </EnrollmentModal>
+                        {
+                            isAuthenticated ? (
+                                <EnrollmentModal course_id={id}>
+                                    <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-2xl h-16 text-lg font-bold shadow-[0_0_30px_rgba(249,115,22,0.25)] hover:shadow-[0_0_40px_rgba(249,115,22,0.4)] transition-all duration-300 group">
+                                        Start Your Transformation
+                                        <ChevronRight
+                                            size={22}
+                                            className="ml-2 group-hover:translate-x-1.5 transition-transform"
+                                        />
+                                    </Button>
+                                </EnrollmentModal>
+                            ) : (
+                                <Button
+                                    onClick={() =>
+                                        navigate("/auth", {
+                                            state: { from: location.pathname }
+                                        })
+                                    }
+                                    className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-2xl h-16 text-lg font-bold shadow-[0_0_30px_rgba(249,115,22,0.25)] hover:shadow-[0_0_40px_rgba(249,115,22,0.4)] transition-all duration-300 group"
+                                >
+                                    Start Your Transformation
+                                    <ChevronRight
+                                        size={22}
+                                        className="ml-2 group-hover:translate-x-1.5 transition-transform"
+                                    />
+                                </Button>
+                            )
+                        }
                         <p className="text-center text-xs md:text-sm text-gray-400 font-medium">{final_call_to_action.split('\n')[1]?.replace('👉 ', '')}</p>
                     </div>
 
@@ -381,12 +409,34 @@ const CourseCard = ({
                     </div>
 
                     <div className="space-y-3 w-full">
-                        <EnrollmentModal>
-                            <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-xl h-14 text-lg font-bold shadow-[0_0_20px_rgba(249,115,22,0.25)] hover:shadow-[0_0_30px_rgba(249,115,22,0.4)] transition-all duration-300 group">
-                                Start Your Transformation
-                                <ChevronRight size={20} className="ml-2 group-hover:translate-x-1.5 transition-transform" />
-                            </Button>
-                        </EnrollmentModal>
+                        {
+                            !isAuthenticated ? (
+                                <Button
+                                    onClick={() =>
+                                        navigate("/auth", {
+                                            state: { from: location }
+                                        })
+                                    }
+                                    className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-xl h-14 text-lg font-bold shadow-[0_0_20px_rgba(249,115,22,0.25)] hover:shadow-[0_0_30px_rgba(249,115,22,0.4)] transition-all duration-300 group"
+                                >
+                                    Start Your Transformation
+                                    <ChevronRight
+                                        size={20}
+                                        className="ml-2 group-hover:translate-x-1.5 transition-transform"
+                                    />
+                                </Button>
+                            ) : (
+                                <EnrollmentModal course_id={id}>
+                                    <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white rounded-xl h-14 text-lg font-bold shadow-[0_0_20px_rgba(249,115,22,0.25)] hover:shadow-[0_0_30px_rgba(249,115,22,0.4)] transition-all duration-300 group">
+                                        Start Your Transformation
+                                        <ChevronRight
+                                            size={20}
+                                            className="ml-2 group-hover:translate-x-1.5 transition-transform"
+                                        />
+                                    </Button>
+                                </EnrollmentModal>
+                            )
+                        }
                         <p className="text-center text-xs text-gray-400 font-medium">{final_call_to_action.split('\n')[1]?.replace('👉 ', '')}</p>
                     </div>
                 </div>

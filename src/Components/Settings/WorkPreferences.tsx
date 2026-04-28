@@ -109,8 +109,8 @@ export default function WorkPreferences() {
 
         EditWork({ formData: formdata, id: Id }, {
 
-            onSuccess: (response) => {
-                if (response.status >= 200 && response.status < 300) {
+            onSuccess: (response:any) => {
+                if (response?.status >= 200 && response?.status < 300) {
                     reset();
                     toast.success("Work Information Updated Successfully");
                 } else {

@@ -162,8 +162,8 @@ export default function PersonalInfromation() {
         mutate(
             { formData, id: id },
             {
-                onSuccess: (response) => {
-                    if (response.status >= 200 && response.status < 300) {
+                onSuccess: (response:any) => {
+                    if (response?.status >= 200 && response?.status < 300) {
                         reset();
                         toast.success("Personal Information Updated Successfully");
                     } else {
