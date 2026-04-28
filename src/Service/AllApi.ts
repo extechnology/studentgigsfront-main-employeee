@@ -2,7 +2,7 @@ import { CommonApi } from "./CommonApi";
 
 
 // Base Url
-export const Base_Url = "https://tgg4qp85-8000.inc1.devtunnels.ms/api/employee"
+export const Base_Url = "https://server.studentsgigs.com/api/employee"
 
 
 
@@ -499,7 +499,7 @@ export const GetAllPlans = async (header: object) => {
 // Create Payment Order
 export const PostCreateOrder = async (data: FormData, header: object) => {
 
-    return await CommonApi("POST", `${Base_Url}/create-order-employee/`, data, header)
+    return await CommonApi("POST", `${Base_Url}/create-payment-cashfree/`, data, header)
 
 }
 
@@ -581,11 +581,30 @@ export const DeleteAllNotifications = async (data: string, header: object) => {
 
 
 // Post Entroll Form
-export const PostEnrollForm = async (data: FormData) => {
+export const PostEnrollForm = async (data: FormData, header: object) => {
 
-    return await CommonApi("POST", `${Base_Url}/skills-academy-enquiry/`, data, "")
+    return await CommonApi("POST", `${Base_Url}/skillsacademy/create-enrollment-order/`, data, header)
 
 }
+
+
+
+// Verify Course Payment
+export const PostVerifyCoursePayment = async (data: FormData, header: object) => {
+
+    return await CommonApi("POST", `${Base_Url}/skillsacademy/verify-payment/`, data, header)
+
+}
+
+
+
+// Verify plan payment
+export const PostVerifyPlanPayment = async (data: FormData, header: object) => {
+
+    return await CommonApi("POST", `${Base_Url}/verify-payment-cashfree/`, data, header)
+
+}
+
 
 
 // Get Course Data

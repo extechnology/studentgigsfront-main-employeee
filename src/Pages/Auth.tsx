@@ -109,9 +109,9 @@ export default function Auth() {
     // Mutate
     mutate(formdata, {
 
-      onSuccess: (response) => {
+      onSuccess: (response:any) => {
 
-        if (response.status >= 200 && response.status <= 300) {
+        if (response?.status >= 200 && response?.status <= 300) {
 
           setOtpModal(true)
 
@@ -178,18 +178,16 @@ export default function Auth() {
     // Mutate
     mutateLogin(formdata, {
 
-      onSuccess: (response) => {
+      onSuccess: (response:any) => {
 
-        if (response.status >= 200 && response.status <= 300) {
+        if (response?.status >= 200 && response?.status <= 300) {
 
           toast.success("User Login Successfully")
 
           // Get previous route or default to home
-          const from = location.state?.from?.pathname || "/";
-
+          const from = location.state?.from || "/";
 
           reset()
-
 
           login(response.data.access)
 
@@ -287,12 +285,12 @@ export default function Auth() {
           // Mutate
           mutateGoogleLogin(formdata, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-              if (response.status >= 200 && response.status <= 300) {
+              if (response?.status >= 200 && response?.status <= 300) {
 
                 // Get previous route or default to home
-                const from = location.state?.from?.pathname || "/";
+                const from = location.state?.from || "/";
 
                 login(response.data.access)
 

@@ -63,9 +63,9 @@ export default function SoftSkills() {
 
         AddSoftSkills({ formData: formdata }, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status < 300) {
+                if (response?.status >= 200 && response?.status < 300) {
                     reset();
                     toast.success("Skill Added Successfully");
                 } else {
@@ -90,9 +90,9 @@ export default function SoftSkills() {
 
         DeleteSoftSkill(id, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status < 300) {
+                if (response?.status >= 200 && response?.status < 300) {
                     reset();
                     toast.success("Skill Deleted Successfully");
                 } else {

@@ -127,9 +127,9 @@ export default function DeleteOtpModal({ isOpen, setIsOpen }: DeleteAccountProps
 
         EmailOtpSend(formdata, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status <= 300) {
+                if (response?.status >= 200 && response?.status <= 300) {
 
                     toast.success("An Otp has been sent to your Email.", { duration: 4000 });
                     setStep("otp");
@@ -160,9 +160,9 @@ export default function DeleteOtpModal({ isOpen, setIsOpen }: DeleteAccountProps
 
         VerifyOtp(formdata, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status <= 300) {
+                if (response?.status >= 200 && response?.status <= 300) {
 
                     toast.success("Request has been sent & your account will be deleted in 60days", { duration: 4000 });
                     setIsOpen(false);
@@ -194,9 +194,9 @@ export default function DeleteOtpModal({ isOpen, setIsOpen }: DeleteAccountProps
 
         EmailOtpSend(formdata, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status <= 300) {
+                if (response?.status >= 200 && response?.status <= 300) {
 
                     toast.success("An Otp has been resent to your Email.", { duration: 4000 });
                     setTimerKey(prev => prev + 1);

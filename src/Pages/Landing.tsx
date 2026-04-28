@@ -91,11 +91,11 @@ export default function Landing() {
 
       mutateGoogleLogin(formdata, {
 
-        onSuccess: (response) => {
+        onSuccess: (response:any) => {
 
-          if (response.status >= 200 && response.status <= 300) {
+          if (response?.status >= 200 && response?.status <= 300) {
 
-            login(response.data.access);
+            login(response?.data.access);
             toast.success("Login Successful!");
             markPopupAsShown();
             queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });

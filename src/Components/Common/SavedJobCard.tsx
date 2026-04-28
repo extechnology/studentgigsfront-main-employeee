@@ -52,9 +52,9 @@ export default function SavedJobCard({ id, index, applied, company_name, jobType
 
         DeleteSavedJobs({ id, job_type }, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status < 300) {
+                if (response?.status >= 200 && response?.status < 300) {
 
                     toast.success("Job Removed from Saved Jobs");
 

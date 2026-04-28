@@ -1,10 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Telescope } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { HomeSlider } from '@/Hooks/Utils';
 import FilterJob from '@/Components/JobFilter/FilterJob';
 
@@ -53,12 +51,12 @@ const Hero = () => {
               <div className="absolute inset-0 bg-black/40"></div>
 
               {/* Loading text */}
-              <div className="absolute top-48 sm:top-72 left-4 sm:left-16 text-white space-y-3 w-full max-w-xs sm:max-w-md lg:max-w-lg">
+              {/* <div className="absolute top-48 sm:top-72 left-4 sm:left-16 text-white space-y-3 w-full max-w-xs sm:max-w-md lg:max-w-lg">
                 <div className="h-10 w-full max-w-sm bg-gray-400/50 rounded-lg"></div>
                 <div className="h-5 w-full max-w-md bg-gray-400/50 rounded-lg"></div>
                 <div className="h-5 w-full max-w-sm bg-gray-400/50 rounded-lg"></div>
                 <div className="mt-6 w-32 sm:w-40 h-10 bg-orange-400/50 rounded-md"></div>
-              </div>
+              </div> */}
 
               {/* Pagination Dots */}
               <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2">
@@ -110,7 +108,7 @@ const Hero = () => {
 
                           <div className="absolute inset-0 bg-black/40" />
 
-                          <AnimatePresence mode="wait">
+                          {/* <AnimatePresence mode="wait">
 
                             {activeIndex === index && (
 
@@ -150,7 +148,7 @@ const Hero = () => {
                               </div>
 
                             )}
-                          </AnimatePresence>
+                          </AnimatePresence> */}
 
 
                         </div>
@@ -165,7 +163,8 @@ const Hero = () => {
                   </Swiper>
 
                   {/* Job Filter Section */}
-                  <div className="absolute z-40 sm:bottom-16 bottom-12 inset-x-0 px-5 sm:px-16 text-white pointer-events-none flex flex-col items-center justify-end text-center">
+                  <div className="absolute z-40 sm:bottom-28 bottom-12 inset-x-0 px-5 sm:px-16 text-white pointer-events-none flex flex-col items-center justify-end text-center">
+                  
                     <div className="pointer-events-auto w-full max-w-7xl">
                       <motion.h2
                         initial={{ opacity: 0, y: 20 }}

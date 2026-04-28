@@ -88,9 +88,9 @@ export default function Languages() {
 
 
         mutate({ formData: formdata }, {
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status < 300) {
+                if (response?.status >= 200 && response?.status < 300) {
                     reset();
                     toast.success("Language Added Successfully");
                 } else {
@@ -112,9 +112,9 @@ export default function Languages() {
 
         DeleteLanguage(id, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status < 300) {
+                if (response?.status >= 200 && response?.status < 300) {
                     reset();
                     toast.success("Language Deleted Successfully");
                 } else {

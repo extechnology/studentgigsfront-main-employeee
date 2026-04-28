@@ -54,7 +54,7 @@ const CoursesSection = () => {
                             Designed to provide practical, hands-on training that prepares you for real-world success.
                         </p>
                     </div>
-                    
+
 
                     {/* No Course */}
                     {data?.length === 0 && (
@@ -68,7 +68,11 @@ const CoursesSection = () => {
 
                         {isLoading || isFetching || isError ? (
 
-                            Array.from({ length: 1 }).map((_, index) => <CourseCardLoader key={index} />)
+                            < div className='w-full mx-auto flex justify-center items-center'>
+
+                                {Array.from({ length: 1 }).map((_, index) => <CourseCardLoader key={index} />)}
+
+                            </div>
 
                         ) : (
 

@@ -115,9 +115,9 @@ export default function EmailOtp({ isOpen, setIsOpen, RegisterData, reset, handl
 
         mutate(formdata, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status <= 300) {
+                if (response?.status >= 200 && response?.status <= 300) {
 
                     toast.success("User Registered Successfully")
                     reset()
@@ -157,9 +157,9 @@ export default function EmailOtp({ isOpen, setIsOpen, RegisterData, reset, handl
 
         resendOtp(formdata, {
 
-            onSuccess: (response) => {
+            onSuccess: (response:any) => {
 
-                if (response.status >= 200 && response.status <= 300) {
+                if (response?.status >= 200 && response?.status <= 300) {
 
                     toast.success("Otp has been resent to your Email.")
 

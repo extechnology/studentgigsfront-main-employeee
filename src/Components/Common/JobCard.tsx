@@ -69,9 +69,9 @@ export default function JobCard({ id, applied, saved, employer_id, salaryType, c
 
                 DeleteSavedJob({ id, job_type }, {
 
-                    onSuccess: (response) => {
+                    onSuccess: (response:any) => {
 
-                        if (response.status >= 200 && response.status < 300) {
+                        if (response?.status >= 200 && response?.status < 300) {
 
                             toast.success("Job Removed from Saved Jobs");
 
@@ -95,9 +95,9 @@ export default function JobCard({ id, applied, saved, employer_id, salaryType, c
 
                 SaveJob({ formData: formData }, {
 
-                    onSuccess: (response) => {
+                    onSuccess: (response:any) => {
 
-                        if (response.status >= 200 && response.status < 300) {
+                        if (response?.status >= 200 && response?.status < 300) {
 
                             toast.success("Job Saved Successfully");
 

@@ -19,6 +19,8 @@ const Plans = lazy(() => import("./Pages/Plans"));
 const GigsAcademy = lazy(() => import("./Pages/GigsAcademy"));
 const PlanUsageDashboard = lazy(() => import("./Pages/Usage"));
 const DeleteAccount = lazy(() => import("./Pages/DeleteAccount"));
+const CourseSuccess = lazy(() => import("./Pages/VerifyCourse"));
+const PlanSuccess = lazy(() => import("./Pages/VerifyPlan"));
 
 
 
@@ -89,6 +91,9 @@ function App() {
             <Route path="/loginterms" element={<LegalPages.LoginTerms />} />
             <Route path="/disclaimer" element={<LegalPages.Disclaimer />} />
             <Route path="/deleteaccount" element={<DeleteAccount />} />
+            <Route path="/verify-payment" element={<CourseSuccess />} />
+            <Route path="/planSuccess" element={<PlanSuccess />} />
+
 
 
             {/* Protected Routes */}
