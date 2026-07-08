@@ -1,6 +1,6 @@
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
-import { Button } from "../ui/button";
+import { Button } from "@/Components/ui/button";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -153,7 +153,7 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
 
         MobileOtpSend(formdata, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status <= 300) {
 
@@ -186,7 +186,7 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
 
         MobileVerifyOtpSend(formdata, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status <= 300) {
 
@@ -198,7 +198,7 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
 
                     login(response.data.access)
 
-                    const from = location.state?.from?.pathname || "/";
+                    const from = location.state?.from?.pathname || "/jobfilter";
 
                     queryclient.invalidateQueries({ queryKey: ["UserProfile"] });
 
@@ -228,7 +228,7 @@ export default function MobileOtpModal({ isOpen, setIsOpen }: MobileOtpProps) {
 
         MobileOtpSend(formdata, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status <= 300) {
 

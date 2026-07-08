@@ -8,7 +8,7 @@ import { AddEducationInfo } from "@/Hooks/UserProfile";
 import toast from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookOpenText, Building2, ChevronRight, CirclePlusIcon, GraduationCap, History, Medal, Trash2 } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/Components/ui/button";
 
 
 interface Inputs {
@@ -151,7 +151,7 @@ export default function Education() {
 
         mutate({ formData: formdata }, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();
@@ -175,7 +175,7 @@ export default function Education() {
 
         Delete(id, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();
@@ -294,7 +294,7 @@ export default function Education() {
                                                 htmlFor="feild-of-study"
                                                 className="block text-sm/6 font-medium text-gray-900"
                                             >
-                                               Select / Enter Your Field of Study
+                                                Select / Enter Your Field of Study
                                             </label>
                                             <div>
                                                 <Controller
@@ -399,7 +399,7 @@ export default function Education() {
                                                 htmlFor="university"
                                                 className="block text-sm/6 font-medium text-gray-900"
                                             >
-                                               Select / Enter Your Academic Achievements
+                                                Select / Enter Your Academic Achievements
                                             </label>
                                             <div className="">
                                                 <Controller

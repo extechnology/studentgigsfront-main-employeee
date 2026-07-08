@@ -1,9 +1,9 @@
 import { Sparkles } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from "@/Components/ui/button";
 import { useEffect, useState } from 'react';
-import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/Components/ui/carousel";
 import { motion } from 'framer-motion';
-import { AnimatedShinyText } from '../magicui/animated-shiny-text';
+import { AnimatedShinyText } from '@/Components/magicui/animated-shiny-text';
 
 const AcademyHero = () => {
 

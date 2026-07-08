@@ -22,15 +22,14 @@ export default function About() {
                                     <div className="grid grid-cols-1 gap-6">
                                         <img
 
-                                            src="/about-2.jpg"
-
+                                            src="/about-1.jpg"
                                             loading="lazy"
                                             alt="Professional Woman"
                                             className="shadow rounded-md"
                                         />
                                         <img
 
-                                            src="/about-3.jpg"
+                                            src="/about-2.webp"
 
                                             loading="lazy"
                                             alt="Smiling Woman"
@@ -42,8 +41,7 @@ export default function About() {
                                     <div className="grid grid-cols-1 gap-6">
                                         <img
 
-                                            src="/about-1.jpg"
-
+                                            src="/about-3.webp"
                                             loading="lazy"
                                             alt="Conference Room"
                                             className="shadow rounded-md"

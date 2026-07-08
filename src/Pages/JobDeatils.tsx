@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { SingleJobData } from '@/Hooks/JobHook';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useCheckJobApplyEligibility } from "@/Hooks/UserProfile";
 
 
 // Types for Job Details
@@ -59,6 +60,9 @@ export default function JobDeatils() {
   // Get Jobs
   const { data, isLoading, isFetching, isError } = SingleJobData(id ?? '', jobType ?? '');
 
+
+  // Check job apply eligibility
+  const { handleApplyCheck } = useCheckJobApplyEligibility();
 
 
   // TO Set job details
@@ -225,7 +229,7 @@ export default function JobDeatils() {
                   {/* Apply Button */}
                   <div className="sm:flex md:gap-4 items-end">
                     <div>
-                      <Link to={`/applyjob/${id}/${jobType}`}>
+                      <Link to={`/applyjob/${id}/${jobType}`} onClick={handleApplyCheck}>
                         <button
                           disabled={jobDetails?.applied}
                           className={`flex w-full justify-center items-center ${jobDetails?.applied

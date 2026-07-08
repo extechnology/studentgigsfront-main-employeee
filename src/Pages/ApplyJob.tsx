@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { SingleJobData } from '@/Hooks/JobHook';
 import { useNavigate, useParams } from 'react-router-dom';
-import { GetPersonalInfo } from '@/Hooks/UserProfile';
+import { GetPersonalInfo, useCheckJobApplyEligibility } from '@/Hooks/UserProfile';
 import { ApplyJob } from '@/Hooks/JobHook';
 import toast from 'react-hot-toast';
 import confetti from 'canvas-confetti';
@@ -92,6 +92,18 @@ const JobApplicationForm = () => {
     const { data: user, isSuccess, isLoading: userLoading, isFetching: userFetching, isError: userError } = GetPersonalInfo()
 
 
+    // Check job eligibility
+    const { isBasicInfoComplete, isLoading: completionLoading } = useCheckJobApplyEligibility();
+
+
+    // Redirect user if basic info is not completed
+    useEffect(() => {
+        if (!completionLoading && !isBasicInfoComplete) {
+            toast.error("Oops! Please complete your basic information before applying for jobs.");
+            Navigate('/settings');
+        }
+    }, [isBasicInfoComplete, completionLoading, Navigate]);
+
 
     // TO Set job details
     const [jobDetails, setJobDetails] = useState<Job | null>(null);
@@ -157,7 +169,13 @@ const JobApplicationForm = () => {
 
         e.preventDefault();
 
-        if (!isPlanExpired && usage?.job_limit && usage?.profile_completed && usage?.age_restrict) {
+        if (!isBasicInfoComplete) {
+            toast.error("Oops! Please complete your basic information before applying for jobs.");
+            Navigate('/settings');
+            return;
+        }
+
+        if (!isPlanExpired && usage?.job_limit && usage?.age_restrict) {
 
             const formdata = new FormData()
 
@@ -199,10 +217,7 @@ const JobApplicationForm = () => {
                 handlePlanRedirect("Your plan has expired. Please subscribe to continue.");
             } else if (!usage?.job_limit) {
                 handlePlanRedirect("You have reached your job limit. Please upgrade your plan to continue.");
-            } else if (!usage?.profile_completed) {
-                toast.error("Oops! Please complete your personal information before applying for jobs.");
-                Navigate('/settings')
-            }else if(!usage?.age_restrict){
+            } else if (!usage?.age_restrict) {
                 toast.error("Oops! You are not eligible to apply for jobs due to your age.");
                 Navigate('/settings')
             }
@@ -256,7 +271,7 @@ const JobApplicationForm = () => {
 
             {
 
-                isLoading || isFetching || isError ? (
+                isLoading || isFetching || isError || completionLoading ? (
 
 
                     <div className="w-full max-w-4xl mx-auto p-8 bg-white rounded-2xl shadow-xl border border-green-100 animate-pulse">

@@ -238,7 +238,7 @@ const EmployerPlansPage = () => {
 
                 onSuccess: async (response: any) => {
 
-                    
+
                     const sessionId = response?.data?.payment_session_id || response?.payment_session_id;
 
 

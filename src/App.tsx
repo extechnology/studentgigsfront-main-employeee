@@ -30,7 +30,7 @@ const JobPages = {
   JobDetails: lazy(() => import("./Pages/JobDeatils")),
   ApplyJob: lazy(() => import("./Pages/ApplyJob")),
   JobApplySuccess: lazy(() => import("./Pages/JobApplySuccess")),
-  SavedJobs: lazy(() => import("./Pages/SavedJobs")),        
+  SavedJobs: lazy(() => import("./Pages/SavedJobs")),
 };
 
 

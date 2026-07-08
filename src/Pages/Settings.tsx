@@ -15,7 +15,7 @@ import { useState } from "react";
 export default function Settings() {
 
 
-  
+
   window.scrollTo({ top: 0, behavior: 'smooth', });
 
 

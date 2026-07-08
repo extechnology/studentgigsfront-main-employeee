@@ -8,10 +8,11 @@ interface ProfileMenuProps {
     HandleLogOut: () => void;
     data: { profile?: { profile_pic?: string } }[];
     color?: boolean;
+    openLoginModal?: () => void;
 }
 
 
-const ProfileMenu: React.FC<ProfileMenuProps> = ({ LoginStatus, HandleLogOut, data, color }) => {
+const ProfileMenu: React.FC<ProfileMenuProps> = ({ LoginStatus, HandleLogOut, data, color, openLoginModal }) => {
 
 
     return (
@@ -35,7 +36,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ LoginStatus, HandleLogOut, da
                         <Popover.Panel
                             className="absolute -left-32 top-9 z-10 mt-3 w-52 dropdown rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5"
                         >
-                            <PopoverContent LoginStatus={LoginStatus} HandleLogOut={HandleLogOut} />
+                            <PopoverContent LoginStatus={LoginStatus} HandleLogOut={HandleLogOut} openLoginModal={openLoginModal} />
 
                         </Popover.Panel>
                     </>
@@ -52,10 +53,11 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ LoginStatus, HandleLogOut, da
 interface PopoverContentProps {
     LoginStatus: boolean;
     HandleLogOut: () => void;
+    openLoginModal?: () => void;
 }
 
 
-const PopoverContent: React.FC<PopoverContentProps> = ({ LoginStatus, HandleLogOut }) => (
+const PopoverContent: React.FC<PopoverContentProps> = ({ LoginStatus, HandleLogOut, openLoginModal }) => (
 
     <div className="p-4">
         <MenuItem link="/userprofile" icon={<User size={20} />} text="Profile" />
@@ -65,9 +67,13 @@ const PopoverContent: React.FC<PopoverContentProps> = ({ LoginStatus, HandleLogO
         <MenuItem link="/planusage" icon={<Gauge size={20} />} text="Plan Usage" />
 
         {!LoginStatus ? (
-            <Link to="/auth">
-                <button className="w-full hover:cursor-pointer text-left flex font-semibold items-center gap-2 text-sm text-gray-900 hover:bg-gray-50 p-4 rounded-lg" ><KeyRound size={20} /> Login </button>
-            </Link> 
+            <Popover.Button
+                as="button"
+                onClick={openLoginModal}
+                className="w-full hover:cursor-pointer text-left flex font-semibold items-center gap-2 text-sm text-gray-900 hover:bg-gray-50 p-4 rounded-lg"
+            >
+                <KeyRound size={20} /> Login
+            </Popover.Button>
         ) : (
             <MenuItemLogout icon={<LogOut size={20} />} text="Logout" HandleLogOut={HandleLogOut} />
         )}

@@ -4,7 +4,7 @@ import { z } from "zod"
 import { motion } from 'framer-motion';
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "../ui/form";
-import { Button } from "../ui/button";
+import { Button } from "@/Components/ui/button";
 import { Input } from "../ui/input";
 import { BadgeCheck, KeyRound, Loader } from "lucide-react";
 import { ResetPassword } from "@/Hooks/UserLogin";
@@ -60,7 +60,7 @@ export default function ForgetPassword({ isOpen, setIsOpen }: EmailOtpProps) {
 
         mutate(formdata, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status <= 300) {
 

@@ -7,7 +7,7 @@ import { GetLanguageInfo, AddLanguageInfo, DeleteLanguageInfo } from '@/Hooks/Us
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { CirclePlus, Globe, LanguagesIcon, Trash2 } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '@/Components/ui/button';
 
 
 // Type definitions
@@ -88,7 +88,7 @@ export default function Languages() {
 
 
         mutate({ formData: formdata }, {
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();
@@ -112,7 +112,7 @@ export default function Languages() {
 
         DeleteLanguage(id, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();

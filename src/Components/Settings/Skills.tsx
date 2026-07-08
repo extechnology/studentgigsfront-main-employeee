@@ -5,7 +5,7 @@ import Selecet from 'react-select';
 import TechSkills from '../../Data/TechSkills.json';
 import { GetTechSkills, AddTechSkills, DeleteTechSkills } from '@/Hooks/UserProfile';
 import toast from 'react-hot-toast';
-import { Button } from '../ui/button';
+import { Button } from '@/Components/ui/button';
 
 
 
@@ -75,7 +75,7 @@ export default function Skills() {
 
         AddSkill({ formData: formdata }, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();
@@ -102,7 +102,7 @@ export default function Skills() {
 
         DeleteSkill(id, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();
@@ -182,7 +182,7 @@ export default function Skills() {
                                             htmlFor="feild-of-study"
                                             className="block text-sm/6 font-medium text-gray-900"
                                         >
-                                            Technical Skills 
+                                            Technical Skills
                                         </label>
                                         <div>
                                             <Controller

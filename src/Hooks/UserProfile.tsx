@@ -1,12 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import {
     GetUserPersonalInfo, EditUserPersonalInfo, GetUserEducationInfo, AddUserEducationInfo,
     DeleteUserEducationInfo, GetUserLanguageInfo, AddUserLanguageInfo, DeleteUserLanguageInfo,
     GetUserTechSkills, AddUserTechSkills, DeleteUserTechSkills, GetUserSoftSkills, AddUserSoftSkills,
     DeleteUserSoftSkills, EditUserWorkPerference, GetUserWorkPerference, GetUserJobCategory, AddUserJobCategory,
     DeleteUserJobCategory, GetUserProfilePicture, EditUserProfilePicture, GetUserExperience, AddUserExperience,
-    DeleteUserExperience , EditUserAdditionalInfo , GetUserAdditionalInfo
+    DeleteUserExperience, EditUserAdditionalInfo, GetUserAdditionalInfo, GetUserProfileCompletion
 } from "@/Service/AllApi";
+import type { ProfileCompletionResponse } from "@/Service/ProfileCompletionTypes";
 
 
 
@@ -29,7 +32,7 @@ export const GetPersonalInfo = () => {
                 if (!token) {
 
                     return [];
-                    
+
                 }
 
                 const headers = { Authorization: `Bearer ${token}` }
@@ -46,6 +49,36 @@ export const GetPersonalInfo = () => {
 
             }
         },
+
+    })
+
+}
+
+
+// Get User Profile Completion
+export const GetProfileCompletion = () => {
+
+    return useQuery<ProfileCompletionResponse>({
+
+        queryKey: ["userprofilecompletion"],
+
+        queryFn: async () => {
+
+            const token = localStorage.getItem("token")
+
+            if (!token) {
+                throw new Error("Authentication token not found");
+            }
+
+            const headers = { Authorization: `Bearer ${token}` }
+
+            const Response = await GetUserProfileCompletion(headers)
+
+            return Response.data as ProfileCompletionResponse
+
+        },
+
+        staleTime: 1000 * 60 * 5,
 
     })
 
@@ -99,6 +132,7 @@ export const EditPersonalInfo = () => {
             queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
             queryclient.invalidateQueries({ queryKey: ["userprofilepicture"] });
             queryclient.invalidateQueries({ queryKey: ["userPlans"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -141,6 +175,7 @@ export const GetEducationInfo = () => {
             }
 
         },
+
 
     })
 
@@ -187,6 +222,7 @@ export const AddEducationInfo = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["usereducationinfo"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -323,6 +359,7 @@ export const AddLanguageInfo = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["userlanguageinfo"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -368,6 +405,7 @@ export const DeleteLanguageInfo = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["userlanguageinfo"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -502,6 +540,7 @@ export const DeleteTechSkills = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["usertechskills"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -593,6 +632,7 @@ export const AddSoftSkill = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["usersoftskills"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -638,6 +678,7 @@ export const DeleteSoftSkills = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["usersoftskills"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -734,6 +775,7 @@ export const EditWorkPerference = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["userworkperference"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -874,6 +916,7 @@ export const DeletePreferredCategory = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["userpreferredcategories"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -973,7 +1016,7 @@ export const EditProfilePicture = () => {
 
             queryclient.invalidateQueries({ queryKey: ["userprofilepicture"] });
             queryclient.invalidateQueries({ queryKey: ["userpersonalinfo"] });
-
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
         }
 
     })
@@ -1064,6 +1107,7 @@ export const AddExperience = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["userexperience"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -1109,6 +1153,7 @@ export const DeleteExperience = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["userexperience"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -1204,6 +1249,7 @@ export const EditAdditionalInfo = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["useradditionalinfo"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
 
         }
@@ -1211,3 +1257,37 @@ export const EditAdditionalInfo = () => {
     })
 
 }
+
+
+// Custom hook to check if user is eligible to apply for a job based on basic info completion
+export const useCheckJobApplyEligibility = () => {
+    const navigate = useNavigate();
+    const { data, isLoading, isError } = GetProfileCompletion();
+
+    const isBasicInfoComplete = data ? (data.sections?.basic_info?.percentage >= 100) : false;
+
+    const handleApplyCheck = (e: React.MouseEvent) => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            e.preventDefault();
+            toast.error("Please login to apply for jobs");
+            navigate("/auth");
+            return false;
+        }
+
+        if (!isBasicInfoComplete) {
+            e.preventDefault();
+            toast.error("Oops! Please complete your Personal Information before applying for jobs.");
+            navigate("/settings");
+            return false;
+        }
+        return true;
+    };
+
+    return {
+        isBasicInfoComplete,
+        isLoading,
+        isError,
+        handleApplyCheck,
+    };
+};

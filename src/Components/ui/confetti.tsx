@@ -15,7 +15,7 @@ import type {
 } from "canvas-confetti"
 import confetti from "canvas-confetti"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/Components/ui/button"
 
 type Api = {
   fire: (options?: ConfettiOptions) => void
@@ -83,7 +83,7 @@ const ConfettiComponent = forwardRef<ConfettiRef, Props>((props, ref) => {
 
   useEffect(() => {
     if (!manualstart) {
-      ;(async () => {
+      ; (async () => {
         try {
           await fire()
         } catch (error) {
@@ -109,7 +109,7 @@ export const Confetti = ConfettiComponent
 
 interface ConfettiButtonProps extends React.ComponentProps<"button"> {
   options?: ConfettiOptions &
-    ConfettiGlobalOptions & { canvas?: HTMLCanvasElement }
+  ConfettiGlobalOptions & { canvas?: HTMLCanvasElement }
 }
 
 const ConfettiButtonComponent = ({

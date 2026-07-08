@@ -1,6 +1,6 @@
 import { BriefcaseBusiness, Building2, FileText, GraduationCap, GraduationCapIcon, Laptop, Lightbulb, Medal, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
-import { GetPersonalInfo } from "@/Hooks/UserProfile";
+import { GetPersonalInfo, GetProfileCompletion } from "@/Hooks/UserProfile";
 import PersonalInfoLoader from "@/Components/Loaders/PersonalInfoLoader";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -11,6 +11,7 @@ import NoSoftSkills from "@/Components/Loaders/NoSoft";
 import NoExperience from "@/Components/Loaders/NoExp";
 import ResumeViewer from "@/Components/Common/ResumeViewer";
 import { useAuth } from "@/Context/AuthContext";
+import ProfileCompletionCard from "@/Components/Common/ProfileCompletionCard";
 
 
 
@@ -118,7 +119,7 @@ interface PersonalInfo {
     available_working_periods_end_date: string;
     portfolio: string;
     user: number;
-    username : string
+    username: string
     about: string;
     job_title: string;
 }
@@ -142,7 +143,21 @@ export default function UserProfile() {
 
 
     // Get User Personal Information
-    const { data, isLoading, isError, isFetching, isSuccess } = GetPersonalInfo()
+    const {
+        data: personalInfoData,
+        isLoading,
+        isError,
+        isFetching,
+        isSuccess
+    } = GetPersonalInfo()
+
+    const {
+        data: profileCompletionData,
+        isLoading: isProfileCompletionLoading,
+        isError: isProfileCompletionError,
+        isFetching: isProfileCompletionFetching,
+        refetch: refetchProfileCompletion,
+    } = GetProfileCompletion()
 
 
     // User Data
@@ -151,20 +166,22 @@ export default function UserProfile() {
 
     useEffect(() => {
 
-        if (data && isSuccess) {
+        if (personalInfoData && isSuccess) {
 
-            const SelectedInfo = data[0]
+            const SelectedInfo = personalInfoData[0]
 
             SetUserData(SelectedInfo)
 
         }
 
-    }, [data])
+    }, [personalInfoData, isSuccess])
 
 
 
     // Scroll to top when page is loaded
-    window.scrollTo({ top: 0, behavior: 'smooth', });
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth', });
+    }, [])
 
 
 
@@ -243,7 +260,7 @@ export default function UserProfile() {
                                                     <div className="relative group">
 
                                                         {/* Shimmer border effect for premium users */}
-                                                        {!isPlanExpired &&  plan?.premium_profile_badge.toLowerCase() === "yes" && (
+                                                        {!isPlanExpired && plan?.premium_profile_badge.toLowerCase() === "yes" && (
                                                             <div className="absolute inset-0 rounded-full border-shimmer"></div>
                                                         )}
 
@@ -299,6 +316,20 @@ export default function UserProfile() {
 
                                     </section>
 
+
+                                    <div className="pt-8 xl:grid xl:grid-cols-[320px_minmax(0,1fr)] xl:gap-6 xl:px-10">
+
+                                        <aside className="px-2 sm:px-10 xl:sticky xl:top-24 xl:self-start xl:px-0">
+                                            <ProfileCompletionCard
+                                                data={profileCompletionData}
+                                                isLoading={isProfileCompletionLoading}
+                                                isError={isProfileCompletionError}
+                                                isFetching={isProfileCompletionFetching}
+                                                onRetry={() => refetchProfileCompletion()}
+                                            />
+                                        </aside>
+
+                                        <div className="min-w-0">
 
 
                                     <section className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-9 px-2 sm:px-10">
@@ -664,6 +695,10 @@ export default function UserProfile() {
                                             }
 
                                         </AnimatePresence>
+
+                                    </div>
+
+                                        </div>
 
                                     </div>
 

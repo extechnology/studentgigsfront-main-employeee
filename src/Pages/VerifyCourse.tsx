@@ -86,8 +86,8 @@ export default function EnrollmentSuccess() {
 
     // ✅ SUCCESS UI
     return (
-       
-       <div className="min-h-screen bg-gradient-to-br from-white via-orange-50 to-orange-100 flex items-center justify-center px-4 mt-24 sm:mt-0 sm:py-10">
+
+        <div className="min-h-screen bg-gradient-to-br from-white via-orange-50 to-orange-100 flex items-center justify-center px-4 mt-24 sm:mt-0 sm:py-10">
             <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}

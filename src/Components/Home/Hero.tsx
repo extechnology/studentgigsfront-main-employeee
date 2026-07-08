@@ -163,8 +163,8 @@ const Hero = () => {
                   </Swiper>
 
                   {/* Job Filter Section */}
-                  <div className="absolute z-40 sm:bottom-28 bottom-12 inset-x-0 px-5 sm:px-16 text-white pointer-events-none flex flex-col items-center justify-end text-center">
-                  
+                  <div className="absolute z-40 top-20 sm:top-auto sm:bottom-28 inset-x-0 px-5 sm:px-16 text-white pointer-events-none flex flex-col items-center justify-start sm:justify-end text-center">
+
                     <div className="pointer-events-auto w-full max-w-7xl">
                       <motion.h2
                         initial={{ opacity: 0, y: 20 }}

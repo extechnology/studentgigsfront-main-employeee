@@ -3,7 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import makeAnimated from 'react-select/animated';
 import Selecet from 'react-select';
 import toast from 'react-hot-toast';
-import { Button } from '../ui/button';
+import { Button } from "@/Components/ui/button";
 import { BadgePlus, SaveIcon, ViewIcon } from 'lucide-react';
 import { EditAdditionalInfo, GetAdditionalInfo } from '@/Hooks/UserProfile';
 import ResumeViewer from '../Common/ResumeViewer';
@@ -122,7 +122,7 @@ export default function AdditionalInfo() {
 
         EditInfo({ formData: formdata, id: Id }, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
 
@@ -328,7 +328,7 @@ export default function AdditionalInfo() {
                                                 )
 
                                             }
-                                            
+
                                         </div>
 
                                     </div>

@@ -1,6 +1,6 @@
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "../ui/form";
-import { Button } from "../ui/button";
+import { Button } from "@/Components/ui/button";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -68,7 +68,7 @@ export default function EmailOtp({ isOpen, setIsOpen, RegisterData, reset, handl
         }, 1000);
 
         return () => clearInterval(timer);
-        
+
     }, [isOpen]);
 
 
@@ -115,7 +115,7 @@ export default function EmailOtp({ isOpen, setIsOpen, RegisterData, reset, handl
 
         mutate(formdata, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status <= 300) {
 
@@ -157,7 +157,7 @@ export default function EmailOtp({ isOpen, setIsOpen, RegisterData, reset, handl
 
         resendOtp(formdata, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status <= 300) {
 

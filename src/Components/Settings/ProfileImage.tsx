@@ -53,6 +53,7 @@ const ProfileEditor: React.FC = () => {
     const [tempBannerSrc, setTempBannerSrc] = useState('');
     const [tempProfileSrc, setTempProfileSrc] = useState('');
     const [Id, SetId] = useState('');
+    const hasProfilePicture = Boolean(profileSrc);
 
 
 
@@ -138,6 +139,13 @@ const ProfileEditor: React.FC = () => {
     const handleCropComplete = (croppedImage: string, type: 'banner' | 'profile') => {
 
         if (type === 'banner') {
+            if (!hasProfilePicture) {
+                toast.error("Profile picture is required before updating the cover photo.");
+                setShowBannerCropper(false);
+                setTempBannerSrc('');
+                return;
+            }
+
             submitProfileData({ cover_photo: croppedImage, profile_pic: "" });
         } else {
             submitProfileData({ cover_photo: "", profile_pic: croppedImage });
@@ -333,6 +341,11 @@ const ProfileEditor: React.FC = () => {
                                 <p className="font-[1rem] text-md md:text-lg text-gray-400">
                                     {data[0]?.job_title}
                                 </p>
+                                {!hasProfilePicture && (
+                                    <p className="mt-1 text-xs font-semibold text-red-600">
+                                        Profile picture is required
+                                    </p>
+                                )}
                             </div>
 
 

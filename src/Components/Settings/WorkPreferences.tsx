@@ -5,7 +5,7 @@ import { EditWorkPerference, GetWorkPerference } from "@/Hooks/UserProfile";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import PreferedCategory from "./PreferedCategory";
-import { Button } from "../ui/button";
+import { Button } from "@/Components/ui/button";
 
 
 // Form inputs
@@ -33,8 +33,8 @@ const JobTypes = [
 // Compensation Types
 const Availability = [
 
-    { label: "Hourly Rate", value: "hourly" },
-    { label: "All-Day Gigs", value: "All-Day Gigs" },
+    { label: "Hourly Gigs", value: "Hourly Gigs" },
+    { label: "Daily Gigs", value: "Daily Gigs" },
     { label: "Weekend Gigs", value: "Weekend Gigs" },
     { label: "Vacation Gigs", value: "Vacation Gigs" },
     { label: "Project Based", value: "project" },
@@ -109,7 +109,7 @@ export default function WorkPreferences() {
 
         EditWork({ formData: formdata, id: Id }, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();
                     toast.success("Work Information Updated Successfully");
@@ -261,8 +261,8 @@ export default function WorkPreferences() {
                                                     <Selecet
                                                         ref={ref}
                                                         options={Availability}
-                                                        value={value ? Availability.find((option) => option.label === value) : null}
-                                                        onChange={(option) => { onChange(option?.label) }}
+                                                        value={value ? Availability.find((option) => option.value === value) : null}
+                                                        onChange={(option) => { onChange(option?.value) }}
                                                         placeholder={"Search Your Categories"}
                                                         isSearchable={true}
                                                         className="basic-single"

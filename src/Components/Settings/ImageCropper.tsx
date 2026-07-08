@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.css";
 import { Save } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/Components/ui/button";
 
 interface ImageCropperProps {
     src: string;
@@ -13,7 +13,7 @@ interface ImageCropperProps {
 
 const ImageCropper: React.FC<ImageCropperProps> = ({ src, onCrop, onCropComplete, aspectRatio = 16 / 9 }) => {
 
-    
+
     const imageRef = useRef<HTMLImageElement>(null);
     const cropperRef = useRef<Cropper>();
 

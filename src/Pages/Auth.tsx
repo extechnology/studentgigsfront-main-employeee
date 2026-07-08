@@ -109,7 +109,7 @@ export default function Auth() {
     // Mutate
     mutate(formdata, {
 
-      onSuccess: (response:any) => {
+      onSuccess: (response: any) => {
 
         if (response?.status >= 200 && response?.status <= 300) {
 
@@ -178,14 +178,14 @@ export default function Auth() {
     // Mutate
     mutateLogin(formdata, {
 
-      onSuccess: (response:any) => {
+      onSuccess: (response: any) => {
 
         if (response?.status >= 200 && response?.status <= 300) {
 
           toast.success("User Login Successfully")
 
-          // Get previous route or default to home
-          const from = location.state?.from || "/";
+          // Get previous route or default to jobfilter
+          const from = location.state?.from || "/jobfilter";
 
           reset()
 
@@ -285,12 +285,12 @@ export default function Auth() {
           // Mutate
           mutateGoogleLogin(formdata, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
               if (response?.status >= 200 && response?.status <= 300) {
 
-                // Get previous route or default to home
-                const from = location.state?.from || "/";
+                // Get previous route or default to jobfilter
+                const from = location.state?.from || "/jobfilter";
 
                 login(response.data.access)
 
@@ -475,9 +475,9 @@ export default function Auth() {
                       <a onClick={() => { setForgotModal(!forgotModal) }} className="cursor-pointer underline-offset-4 font-semibold text-gray-900 hover:underline ms-3">Forget Password & Username ?</a>
                     </p>
 
-                    <p className="whitespace-nowrap text-gray-600">
+                    {/* <p className="whitespace-nowrap text-gray-600">
                       <a href="https://gigs.studentsgigs.com/auth" className="cursor-pointer underline-offset-4 font-semibold text-gray-900 hover:underline ms-3">Login as Employer</a>
-                    </p>
+                    </p> */}
 
                   </div>
 

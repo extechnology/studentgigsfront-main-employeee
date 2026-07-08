@@ -1,8 +1,8 @@
-import BlurFade from '../ui/blur-fade';
+import BlurFade from '@/Components/ui/blur-fade';
 import CourseCard from './CourseCard';
 import { CourseData } from '@/Hooks/Utils';
-import CourseCardLoader from '../Loaders/CourseCardLoader';
-import NoCourseLoader from '../Loaders/NoCourseLoader';
+import CourseCardLoader from '@/Components/Loaders/CourseCardLoader';
+import NoCourseLoader from '@/Components/Loaders/NoCourseLoader';
 
 
 

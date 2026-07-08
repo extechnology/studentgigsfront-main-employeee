@@ -131,6 +131,14 @@ export const GetUserPersonalInfo = async (header: object) => {
 }
 
 
+//GET User Profile Completion
+export const GetUserProfileCompletion = async (header: object) => {
+
+    return await CommonApi("GET", `${Base_Url}/profile/completion/`, "", header)
+
+}
+
+
 
 // Edit User Personal Information
 export const EditUserPersonalInfo = async (data: any, header: object, id: string) => {
