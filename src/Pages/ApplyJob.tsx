@@ -10,11 +10,12 @@ import {
 } from 'lucide-react';
 import { SingleJobData } from '@/Hooks/JobHook';
 import { useNavigate, useParams } from 'react-router-dom';
-import { GetPersonalInfo, useCheckJobApplyEligibility } from '@/Hooks/UserProfile';
+import { GetPersonalInfo, isApplyPersonalInfoComplete, useCheckJobApplyEligibility } from '@/Hooks/UserProfile';
 import { ApplyJob } from '@/Hooks/JobHook';
 import toast from 'react-hot-toast';
 import confetti from 'canvas-confetti';
 import { useAuth } from '@/Context/AuthContext';
+import ApplyProfileCompletionModal from '@/Components/Common/ApplyProfileCompletionModal';
 
 
 
@@ -76,6 +77,8 @@ const JobApplicationForm = () => {
     const [resumeFile, setResumeFile] = useState<File | null>(null);
     const [resumeUrl, setResumeUrl] = useState('');
     const [isEditing, setIsEditing] = useState(false);
+    const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+    const [hasPromptedProfileCompletion, setHasPromptedProfileCompletion] = useState(false);
 
 
     // Apply Job
@@ -93,16 +96,48 @@ const JobApplicationForm = () => {
 
 
     // Check job eligibility
-    const { isBasicInfoComplete, isLoading: completionLoading } = useCheckJobApplyEligibility();
+    const {
+        isBasicInfoComplete,
+        isLoading: completionLoading,
+        refetch: refetchApplyEligibility,
+    } = useCheckJobApplyEligibility();
 
 
-    // Redirect user if basic info is not completed
     useEffect(() => {
-        if (!completionLoading && !isBasicInfoComplete) {
-            toast.error("Oops! Please complete your basic information before applying for jobs.");
-            Navigate('/settings');
+        window.scrollTo({ top: 0, behavior: 'smooth', });
+    }, []);
+
+
+    // Ask user to complete basic info without leaving the apply flow
+    useEffect(() => {
+        if (completionLoading) return;
+
+        if (!isBasicInfoComplete) {
+            setIsProfileModalOpen(true);
+
+            if (!hasPromptedProfileCompletion) {
+                toast.error("Please complete your basic information before applying for jobs.");
+                setHasPromptedProfileCompletion(true);
+            }
+        } else {
+            setHasPromptedProfileCompletion(false);
         }
-    }, [isBasicInfoComplete, completionLoading, Navigate]);
+    }, [isBasicInfoComplete, completionLoading, hasPromptedProfileCompletion]);
+
+
+    const handleProfileCompleted = async () => {
+        const result = await refetchApplyEligibility();
+        const updatedUser = Array.isArray(result.data) ? result.data[0] : null;
+
+        if (isApplyPersonalInfoComplete(updatedUser)) {
+            setIsProfileModalOpen(false);
+            setHasPromptedProfileCompletion(false);
+            toast.success("Profile completed. You can submit your application now.");
+        } else {
+            setIsProfileModalOpen(true);
+            toast.error("Oops! Please complete your basic information before applying for jobs.");
+        }
+    };
 
 
     // TO Set job details
@@ -171,7 +206,7 @@ const JobApplicationForm = () => {
 
         if (!isBasicInfoComplete) {
             toast.error("Oops! Please complete your basic information before applying for jobs.");
-            Navigate('/settings');
+            setIsProfileModalOpen(true);
             return;
         }
 
@@ -219,7 +254,7 @@ const JobApplicationForm = () => {
                 handlePlanRedirect("You have reached your job limit. Please upgrade your plan to continue.");
             } else if (!usage?.age_restrict) {
                 toast.error("Oops! You are not eligible to apply for jobs due to your age.");
-                Navigate('/settings')
+                setIsProfileModalOpen(true);
             }
 
         }
@@ -261,8 +296,6 @@ const JobApplicationForm = () => {
         frame();
     };
 
-
-    window.scrollTo({ top: 0, behavior: 'smooth', });
 
     return (
 
@@ -467,6 +500,11 @@ const JobApplicationForm = () => {
 
 
             }
+            <ApplyProfileCompletionModal
+                open={isProfileModalOpen}
+                onOpenChange={setIsProfileModalOpen}
+                onCompleted={handleProfileCompleted}
+            />
         </div>
     );
 };

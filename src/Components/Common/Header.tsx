@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Bookmark, Crown, Gauge, House, KeyRound, LogOut, Search, Settings, Telescope, Text, User } from 'lucide-react';
+import { Bookmark, Crown, Gauge, House, KeyRound, LogOut, Search, Settings, User } from 'lucide-react';
 import {
   Dialog,
   Transition
@@ -71,6 +71,15 @@ export default function Header() {
       }
     }
   }, [isAuthenticated]);
+
+  // Listen to open-mobile-menu event from bottom dock
+  useEffect(() => {
+    const handleOpenMenu = () => setMobileMenuOpen(true);
+    document.addEventListener("open-mobile-menu", handleOpenMenu);
+    return () => {
+      document.removeEventListener("open-mobile-menu", handleOpenMenu);
+    };
+  }, []);
 
 
 
@@ -159,53 +168,7 @@ export default function Header() {
               </div>
 
 
-              <div className="flex items-center justify-between">
 
-
-                {/* Home for mobile view */}
-                <Link to={'/'} className={`ms-1 text-md  font-semibold text-gray-400 hover:text-green-600 sm:hidden block ${color ? "text-white" : ""}`}>
-                  <House size={24} />
-                </Link>
-
-
-                {/* Profile image */}
-                <div className="ms-2 sm:hidden">
-
-                  <img
-                    src={data[0]?.profile?.profile_pic ?? "/Header-profile.webp"}
-                    loading="lazy"
-                    alt="User profile"
-                    className="w-[25px] h-[25px] rounded-full object-cover "
-                  />
-
-                </div>
-
-
-                {/* Search  for mobile view */}
-                <Link
-                  to={'/jobfilter'}
-                  className={`p-2 me-1 ms-1 sm:hidden flex items-center justify-center ${color ? 'bg-transparent hover:bg-gray-600' : ""} text-md font-semibold`}
-                >
-                  <Search size={16} className={`${color ? 'text-white' : 'text-gray-400'}`} />
-
-                </Link>
-
-
-                <div className="flex lg:hidden">
-                  <button
-                    type="button"
-                    onClick={() => setMobileMenuOpen(true)}
-                    className={`-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 ${color ? "text-white" : "text-black"}`}
-                  >
-                    <span className="sr-only">Open main menu</span>
-
-                    <Text aria-hidden="true" className="size-6" />
-
-                  </button>
-
-                </div>
-
-              </div>
 
             </div>
 
@@ -222,13 +185,13 @@ export default function Header() {
             {/* Desktop Navbar items - grid: [explore] [right-icons] */}
             <div className="hidden lg:flex items-center justify-center">
               {/* Explore Gigs - centered */}
-              {location.pathname !== "/jobfilter" && (
+              {/* {location.pathname !== "/jobfilter" && (
                 <Link to={'/jobfilter'}>
                   <button className="flex items-center gap-x-2 bg-[#004673] text-white font-semibold text-md md:px-4 lg:px-10 xl:px-16 py-2 hover:shadow-lg transform hover:scale-105 transition-all duration-300 ease-in-out">
                     Explore Jobs <Telescope size={24} />
                   </button>
                 </Link>
-              )}
+              )} */}
 
               {/* Find Student Talents */}
               {/* <GigsAlert /> */}

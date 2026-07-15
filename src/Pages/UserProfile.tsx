@@ -12,6 +12,7 @@ import NoExperience from "@/Components/Loaders/NoExp";
 import ResumeViewer from "@/Components/Common/ResumeViewer";
 import { useAuth } from "@/Context/AuthContext";
 import ProfileCompletionCard from "@/Components/Common/ProfileCompletionCard";
+import ProfileAvatar from "@/Components/Common/ProfileAvatar";
 
 
 
@@ -162,6 +163,8 @@ export default function UserProfile() {
 
     // User Data
     const [UserData, SetUserData] = useState<PersonalInfo | null>(null)
+    const profilePic = UserData?.profile?.profile_pic || UserData?.profile_photo;
+    const profileName = UserData?.name || UserData?.username;
 
 
     useEffect(() => {
@@ -213,7 +216,7 @@ export default function UserProfile() {
 
         <>
 
-            <main className="pt-20 sm:pt-12">
+            <main className="pt-8 sm:pt-12">
 
 
                 <div className="">
@@ -251,9 +254,9 @@ export default function UserProfile() {
 
 
                                         {/* Profile Image */}
-                                        <div className="flex justify-between -mt-7 sm:-mt-10 sm:ms-8 sm:me-10 ms-2">
+                                        <div className="flex flex-col gap-4 -mt-7 px-2 sm:-mt-10 sm:ms-8 sm:me-10 sm:flex-row sm:items-start sm:justify-between sm:px-0">
 
-                                            <div className="flex justify-between space-x-2">
+                                            <div className="flex min-w-0 items-start gap-3 sm:gap-4">
 
                                                 <div className="flex items-center gap-4">
 
@@ -266,11 +269,12 @@ export default function UserProfile() {
 
                                                         <div className="relative w-24 h-24 md:w-32 md:h-32">
 
-                                                            <img
-                                                                src={UserData?.profile?.profile_pic ?? "/Profile-deaf.jpg"}
+                                                            <ProfileAvatar
+                                                                src={profilePic}
+                                                                name={profileName}
                                                                 alt="profile"
-                                                                loading="lazy"
                                                                 className="w-full h-full rounded-full object-cover border-4 border-white shadow-lg"
+                                                                textClassName="text-3xl md:text-4xl"
                                                             />
 
                                                             {/* Premium Badge */}
@@ -296,16 +300,19 @@ export default function UserProfile() {
 
                                                 </div>
 
-                                                <div className="md:pt-12 pt-9 ps-2">
-                                                    <h1 className="font-semibold text-md md:text-lg">{UserData?.name?.toUpperCase()} <span className="text-gray-400 text-sm ms-1 pb-0">@{UserData?.username}</span></h1>
-                                                    <p className="font-[1rem] text-md md:text-lg text-gray-400">
+                                                <div className="min-w-0 pt-8 sm:pt-9 md:pt-12">
+                                                    <h1 className="text-base font-semibold leading-snug text-gray-900 md:text-lg">
+                                                        <span className="break-words">{UserData?.name?.toUpperCase()}</span>
+                                                        <span className="block break-all text-sm text-gray-400 sm:inline sm:ms-1">@{UserData?.username}</span>
+                                                    </h1>
+                                                    <p className="break-words text-sm text-gray-400 md:text-lg">
                                                         {UserData?.job_title}
                                                     </p>
                                                 </div>
 
                                             </div>
 
-                                            <div className="flex sm:mt-12 mt-10 pl-4 me-4">
+                                            <div className="flex shrink-0 self-end sm:mt-12 sm:self-auto sm:pl-4 sm:me-4">
                                                 <Link to={'/settings'}>
                                                     <Settings size={46} className="text-black bg-green-100 rounded-full p-2 sm:h-12 sm:w-12 h-10 w-10" />
                                                 </Link>

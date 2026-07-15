@@ -28,6 +28,8 @@ interface ProfileCompletionCardProps {
     isFetching?: boolean;
     onRetry?: () => void;
     className?: string;
+    actionHref?: string;
+    actionLabel?: string;
 }
 
 interface SectionMeta {
@@ -106,6 +108,8 @@ export default function ProfileCompletionCard({
     isFetching = false,
     onRetry,
     className,
+    actionHref = "/settings",
+    actionLabel = "Complete profile",
 }: ProfileCompletionCardProps) {
     if (isLoading) {
         return <ProfileCompletionSkeleton className={className} />;
@@ -239,10 +243,10 @@ export default function ProfileCompletionCard({
                 </div>
 
                 <Link
-                    to="/settings"
+                    to={actionHref}
                     className="mt-5 inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-emerald-600 px-4 text-sm font-bold text-white shadow-sm transition-colors hover:bg-emerald-700"
                 >
-                    Complete profile
+                    {actionLabel}
                     <ArrowRight size={16} />
                 </Link>
             </div>

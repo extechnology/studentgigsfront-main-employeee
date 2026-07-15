@@ -47,8 +47,9 @@ const ImageCropper: React.FC<ImageCropperProps> = ({ src, onCrop, onCropComplete
             </div>
             <div className="mt-4 flex justify-end gap-2">
                 <Button
+                    type="button"
                     onClick={handleCrop}
-                    className=" text-white px-4 py-2 rounded-lg flex items-center"
+                    className=" bg-emerald-500 text-white hover:bg-emerald-600 px-4 py-2 rounded-lg flex items-center"
                 >
                     Save Changes <Save className="ml-2" size={24} />
                 </Button>

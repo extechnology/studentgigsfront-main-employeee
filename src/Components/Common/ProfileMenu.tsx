@@ -1,12 +1,19 @@
 import { Link } from "react-router-dom";
 import { Popover } from "@headlessui/react";
 import { User, Settings, Crown, Bookmark, KeyRound, LogOut, Gauge } from "lucide-react";
+import ProfileAvatar from "@/Components/Common/ProfileAvatar";
 
 
 interface ProfileMenuProps {
     LoginStatus: boolean;
     HandleLogOut: () => void;
-    data: { profile?: { profile_pic?: string } }[];
+    data?: {
+        profile?: { profile_pic?: string | null };
+        profile_photo?: string | null;
+        name?: string | null;
+        employee_name?: string | null;
+        username?: string | null;
+    }[];
     color?: boolean;
     openLoginModal?: () => void;
 }
@@ -14,6 +21,9 @@ interface ProfileMenuProps {
 
 const ProfileMenu: React.FC<ProfileMenuProps> = ({ LoginStatus, HandleLogOut, data, color, openLoginModal }) => {
 
+    const selectedUser = data?.[0];
+    const profilePic = selectedUser?.profile?.profile_pic || selectedUser?.profile_photo;
+    const profileName = selectedUser?.name || selectedUser?.employee_name || selectedUser?.username;
 
     return (
 
@@ -25,11 +35,11 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ LoginStatus, HandleLogOut, da
                         <Popover.Button
                             className={`flex items-center gap-x-1 text-sm font-semibold text-gray-400 ${color ? "text-white" : ""}`}
                         >
-                            <img
-                                src={data[0]?.profile?.profile_pic ?? "/Header-profile.webp"}
-                                loading="lazy"
-                                alt="User profile"
-                                className="w-[30px] h-[30px] rounded-full object-cover"
+                            <ProfileAvatar
+                                src={profilePic}
+                                name={profileName}
+                                className="h-[30px] w-[30px] rounded-full object-cover"
+                                textClassName="text-xs"
                             />
                         </Popover.Button>
 

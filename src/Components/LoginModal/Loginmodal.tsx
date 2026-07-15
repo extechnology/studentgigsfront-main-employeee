@@ -92,12 +92,12 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
 
                             {/* Title */}
                             <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white leading-tight mb-1 sm:mb-2 group-hover:text-emerald-300 transition-colors">
-                                Find a Job
+                                Find Opportunities
                             </h2>
 
                             {/* Description — hidden on small mobile, shown sm+ */}
                             <p className="hidden sm:block text-xs sm:text-sm text-gray-300 max-w-xs leading-relaxed mb-3">
-                                Jobs, Gigs, Internship
+                                Jobs • Gigs • Internships
                             </p>
 
                             <Link to={'/auth'} onClick={() => setIsOpen(false)} className="inline-block">
@@ -156,12 +156,12 @@ export default function LoginModal({ isOpen, setIsOpen }: LoginModalProps) {
 
                             {/* Title */}
                             <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white leading-tight mb-1 sm:mb-2 group-hover:text-orange-300 transition-colors">
-                                Hire Talent
+                                Hire Candidates
                             </h2>
 
                             {/* Description — hidden on small mobile, shown sm+ */}
                             <p className="hidden sm:block text-xs sm:text-sm text-gray-300 max-w-xs leading-relaxed mb-3">
-                                Students, Freshers , Experienced  Professionals
+                                Students • Freshers • Experienced Professionals
                             </p>
 
                             <a href="https://gigs.studentsgigs.com/auth" onClick={() => setIsOpen(false)} className="inline-block">

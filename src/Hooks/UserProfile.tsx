@@ -10,6 +10,57 @@ import {
     DeleteUserExperience, EditUserAdditionalInfo, GetUserAdditionalInfo, GetUserProfileCompletion
 } from "@/Service/AllApi";
 import type { ProfileCompletionResponse } from "@/Service/ProfileCompletionTypes";
+const optionalProfileImageFields = new Set([
+    "profile_pic",
+    "profile_photo",
+    "profile_picture",
+]);
+
+const normalizeCompletionField = (field: string) =>
+    field.toLowerCase().replace(/[\s-]+/g, "_");
+
+const getPercentage = (filled: number, total: number) =>
+    total === 0 ? 100 : Math.round((filled / total) * 100);
+
+const normalizeProfileCompletion = (
+    response: ProfileCompletionResponse
+): ProfileCompletionResponse => {
+    const basicInfo = response.sections?.basic_info;
+
+    if (!basicInfo) return response;
+
+    const optionalMissingCount = basicInfo.missing_fields.filter((field) =>
+        optionalProfileImageFields.has(normalizeCompletionField(field))
+    ).length;
+
+    if (optionalMissingCount === 0) return response;
+
+    const sections = { ...response.sections };
+    const total = Math.max(0, basicInfo.total - optionalMissingCount);
+    const filled = Math.min(basicInfo.filled, total);
+
+    sections.basic_info = {
+        ...basicInfo,
+        filled,
+        total,
+        percentage: getPercentage(filled, total),
+        missing_fields: basicInfo.missing_fields.filter(
+            (field) => !optionalProfileImageFields.has(normalizeCompletionField(field))
+        ),
+    };
+
+    const sectionValues = Object.values(sections);
+    const overallTotal = sectionValues.reduce((sum, section) => sum + section.total, 0);
+    const overallFilled = sectionValues.reduce((sum, section) => sum + section.filled, 0);
+    const isComplete = sectionValues.every((section) => section.percentage >= 100);
+
+    return {
+        ...response,
+        sections,
+        overall_percentage: getPercentage(overallFilled, overallTotal),
+        is_complete: isComplete,
+    };
+};
 
 
 
@@ -74,7 +125,7 @@ export const GetProfileCompletion = () => {
 
             const Response = await GetUserProfileCompletion(headers)
 
-            return Response.data as ProfileCompletionResponse
+            return normalizeProfileCompletion(Response.data as ProfileCompletionResponse)
 
         },
 
@@ -270,6 +321,7 @@ export const DeleteEducationInfo = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["usereducationinfo"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -495,6 +547,7 @@ export const AddTechSkills = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["usertechskills"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -871,6 +924,7 @@ export const AddPreferredCategory = () => {
         onSuccess: () => {
 
             queryclient.invalidateQueries({ queryKey: ["userpreferredcategories"] });
+            queryclient.invalidateQueries({ queryKey: ["userprofilecompletion"] });
 
         }
 
@@ -1259,12 +1313,40 @@ export const EditAdditionalInfo = () => {
 }
 
 
+const hasApplyValue = (value: any) => {
+    if (value === null || value === undefined) return false;
+    if (typeof value === "string") return value.trim().length > 0;
+    return true;
+};
+
+export const isApplyPersonalInfoComplete = (info: any) => {
+    if (!info) return false;
+
+    const requiredFields = [
+        "name",
+        "email",
+        "phone",
+        "preferred_work_location",
+        "available_work_hours",
+        "date_of_birth",
+        "age",
+        "gender",
+        "job_title",
+        "about",
+    ];
+    const hasRequiredFields = requiredFields.every((field) => hasApplyValue(info[field]));
+    const hasMinimumAge = Number(info.age) >= 14;
+
+    return hasRequiredFields && hasMinimumAge;
+};
+
 // Custom hook to check if user is eligible to apply for a job based on basic info completion
 export const useCheckJobApplyEligibility = () => {
     const navigate = useNavigate();
-    const { data, isLoading, isError } = GetProfileCompletion();
+    const { data, isLoading, isFetching, isError, refetch } = GetPersonalInfo();
 
-    const isBasicInfoComplete = data ? (data.sections?.basic_info?.percentage >= 100) : false;
+    const selectedUser = Array.isArray(data) ? data[0] : null;
+    const isBasicInfoComplete = isApplyPersonalInfoComplete(selectedUser);
 
     const handleApplyCheck = (e: React.MouseEvent) => {
         const token = localStorage.getItem("token");
@@ -1275,19 +1357,14 @@ export const useCheckJobApplyEligibility = () => {
             return false;
         }
 
-        if (!isBasicInfoComplete) {
-            e.preventDefault();
-            toast.error("Oops! Please complete your Personal Information before applying for jobs.");
-            navigate("/settings");
-            return false;
-        }
         return true;
     };
 
     return {
         isBasicInfoComplete,
-        isLoading,
+        isLoading: isLoading || isFetching,
         isError,
         handleApplyCheck,
+        refetch,
     };
 };
