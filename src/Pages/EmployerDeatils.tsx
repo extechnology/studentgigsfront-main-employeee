@@ -239,7 +239,7 @@ export default function EmployerDeatils() {
                                             <div>
                                                 <a href="#see-jobs">
                                                     <button className="rounded-md shadow-md md:px-4 px-2 py-1 bg-gray-200 text-[#059669] font-bold hover:scale-110 duration-300">
-                                                        See Jobs
+                                                        See More Jobs
                                                     </button>
                                                 </a>
                                             </div>

@@ -9,6 +9,7 @@ import { useJobSearch } from "@/Context/JobSearchContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/Context/AuthContext";
 import toast from "react-hot-toast";
+import LoginModal from "../LoginModal/Loginmodal";
 
 
 // form inputs
@@ -31,8 +32,8 @@ interface Option {
 // Compensation Types
 const compensationTypes: Option[] = [
 
-    { label: "Hourly Rate", value: "hourly" },
-    { label: "All-Day Gigs", value: "All-Day Gigs" },
+    { label: "Hourly Gigs", value: "Hourly Gigs" },
+    { label: "Daily Gigs", value: "Daily Gigs" },
     { label: "Weekend Gigs", value: "Weekend Gigs" },
     { label: "Vacation Gigs", value: "Vacation Gigs" },
     { label: "Project Based", value: "project" },
@@ -51,8 +52,6 @@ const SelectedStyles = {
         boxShadow: state.isFocused ? "0 0 0 2px rgba(16, 185, 129, 0.2)" : "none",
         transition: "all 0.2s ease",
         width: "100%",
-        minWidth: "250px",
-        maxWidth: "600px",
         "&:hover": {
             backgroundColor: "white",
             boxShadow: "0 0 0 1px rgba(16, 185, 129, 0.15)",
@@ -78,8 +77,6 @@ const SelectedStyles = {
         borderRadius: "8px",
         boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
         width: "100%",
-        minWidth: "330px",
-        maxWidth: "700px",
         overflow: "hidden",
         marginTop: "8px",
         zIndex: 10,
@@ -169,6 +166,9 @@ export default function FilterJob({ className }: FilterJobProps = {}) {
     // Auth Context
     const { isAuthenticated } = useAuth()
 
+    // State to manage Login Modal
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
 
     // Search keyword
     const [Search, setSearch] = useState<string>("")
@@ -198,7 +198,7 @@ export default function FilterJob({ className }: FilterJobProps = {}) {
 
             toast.error("Please Login to Search");
 
-            navigate("/auth", { state: { from: location } })
+            setIsLoginModalOpen(true);
 
             return
 
@@ -231,7 +231,7 @@ export default function FilterJob({ className }: FilterJobProps = {}) {
 
 
                         {/* Category and jobtitle */}
-                        <div className="flex-1 flex items-center gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200 bg-white rounded-lg shadow-sm">
+                        <div className="flex-1 flex items-center gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200">
 
 
                             {/* <Briefcase className="text-emerald-500 flex-shrink-0" size={24} /> */}
@@ -262,35 +262,33 @@ export default function FilterJob({ className }: FilterJobProps = {}) {
 
 
                         {/* Location Dropdown */}
-                        <div className="flex-1 flex items-center gap-2 p-5 border-b md:border-b-0 md:border-r border-gray-200">
+                        <div className="flex-1 flex items-center gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200">
 
                             {/* <MapPin className="text-emerald-500" size={26} /> */}
 
                             <div className="w-full">
 
-                                <div className="mt-2">
-                                    <Controller
-                                        name="location"
-                                        control={control}
-                                        render={({ field: { onChange, value, ref } }) => (
-                                            <Select
-                                                ref={ref}
-                                                options={Location}
-                                                onInputChange={(value) => setSearch(value)}
-                                                value={value ? Location?.find((option: Option) => option?.label === value) : null}
-                                                isSearchable={true}
-                                                isClearable={true}
-                                                className="basic-single"
-                                                onChange={(option: any) => { onChange(option?.label) }}
-                                                placeholder="Search a City...."
-                                                classNamePrefix="select"
-                                                noOptionsMessage={() => "No Locations Found..."}
-                                                isLoading={LocationLoading}
-                                                styles={SelectedStyles}
-                                            />
-                                        )}
-                                    />
-                                </div>
+                                <Controller
+                                    name="location"
+                                    control={control}
+                                    render={({ field: { onChange, value, ref } }) => (
+                                        <Select
+                                            ref={ref}
+                                            options={Location}
+                                            onInputChange={(value) => setSearch(value)}
+                                            value={value ? Location?.find((option: Option) => option?.label === value) : null}
+                                            isSearchable={true}
+                                            isClearable={true}
+                                            className="basic-single"
+                                            onChange={(option: any) => { onChange(option?.label) }}
+                                            placeholder="Search a City...."
+                                            classNamePrefix="select"
+                                            noOptionsMessage={() => "No Locations Found..."}
+                                            isLoading={LocationLoading}
+                                            styles={SelectedStyles}
+                                        />
+                                    )}
+                                />
 
                             </div>
 
@@ -298,41 +296,39 @@ export default function FilterJob({ className }: FilterJobProps = {}) {
 
 
                         {/* Category Dropdown */}
-                        <div className="flex-1 flex items-center gap-2 p-5 border-b md:border-b-0 md:border-r border-gray-200">
+                        <div className="flex-1 flex items-center gap-3 p-4 border-b md:border-b-0 md:border-r border-gray-200">
 
                             {/* <Calendar className="text-emerald-500" size={18} /> */}
 
                             {/* Availability */}
                             <div className="w-full">
 
-                                <div>
-                                    <Controller
-                                        name="salary_type"
-                                        control={control}
-                                        render={({ field: { onChange, value, ref } }) => (
-                                            <Selecet
-                                                ref={ref}
-                                                options={compensationTypes}
-                                                value={value ? compensationTypes?.find((option) => option?.label === value) : null}
-                                                onChange={(option) => { onChange(option?.label) }}
-                                                placeholder={"Select Your Salary Type..."}
-                                                isSearchable={false}
-                                                className="basic-single"
-                                                isClearable={true}
-                                                classNamePrefix="select"
-                                                styles={SelectedStyles}
+                                <Controller
+                                    name="salary_type"
+                                    control={control}
+                                    render={({ field: { onChange, value, ref } }) => (
+                                        <Selecet
+                                            ref={ref}
+                                            options={compensationTypes}
+                                            value={value ? compensationTypes?.find((option) => option?.value === value) : null}
+                                            onChange={(option) => { onChange(option?.value) }}
+                                            placeholder={"Select Your Work Type..."}
+                                            isSearchable={false}
+                                            className="basic-single"
+                                            isClearable={true}
+                                            classNamePrefix="select"
+                                            styles={SelectedStyles}
 
-                                            />
-                                        )}
-                                    />
-                                </div>
+                                        />
+                                    )}
+                                />
 
                             </div>
                         </div>
 
 
                         {/* Search Button */}
-                        <button type='submit' className="bg-emerald-500 text-white px-8 py-3 rounded-lg sm:rounded-r-lg hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2">
+                        <button type='submit' className="bg-emerald-500 text-white px-8 py-3 rounded-lg md:rounded-r-lg hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2">
                             <SearchIcon size={20} />
                             <span>Search</span>
                         </button>
@@ -343,7 +339,7 @@ export default function FilterJob({ className }: FilterJobProps = {}) {
 
             </div>
 
-
+            <LoginModal isOpen={isLoginModalOpen} setIsOpen={setIsLoginModalOpen} />
 
 
         </>

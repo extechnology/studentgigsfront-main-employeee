@@ -6,7 +6,7 @@ import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import toast from "react-hot-toast";
 import { SaveIcon, UserRound } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/Components/ui/button";
 import { AllLocations } from "@/Hooks/Utils";
 import { JObTittles } from "@/Hooks/Utils";
 
@@ -56,7 +56,7 @@ export default function PersonalInfromation() {
 
 
     // Get Job Title
-    const { data: JobTitle, isLoading: JobTitleLoading , isPending : JobTitlePending } = JObTittles()
+    const { data: JobTitle, isLoading: JobTitleLoading, isPending: JobTitlePending } = JObTittles()
 
 
 
@@ -162,7 +162,7 @@ export default function PersonalInfromation() {
         mutate(
             { formData, id: id },
             {
-                onSuccess: (response:any) => {
+                onSuccess: (response: any) => {
                     if (response?.status >= 200 && response?.status < 300) {
                         reset();
                         toast.success("Personal Information Updated Successfully");
@@ -445,7 +445,7 @@ export default function PersonalInfromation() {
                                             htmlFor="portfolio-link"
                                             className="block text-sm/6 font-medium text-gray-900"
                                         >
-                                            Portfolio/LinkedIn Profile Link (optional)
+                                            Portfolio/LinkedIn Profile Link
                                             {errors.portfolio && (
                                                 <span className="text-sm text-red-500 ms-2">{errors.portfolio.message}</span>
                                             )}
@@ -454,7 +454,7 @@ export default function PersonalInfromation() {
                                             id="portfolio-link"
                                             autoComplete="portfolio-link"
                                             type="url"
-                                            {...register("portfolio")}
+                                            {...register("portfolio", { required: "Portfolio/LinkedIn Link is required" })}
                                             className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                             placeholder="Enter your portfolio or LinkedIn profile URL"
                                         />

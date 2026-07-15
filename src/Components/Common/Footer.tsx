@@ -88,7 +88,7 @@ const Footer = () => {
           </div>
 
           <a
-            href="https://wa.me/yourPhoneNumber?text=Hi%20there!%20I%20want%20to%20chat."
+            href="https://wa.me/919072399100?text=Hi%21%20May%20I%20Know%20More%20About%20StudentsGigs%3F"
             target="_blank"
             rel="noopener noreferrer"
             className="flex w-52 items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full shadow-lg transition-all"
@@ -104,10 +104,9 @@ const Footer = () => {
             <span>Let’s Chat</span>
           </a>
 
-
         </div>
-      </div>
 
+      </div>
 
 
       {/* Call-to-Action */}
@@ -120,17 +119,17 @@ const Footer = () => {
       </div>
 
 
-
       {/* Horizontal Line */}
       <div className="mt-10 border-t border-gray-700"></div>
 
 
-
       {/* Copyright Section */}
       <div className="mt-4 text-center text-sm px-4">
+       
         <p>&copy; {new Date().getFullYear()} Students Gigs. All Rights Reserved.</p>
 
         <div className="flex flex-wrap justify-center gap-2 py-1 text-xs sm:text-sm">
+       
           <Link to={'/privacypolicy'} className="hover:text-gray-400">
             Privacy Policy
           </Link>
@@ -148,7 +147,7 @@ const Footer = () => {
           </Link>
 
           <span className="hidden sm:inline">|</span>
-          
+
           <Link to={'/disclaimer'} className="hover:text-gray-400">
             Disclaimer
           </Link>

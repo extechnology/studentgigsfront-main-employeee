@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { CirclePlusIcon, Lightbulb, X } from 'lucide-react';
 import SoftSkillData from '../../Data/SoftSkillData.json';
 import makeAnimated from 'react-select/animated';
-import { Button } from '../ui/button';
+import { Button } from '@/Components/ui/button';
 
 
 
@@ -63,7 +63,7 @@ export default function SoftSkills() {
 
         AddSoftSkills({ formData: formdata }, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();
@@ -90,7 +90,7 @@ export default function SoftSkills() {
 
         DeleteSoftSkill(id, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();
@@ -156,7 +156,7 @@ export default function SoftSkills() {
 
 
                                 <h2 className="text-2xl pb-3 font-semibold text-gray-900 flex items-center">
-                                    Soft Skills <Lightbulb size={24} className='ml-2' /> <span className='text-sm'>(Optional)</span> 
+                                    Soft Skills <Lightbulb size={24} className='ml-2' /> <span className='text-sm'>(Optional)</span>
                                 </h2>
 
                                 <div className="mt-5 grid grid-cols-1 gap-x-6  sm:grid-cols-2">

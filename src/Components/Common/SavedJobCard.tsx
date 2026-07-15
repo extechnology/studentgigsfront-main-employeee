@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { formatDistanceToNow } from 'date-fns';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import { useCheckJobApplyEligibility } from '@/Hooks/UserProfile';
 
 
 // Job Card Props
@@ -44,6 +45,10 @@ export default function SavedJobCard({ id, index, applied, company_name, jobType
 
     // Delete Saved Jobs HOOK
     const { mutate: DeleteSavedJobs } = RemoveSavedJobs()
+
+
+    // Check job apply eligibility
+    const { handleApplyCheck } = useCheckJobApplyEligibility();
 
 
 
@@ -139,7 +144,7 @@ export default function SavedJobCard({ id, index, applied, company_name, jobType
 
                             </Link>
 
-                            <Link to={`/applyjob/${id}/${jobType}`}>
+                            <Link to={`/applyjob/${id}/${jobType}`} onClick={handleApplyCheck}>
                                 <button
                                     disabled={applied}
                                     className={`flex w-full justify-center items-center text-sm ${applied
@@ -179,13 +184,22 @@ export default function SavedJobCard({ id, index, applied, company_name, jobType
 
                 {/* Action buttons visible on mobile */}
                 <div className="flex md:hidden mt-4 space-x-2 w-full">
-                    <button className="flex-1 px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-medium rounded-lg transition-colors duration-300 flex items-center justify-center">
-                        View Details
-                        <ChevronRight size={16} className="ml-1" />
-                    </button>
-                    <button className="flex-1 px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-600 text-sm font-medium rounded-lg transition-colors duration-300 flex items-center justify-center">
-                        Apply Now
-                    </button>
+                    <Link to={`/jobdeatils/${id}/${jobType}`} className="flex-1">
+                        <button className="w-full px-4 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 text-sm font-medium rounded-lg transition-colors duration-300 flex items-center justify-center">
+                            View Details
+                            <ChevronRight size={16} className="ml-1" />
+                        </button>
+                    </Link>
+                    <Link to={`/applyjob/${id}/${jobType}`} onClick={handleApplyCheck} className="flex-1">
+                        <button
+                            disabled={applied}
+                            className={`w-full px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-300 flex items-center justify-center ${
+                                applied ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-green-50 hover:bg-green-100 text-green-600'
+                            }`}
+                        >
+                            {applied ? 'Applied ✓' : 'Apply Now'}
+                        </button>
+                    </Link>
                 </div>
 
 

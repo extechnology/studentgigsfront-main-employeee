@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { CirclePlusIcon, X } from 'lucide-react';
 import { GetPreferredCategories, AddPreferredCategory, DeletePreferredCategory } from '@/Hooks/UserProfile';
 import { JObList } from '@/Hooks/Utils';
-import { Button } from '../ui/button';
+import { Button } from '@/Components/ui/button';
 
 
 
@@ -56,7 +56,7 @@ export default function PreferedCategory() {
 
         AddCategory({ formData: formdata }, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();
@@ -81,7 +81,7 @@ export default function PreferedCategory() {
 
         DeleteCategory(id, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();

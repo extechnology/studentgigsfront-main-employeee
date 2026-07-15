@@ -1,8 +1,8 @@
-import { Button } from '../ui/button';
+import { Button } from '@/Components/ui/button';
 import { Check, Target, AlertTriangle, Briefcase, Award, ChevronRight, Zap, Users, Trophy, Star } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import EnrollmentModal from './EnrollmentModal';
+import EnrollmentModal from '@/Components/GigsAcademy/EnrollmentModal';
 import { useAuth } from '@/Context/AuthContext';
 import { useNavigate } from "react-router-dom";
 

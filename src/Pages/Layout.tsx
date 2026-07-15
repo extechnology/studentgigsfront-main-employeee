@@ -1,12 +1,13 @@
 import Header from "@/Components/Common/Header";
 import Footer from "@/Components/Common/Footer";
+import DockNavbar from "@/Components/Common/DockNavbar";
 import { Outlet } from "react-router-dom";
 
 export default function Layout() {
 
     return (
 
-        <main className="w-full min-h-screen flex flex-col relative">
+        <main className="w-full min-h-screen flex flex-col relative pb-20 lg:pb-0">
 
             {/* Header */}
             <header aria-label="Main Navigation">
@@ -22,6 +23,9 @@ export default function Layout() {
             <footer aria-label="Footer">
                 <Footer />
             </footer>
+
+            {/* Mobile Bottom Dock Navbar */}
+            <DockNavbar />
 
         </main>
 

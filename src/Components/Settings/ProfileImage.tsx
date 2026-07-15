@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { GetProfilePicture, EditProfilePicture } from "@/Hooks/UserProfile";
 import toast from "react-hot-toast";
 import { useAuth } from "@/Context/AuthContext";
+import ProfileAvatar from "@/Components/Common/ProfileAvatar";
 
 
 
@@ -276,7 +277,7 @@ const ProfileEditor: React.FC = () => {
 
 
                         {/* Profile Image */}
-                        <div className="flex justify-start space-x-4 -mt-6 sm:-mt-10 sm:ms-8 ms-2">
+                        <div className="flex flex-col items-start gap-3 -mt-6 px-2 sm:-mt-10 sm:ms-8 sm:flex-row sm:items-start sm:gap-4 sm:px-0">
 
                             <div className="flex items-center gap-4">
 
@@ -290,11 +291,12 @@ const ProfileEditor: React.FC = () => {
 
                                     <div className="relative w-24 h-24 md:w-32 md:h-32">
 
-                                        <img
-                                            src={profileSrc || "/Profile-deaf.jpg"}
+                                        <ProfileAvatar
+                                            src={profileSrc}
+                                            name={data[0]?.employee_name || data[0]?.name || data[0]?.username}
                                             alt="profile"
-                                            loading="lazy"
                                             className="w-full h-full rounded-full object-cover border-4 border-white shadow-lg"
+                                            textClassName="text-3xl md:text-4xl"
                                         />
 
                                         {/* Premium Badge */}
@@ -328,9 +330,12 @@ const ProfileEditor: React.FC = () => {
 
                             </div>
 
-                            <div className="md:pt-12 pt-8">
-                                <h1 className="font-semibold text-md md:text-lg">{data[0]?.employee_name?.toUpperCase()} <span className="text-gray-400 text-sm ms-1 pb-0">@{data[0]?.username}</span></h1>
-                                <p className="font-[1rem] text-md md:text-lg text-gray-400">
+                            <div className="min-w-0 pt-0 sm:pt-8 md:pt-12">
+                                <h1 className="text-base font-semibold leading-snug text-gray-900 md:text-lg">
+                                    <span className="break-words">{data[0]?.employee_name?.toUpperCase()}</span>
+                                    <span className="block break-all text-sm text-gray-400 sm:inline sm:ms-1">@{data[0]?.username}</span>
+                                </h1>
+                                <p className="break-words text-sm text-gray-400 md:text-lg">
                                     {data[0]?.job_title}
                                 </p>
                             </div>

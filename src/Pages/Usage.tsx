@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { PlanFeature } from '@/Hooks/Userplans';
 
 
-
 const PlanUsageDashboard = () => {
 
 
@@ -177,7 +176,7 @@ const PlanUsageDashboard = () => {
                                                     </div>
                                                     <div>
                                                         <p className="text-gray-500 text-sm">{item?.name} Left</p>
-                                                        <p className="text-gray-800 text-xl font-bold group-hover:text-orange-500 transition-colors duration-300">{ Number(item?.limit ?? 0) - Number(item?.used ?? 0)}</p>
+                                                        <p className="text-gray-800 text-xl font-bold group-hover:text-orange-500 transition-colors duration-300">{Number(item?.limit ?? 0) - Number(item?.used ?? 0)}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -200,7 +199,7 @@ const PlanUsageDashboard = () => {
 
                                     </div>
                                 )
-                                
+
                             })}
 
 

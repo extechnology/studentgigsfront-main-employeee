@@ -1,6 +1,6 @@
 import { CheckCircle, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
-import BlurFade from '../ui/blur-fade';
+import BlurFade from '@/Components/ui/blur-fade';
 
 const WhyChooseUs = () => {
 

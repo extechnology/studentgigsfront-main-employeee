@@ -5,7 +5,7 @@ import Select from "react-select";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "../ui/button";
+import { Button } from "@/Components/ui/button";
 import { Calendar } from "../ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Checkbox } from "../ui/checkbox";
@@ -34,7 +34,7 @@ export default function Experience() {
 
 
     // Get Job Title
-    const { data: JobTitle, isLoading: JobTitleLoading , isPending : JobTitlePending } = JObTittles()
+    const { data: JobTitle, isLoading: JobTitleLoading, isPending: JobTitlePending } = JObTittles()
 
 
     // Add Experience
@@ -76,7 +76,7 @@ export default function Experience() {
 
         AddExp({ formData: formdata }, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();
@@ -101,7 +101,7 @@ export default function Experience() {
 
         DeleteExp(id, {
 
-            onSuccess: (response:any) => {
+            onSuccess: (response: any) => {
 
                 if (response?.status >= 200 && response?.status < 300) {
                     reset();
@@ -146,7 +146,7 @@ export default function Experience() {
 
 
 
- 
+
 
     return (
 
