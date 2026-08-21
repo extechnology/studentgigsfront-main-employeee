@@ -202,10 +202,10 @@ export default function JobCard({ id, applied, saved, employer_id, salaryType, c
 
                         <div className="w-14 h-14  overflow-hidden shadow-lg  border border-gray-300 rounded-full">
                             <img
-                                src={logo ? logo : '/Employer-Default.png'}
+                                src={logo ? logo : '/Tab-icon.png'}
                                 alt={company}
                                 loading='lazy'
-                                className="w-full h-full object-cover rounded-full"
+                                className={logo ? "w-full h-full object-cover rounded-full" : "w-full h-full object-contain rounded-full p-1"}
                             />
                         </div>
 
