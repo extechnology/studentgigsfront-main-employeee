@@ -181,6 +181,8 @@ export default function FilterJob({ className }: FilterJobProps = {}) {
     // Get Job Category and Job Title
     const { data, isLoading, isFetching } = AllSearchCategory()
 
+    console.log(data);
+    
 
     // Form State
     const { handleSubmit, control, } = useForm<Inputs>();
@@ -247,7 +249,7 @@ export default function FilterJob({ className }: FilterJobProps = {}) {
                                             options={data}
                                             value={data?.find((option: Option) => option?.value === value) || null}
                                             onChange={(option) => onChange(option ? option.value : null)}
-                                            placeholder="Search Category or Job title...."
+                                            placeholder="Search Job title...."
                                             isSearchable={true}
                                             isClearable={true}
                                             isLoading={isLoading || isFetching}
